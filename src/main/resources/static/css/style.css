@@ -1,0 +1,31 @@
+/* Stile generale */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f6c6ac;
+    color: #333;
+}
+
+/* Stile per l'header */
+header {
+    background-color: #de6061;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Stile per il titolo */
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+/* Alternanza colore sfondo */
+body:nth-child(odd) {
+    background-color: #fae2d6;
+}
+
+input:invalid {
+    border: 2px solid red;
+}

@@ -8,13 +8,12 @@ CREATE TABLE account (
                          password VARCHAR(255) NOT NULL,
                          data_nascita DATE NOT NULL,
                          sesso ENUM('M', 'F') NOT NULL,
-                         provincia VARCHAR(50) NOT NULL,
-                         paese VARCHAR(50) NOT NULL,
-                         via VARCHAR(100) NOT NULL,
-                         numero_civico VARCHAR(10) NOT NULL,
+                         email VARCHAR(100) NOT NULL UNIQUE,
+                         indirizzo VARCHAR(255) NOT NULL,
                          numero_telefono VARCHAR(10),
                          punti INT DEFAULT 0
 );
+
 
 -- Tabella Richieste
 CREATE TABLE richiesta (
