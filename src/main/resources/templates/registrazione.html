@@ -5,63 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione</title>
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/validation.js" defer></script>
 </head>
 <body>
-<header>
-    <h1>HelpMeUp - Registrazione</h1>
-</header>
+<div th:insert="fragments/header :: header"></div>
 
 <div class="container">
-    <form action="/register" method="POST" th:object="${user}" onsubmit="return validateForm()">
+    <form action="/register" method="POST" th:object="${user}">
         <!-- Nome -->
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" th:field="*{nome}" required>
+        <input type="text" id="nome" name="nome" th:field="*{nome}" required maxlength="20" pattern="[A-Za-zàèìòùÁÉÍÓÚàáäëïöü ]+" title="Solo lettere e spazi" />
 
         <!-- Cognome -->
         <label for="cognome">Cognome:</label>
-        <input type="text" id="cognome" name="cognome" th:field="*{cognome}" required>
+        <input type="text" id="cognome" name="cognome" th:field="*{cognome}" required maxlength="20" pattern="[A-Za-zàèìòùÁÉÍÓÚàáäëïöü ]+" title="Solo lettere e spazi" />
 
         <!-- Username -->
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" th:field="*{username}" required>
+        <input type="text" id="username" name="username" th:field="*{username}" required />
 
         <!-- Tipo Account -->
         <label for="tipo_account">Tipo Account:</label>
-        <select id="tipo_account" name="tipo_account" th:field="*{tipoAccount}">
+        <select id="tipo_account" name="tipo_account" th:field="*{tipoAccount}" required>
             <option value="volontario">Volontario</option>
             <option value="assistito">Assistito</option>
         </select>
 
         <!-- Data di nascita -->
         <label for="data_nascita">Data di nascita:</label>
-        <input type="date" id="data_nascita" name="data_nascita" th:field="*{dataNascita}" required>
+        <input type="date" id="data_nascita" name="data_nascita" th:field="*{dataNascita}" required />
 
-        <!-- Email con placeholder -->
+        <!-- Email -->
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:field="*{email}" placeholder="Inserisci la tua email" required>
+        <input type="email" id="email" name="email" th:field="*{email}" placeholder="Inserisci la tua email" required />
 
-        <!-- Numero di telefono con placeholder -->
+        <!-- Numero di telefono -->
         <label for="numero_telefono">Numero di telefono:</label>
-        <input type="text" id="numero_telefono" name="numero_telefono" th:field="*{numeroTelefono}" placeholder="Inserisci il tuo numero di telefono" pattern="\d{10}" required>
+        <input type="text" id="numero_telefono" name="numero_telefono" th:field="*{numeroTelefono}" placeholder="Inserisci il tuo numero di telefono" pattern="\d{10}" title="Numero di telefono valido (10 cifre)" required />
 
         <!-- Sesso -->
         <label for="sesso">Sesso:</label>
-        <select id="sesso" name="sesso" th:field="*{sesso}">
+        <select id="sesso" name="sesso" th:field="*{sesso}" required>
             <option value="M">Maschile</option>
             <option value="F">Femminile</option>
         </select>
 
         <!-- Indirizzo -->
         <label for="indirizzo">Indirizzo:</label>
-        <input type="text" id="indirizzo" name="indirizzo" th:field="*{indirizzo}" placeholder="Salerno, Fisciano, Via Rossi, 29" required>
+        <input type="text" id="indirizzo" name="indirizzo" th:field="*{indirizzo}" placeholder="Salerno, Fisciano, Via Rossi, 29" required pattern="[a-zA-ZàèìòùÁÉÍÓÚàáäëïöü0-9\s,]+" title="Formato indirizzo valido" />
+
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" th:field="*{password}" required minlength="3" maxlength="15" />
 
         <!-- Conferma Password -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" th:field="*{password}" required>
-
         <label for="confirmPassword">Conferma Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <input type="password" id="confirmPassword" name="confirmPassword" required minlength="3" maxlength="15" />
 
         <!-- Pulsante di invio -->
         <button type="submit">Registrati</button>

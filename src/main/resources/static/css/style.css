@@ -8,10 +8,12 @@ body {
 
 /* Stile per l'header */
 header {
+    display: flex;
+    justify-content: space-between; /* Distribuisce spazio tra logo e menu */
+    align-items: center; /* Allinea verticalmente il contenuto */
     background-color: #de6061;
     color: white;
-    text-align: center;
-    padding: 20px 0;
+    padding: 10px 20px; /* Margini interni per un aspetto migliore */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -28,4 +30,66 @@ body:nth-child(odd) {
 
 input:invalid {
     border: 2px solid red;
+}
+
+/* Stile per il contenitore del logo */
+.logo img {
+    height: 50px;
+    margin-left: 20px;
+}
+
+/* Stile per il menu di navigazione */
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #fae2d6;
+}
+
+.error-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.error-container h1 {
+    font-size: 48px;
+    color: #e74c3c;
+}
+
+.error-container p {
+    font-size: 18px;
+}
+
+.error-container a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.error-container a:hover {
+    text-decoration: underline;
 }
