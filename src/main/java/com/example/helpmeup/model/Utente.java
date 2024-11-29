@@ -2,6 +2,8 @@ package com.example.helpmeup.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -22,10 +24,23 @@ public class Utente {
     private LocalDate dataNascita;
     private String email;
 
-    private String indirizzo; // Unico campo per l'indirizzo
+    private String indirizzo;
 
     private String numeroTelefono;
     private Integer punti = 0;
+
+    @ElementCollection
+    @CollectionTable(name = "certificazioni", joinColumns = @JoinColumn(name = "utente_id"))
+    @Column(name = "certificazione")
+    private List<String> certificazioni = new ArrayList<>();
+
+    public List<String> getCertificazioni() {
+        return certificazioni;
+    }
+
+    public void setCertificazioni(List<String> certificazioni) {
+        this.certificazioni = certificazioni;
+    }
 
     // Costruttore di default
     public Utente() {
@@ -151,12 +166,13 @@ public class Utente {
                 ", cognome='" + cognome + '\'' +
                 ", username='" + username + '\'' +
                 ", tipoAccount='" + tipoAccount + '\'' +
-                ", password='" + password + '\'' +
-                ", dataDiNascita=" + dataNascita +
                 ", sesso='" + sesso + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", email='" + email + '\'' +
                 ", indirizzo='" + indirizzo + '\'' +
                 ", numeroTelefono='" + numeroTelefono + '\'' +
                 ", punti=" + punti +
+                ", certificazioni=" + certificazioni +
                 '}';
     }
 }
