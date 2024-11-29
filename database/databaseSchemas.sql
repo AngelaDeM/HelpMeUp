@@ -14,6 +14,13 @@ CREATE TABLE account (
                          punti INT DEFAULT 0
 );
 
+CREATE TABLE certificazione(
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        titolo VARCHAR(50) NOT NULL,
+                        account_id INT NOT NULL,
+                        FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
+);
+
 
 -- Tabella Richieste
 CREATE TABLE richiesta (
@@ -50,7 +57,7 @@ CREATE TABLE calendario (
 );
 
 -- Tabella Premi
-CREATE TABLE premi (
+CREATE TABLE premio (
                        id INT AUTO_INCREMENT PRIMARY KEY,
                        nome VARCHAR(100) NOT NULL,
                        descrizione TEXT,
@@ -65,5 +72,5 @@ CREATE TABLE riscatti_premi (
                                 premio_id INT NOT NULL,
                                 data_riscatto TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                 FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE,
-                                FOREIGN KEY (premio_id) REFERENCES premi(id) ON DELETE CASCADE
+                                FOREIGN KEY (premio_id) REFERENCES premio(id) ON DELETE CASCADE
 );
