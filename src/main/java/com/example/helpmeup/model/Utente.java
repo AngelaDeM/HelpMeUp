@@ -28,6 +28,7 @@ public class Utente {
 
     private String numeroTelefono;
     private Integer punti = 0;
+    //esempio
 
     @ElementCollection
     @CollectionTable(name = "certificazioni", joinColumns = @JoinColumn(name = "utente_id"))
