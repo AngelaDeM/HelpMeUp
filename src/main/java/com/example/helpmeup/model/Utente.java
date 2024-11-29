@@ -26,6 +26,7 @@ public class Utente {
 
     private String numeroTelefono;
     private Integer punti = 0;
+    //esempio
 
     // Costruttore di default
     public Utente() {
