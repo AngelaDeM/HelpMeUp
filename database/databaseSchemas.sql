@@ -11,7 +11,8 @@ CREATE TABLE account (
                          email VARCHAR(100) NOT NULL UNIQUE,
                          indirizzo VARCHAR(255) NOT NULL,
                          numero_telefono VARCHAR(10),
-                         punti INT DEFAULT 0
+                         punti INT DEFAULT 0,
+                         certificazioni VARCHAR(1000)
 );
 
 CREATE TABLE certificazione(
