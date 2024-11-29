@@ -3,9 +3,12 @@ package com.example.helpmeup.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+
+
 @Entity
-@Table(name = "account")
-public class Utente {
+@Table(name="account")
+
+public abstract class Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +18,7 @@ public class Utente {
     private String cognome;
     private String username;
 
-    private String tipoAccount; // "volontario" o "assistito" come String
+    // "volontario" o "assistito" come String
     private String sesso; // "Maschio" o "Femmina" come String
 
     private String password;
@@ -25,27 +28,23 @@ public class Utente {
     private String indirizzo; // Unico campo per l'indirizzo
 
     private String numeroTelefono;
-    private Integer punti = 0;
-    //esempio
 
-    // Costruttore di default
-    public Utente() {
-    }
 
-    // Costruttore parametrizzato
-    public Utente(String nome, String cognome, String username, String tipoAccount, String password,
-                  LocalDate dataNascita, String sesso, String indirizzo, String numeroTelefono, Integer punti) {
+    public Utente(Long id, String nome, String cognome, String username,  String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono) {
+        this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
-        this.tipoAccount = tipoAccount;
-        this.email = email;
+        this.sesso = sesso;
         this.password = password;
         this.dataNascita = dataNascita;
-        this.sesso = sesso;
+        this.email = email;
         this.indirizzo = indirizzo;
         this.numeroTelefono = numeroTelefono;
-        this.punti = punti;
+    }
+
+    public Utente() {
+
     }
 
     public String getEmail() {
@@ -88,13 +87,7 @@ public class Utente {
         this.username = username;
     }
 
-    public String getTipoAccount() {
-        return tipoAccount;
-    }
 
-    public void setTipoAccount(String tipoAccount) {
-        this.tipoAccount = tipoAccount;
-    }
 
     public String getSesso() {
         return sesso;
@@ -136,13 +129,9 @@ public class Utente {
         this.numeroTelefono = numeroTelefono;
     }
 
-    public Integer getPunti() {
-        return punti;
-    }
 
-    public void setPunti(Integer punti) {
-        this.punti = punti;
-    }
+
+
 
     @Override
     public String toString() {
@@ -151,13 +140,13 @@ public class Utente {
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", username='" + username + '\'' +
-                ", tipoAccount='" + tipoAccount + '\'' +
+
                 ", password='" + password + '\'' +
                 ", dataDiNascita=" + dataNascita +
                 ", sesso='" + sesso + '\'' +
                 ", indirizzo='" + indirizzo + '\'' +
                 ", numeroTelefono='" + numeroTelefono + '\'' +
-                ", punti=" + punti +
+
                 '}';
     }
 }
