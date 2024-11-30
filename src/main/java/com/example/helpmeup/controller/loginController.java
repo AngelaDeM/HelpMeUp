@@ -1,6 +1,7 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Utente;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +22,13 @@ public class loginController {
     @PostMapping("/login")
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
         Utente utente = utenteRepository.findByUsername(username);
+
         if (utente == null) {
             // Handle user not found case
             return "redirect:/login?error";
         }
 
-        if (!utente.getPassword().equals(password)) {
+        if (!new BCryptPasswordEncoder().matches(password, utente.getPassword())) {
             // Handle wrong password case
             return "redirect:/login?error";
         }

@@ -3,6 +3,7 @@ package com.example.helpmeup.controller;
 import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +66,9 @@ public class registrazioneController {
             model.addAttribute("error", "L'indirizzo non è nel formato corretto (Provincia, Città, via, numerocivico)!");
             return "registrazione"; // Torna alla pagina di registrazione
         }
+
+        //Cifratura della password
+        utente.setPassword(new BCryptPasswordEncoder().encode(utente.getPassword()));
 
         // Salva l'utente nel database
         utenteService.salvaUtente(utente);

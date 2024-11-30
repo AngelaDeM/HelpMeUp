@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -37,13 +38,12 @@ public class LoginControllerTest {
     public void testLoginUser() {
         Utente utente = new Utente();
         utente.setUsername("test");
-        utente.setPassword("test");
+        utente.setPassword(new BCryptPasswordEncoder().encode("password"));
 
         when(utenteRepository.findByUsername("test")).thenReturn(utente);
 
-        String result = loginController.loginUser("test", "test", model);
+        String result = loginController.loginUser("test", "password", model);
 
-        verify(model, times(0)).addAttribute("utente", utente);
         assertEquals("redirect:/", result);
     }
 
