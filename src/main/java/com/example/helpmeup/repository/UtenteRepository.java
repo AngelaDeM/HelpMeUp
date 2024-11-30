@@ -14,5 +14,5 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
     boolean existsByUsername(String username);
 
     // Trova un utente per username
-    Utente findByUsername(String username);
+    Utente findByUsername(String username); // Trova un utente per username
 }
