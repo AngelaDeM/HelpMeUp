@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="account")
 
-public abstract class Utente {
+public class Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

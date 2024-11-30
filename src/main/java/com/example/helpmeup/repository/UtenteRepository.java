@@ -12,4 +12,7 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
 
     // Verifica se lo username esiste nel database
     boolean existsByUsername(String username);
+
+    // Trova un utente per username
+    Utente findByUsername(String username);
 }
