@@ -6,6 +6,7 @@ CREATE TABLE account (
                          username VARCHAR(50) UNIQUE NOT NULL,
                          tipo_account ENUM('volontario', 'assistito') NOT NULL,
                          password VARCHAR(255) NOT NULL,
+                         certificazione VARCHAR(255) NOT NULL,
                          data_nascita DATE NOT NULL,
                          sesso ENUM('M', 'F') NOT NULL,
                          email VARCHAR(100) NOT NULL UNIQUE,
@@ -13,13 +14,6 @@ CREATE TABLE account (
                          numero_telefono VARCHAR(10),
                          punti INT DEFAULT 0,
                          certificazioni VARCHAR(1000)
-);
-
-CREATE TABLE certificazione(
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        titolo VARCHAR(50) NOT NULL,
-                        account_id INT NOT NULL,
-                        FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
 );
 
 

@@ -1,6 +1,12 @@
 package com.example.helpmeup.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
+
+@Entity
+
 
 public class Assistito extends Utente{
 
