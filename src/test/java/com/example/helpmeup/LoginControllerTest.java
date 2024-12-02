@@ -2,6 +2,7 @@ package com.example.helpmeup;
 
 import com.example.helpmeup.controller.loginController;
 import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.repository.UtenteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ public class LoginControllerTest {
 
     @Test
     public void testLoginUser() {
-        Utente utente = new Utente();
+        Utente utente = new Volontario();
         utente.setUsername("test");
         utente.setPassword(new BCryptPasswordEncoder().encode("password"));
 

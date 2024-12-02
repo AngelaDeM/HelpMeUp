@@ -1,6 +1,8 @@
 package com.example.helpmeup.controller;
 
+import com.example.helpmeup.model.Assistito;
 import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,13 +28,19 @@ public class registrazioneController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new Utente()); // Aggiungi un oggetto Utente vuoto al modello
+        model.addAttribute("user", new Volontario()); // Aggiungi un oggetto Utente vuoto al modello
         return "registrazione"; // Restituisce la vista 'registrazione.html'
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute Utente utente, String confirmPassword, Model model) {
-        // Validazione della registrazione
+    public String registerUser(@ModelAttribute Utente utente, String userType, String confirmPassword, Model model) {
+        // Controllo se l'utente è un volontario o un'assistito
+        if (!userType.equals("Volontario") && !userType.equals("Assistito")) {
+            model.addAttribute("error", "Errore: seleziona il tipo di utente!");
+            return "registrazione"; // Torna alla pagina di registrazione
+        }
+
+        // Validazione della password
         if (!utente.getPassword().equals(confirmPassword)) {
             model.addAttribute("error", "Le password non corrispondono!");
             return "registrazione"; // Torna alla pagina di registrazione
@@ -69,6 +77,13 @@ public class registrazioneController {
 
         //Cifratura della password
         utente.setPassword(new BCryptPasswordEncoder().encode(utente.getPassword()));
+
+        //Imposta il tipo di utente
+        if ("Assistito".equals(userType)) {
+            utente = new Assistito(utente);
+        } else {
+            utente = new Volontario(utente);
+        }
 
         // Salva l'utente nel database
         utenteService.salvaUtente(utente);
