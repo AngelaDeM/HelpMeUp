@@ -21,7 +21,7 @@ public class RegistrationController {
     @PostMapping("/register-choice")
     public String handleRegistrationChoice(@RequestParam("role") String role) {
         if (role.equals("volontario")) {
-            return "register-volontario";
+            return "register";
         } else {
             return "register-assistito";
         }
