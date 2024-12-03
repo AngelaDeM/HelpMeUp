@@ -1,5 +1,5 @@
 -- Tabella Account
-CREATE TABLE account (
+CREATE TABLE Utente (
                          nome VARCHAR(50) NOT NULL,
                          cognome VARCHAR(50) NOT NULL,
                          username VARCHAR(50) PRIMARY KEY,
@@ -40,11 +40,9 @@ CREATE TABLE messaggio (
 
 -- Tabella Premi
 CREATE TABLE premio (
-                       id INT AUTO_INCREMENT PRIMARY KEY,
-                       nome VARCHAR(100) NOT NULL,
+                       nome VARCHAR(100) PRIMARY KEY,
                        descrizione TEXT,
                        punti_richiesti INT NOT NULL,
-                       disponibilita INT NOT NULL  -- Numero di premi disponibili
 );
 
 -- Tabella Riscatti Premi
