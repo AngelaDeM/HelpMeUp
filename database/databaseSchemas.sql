@@ -14,7 +14,7 @@ CREATE TABLE Utente (
 );
 
 -- Tabella Richieste
-CREATE TABLE richiesta (
+CREATE TABLE Richiesta (
                            id INT AUTO_INCREMENT PRIMARY KEY,
                            titolo VARCHAR(100) NOT NULL,
                            descrizione TEXT NOT NULL,
@@ -23,23 +23,23 @@ CREATE TABLE richiesta (
                            orario_intervento TIME NOT NULL,
                            emergenza BOOLEAN NOT NULL,
                            account_id INT NOT NULL,
-                           FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
+                           FOREIGN KEY (account_id) REFERENCES Utente(id) ON DELETE CASCADE
 );
 
 -- Tabella Forum Messaggi
-CREATE TABLE messaggio (
+CREATE TABLE Messaggio (
                            id INT AUTO_INCREMENT PRIMARY KEY,
                            titolo VARCHAR(100),  -- Sarà NULL se è una risposta
                            contenuto TEXT NOT NULL,
                            data_invio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                            account_id INT NOT NULL,
                            forum_id INT,  -- NULL se è un messaggio di apertura
-                           FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE,
-                           FOREIGN KEY (forum_id) REFERENCES messaggio(id) ON DELETE CASCADE
+                           FOREIGN KEY (account_id) REFERENCES Utente(id) ON DELETE CASCADE,
+                           FOREIGN KEY (forum_id) REFERENCES Messaggio(id) ON DELETE CASCADE
 );
 
 -- Tabella Premi
-CREATE TABLE premio (
+CREATE TABLE Premio (
                        nome VARCHAR(100) PRIMARY KEY,
                        descrizione TEXT,
                        punti_richiesti INT NOT NULL,
@@ -50,6 +50,6 @@ CREATE TABLE riscatti_premi (
                                 account_id INT NOT NULL,
                                 premio_id INT NOT NULL,
                                 data_riscatto TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE,
-                                FOREIGN KEY (premio_id) REFERENCES premio(id) ON DELETE CASCADE
+                                FOREIGN KEY (account_id) REFERENCES Utente(id) ON DELETE CASCADE,
+                                FOREIGN KEY (premio_id) REFERENCES Premio(id) ON DELETE CASCADE
 );

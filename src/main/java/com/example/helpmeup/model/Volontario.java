@@ -11,8 +11,8 @@ public class Volontario extends Utente{
     private int punti;
     @ManyToMany
     @JoinTable(
-    name = "volontario_premio",
-    joinColumns = @JoinColumn(name = "volontario_id"),
+    name = "riscatti_premi",
+    joinColumns = @JoinColumn(name = "account_id"),
     inverseJoinColumns = @JoinColumn(name = "premio_id")
     )
     private ArrayList<Premio> premi;
