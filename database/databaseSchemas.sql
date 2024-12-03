@@ -10,7 +10,7 @@ CREATE TABLE Utente (
                          email VARCHAR(100) NOT NULL UNIQUE,
                          indirizzo VARCHAR(255) NOT NULL,
                          numero_telefono VARCHAR(10),
-                         punti INT DEFAULT 0,
+                         punti INT DEFAULT 0
 );
 
 -- Tabella Richieste
@@ -22,8 +22,8 @@ CREATE TABLE Richiesta (
                            data_intervento DATE NOT NULL,
                            orario_intervento TIME NOT NULL,
                            emergenza BOOLEAN NOT NULL,
-                           account_id INT NOT NULL,
-                           FOREIGN KEY (account_id) REFERENCES Utente(id) ON DELETE CASCADE
+                           account_id VARCHAR(50) NOT NULL,
+                           FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE
 );
 
 -- Tabella Forum Messaggi
@@ -32,9 +32,9 @@ CREATE TABLE Messaggio (
                            titolo VARCHAR(100),  -- Sarà NULL se è una risposta
                            contenuto TEXT NOT NULL,
                            data_invio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                           account_id INT NOT NULL,
+                           account_id VARCHAR(50) NOT NULL,
                            forum_id INT,  -- NULL se è un messaggio di apertura
-                           FOREIGN KEY (account_id) REFERENCES Utente(id) ON DELETE CASCADE,
+                           FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE,
                            FOREIGN KEY (forum_id) REFERENCES Messaggio(id) ON DELETE CASCADE
 );
 
@@ -42,14 +42,14 @@ CREATE TABLE Messaggio (
 CREATE TABLE Premio (
                        nome VARCHAR(100) PRIMARY KEY,
                        descrizione TEXT,
-                       punti_richiesti INT NOT NULL,
+                       punti_richiesti INT NOT NULL
 );
 
 -- Tabella Riscatti Premi
 CREATE TABLE riscatti_premi (
-                                account_id INT NOT NULL,
-                                premio_id INT NOT NULL,
+                                account_id VARCHAR(50) NOT NULL,
+                                premio_id VARCHAR(100) NOT NULL,
                                 data_riscatto TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                FOREIGN KEY (account_id) REFERENCES Utente(id) ON DELETE CASCADE,
-                                FOREIGN KEY (premio_id) REFERENCES Premio(id) ON DELETE CASCADE
+                                FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE,
+                                FOREIGN KEY (premio_id) REFERENCES Premio(nome) ON DELETE CASCADE
 );
