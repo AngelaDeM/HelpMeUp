@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name="account")
+@Table(name="utente")
 
 public abstract class Utente {
 
