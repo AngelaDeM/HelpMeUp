@@ -21,7 +21,7 @@ CREATE TABLE richiesta (
                            data_creazione DATE NOT NULL,
                            data_intervento DATE NOT NULL,
                            orario_intervento TIME NOT NULL,
-                           stato ENUM('emergenza', 'no_emergenza') NOT NULL,
+                           emergenza BOOLEAN NOT NULL,
                            account_id INT NOT NULL,
                            FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
 );
