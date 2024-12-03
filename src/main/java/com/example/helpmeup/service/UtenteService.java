@@ -1,6 +1,5 @@
 package com.example.helpmeup.service;
 
-import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

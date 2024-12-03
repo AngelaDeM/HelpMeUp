@@ -8,30 +8,22 @@ import java.time.LocalDate;
 @Entity
 @Table(name="account")
 
-public abstract class Utente{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public abstract class Utente {
 
     private String nome;
     private String cognome;
+    //primary key
+    @Id
     private String username;
-
-    // "volontario" o "assistito" come String
     private String sesso; // "Maschio" o "Femmina" come String
-
     private String password;
     private LocalDate dataNascita;
     private String email;
-
     private String indirizzo; // Unico campo per l'indirizzo
-
     private String numeroTelefono;
 
 
-    public Utente(Long id, String nome, String cognome, String username,  String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono) {
-        this.id = id;
+    public Utente(String nome, String cognome, String username,  String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono) {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
@@ -53,14 +45,6 @@ public abstract class Utente{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -86,8 +70,6 @@ public abstract class Utente{
     public void setUsername(String username) {
         this.username = username;
     }
-
-
 
     public String getSesso() {
         return sesso;
@@ -129,24 +111,18 @@ public abstract class Utente{
         this.numeroTelefono = numeroTelefono;
     }
 
-
-
-
-
     @Override
     public String toString() {
         return "Utente{" +
-                "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", username='" + username + '\'' +
-
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", dataDiNascita=" + dataNascita +
                 ", sesso='" + sesso + '\'' +
                 ", indirizzo='" + indirizzo + '\'' +
                 ", numeroTelefono='" + numeroTelefono + '\'' +
-
                 '}';
     }
 }
