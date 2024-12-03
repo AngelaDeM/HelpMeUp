@@ -4,30 +4,42 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "richiesta")
 public class Richiesta {
 
     private static int countID=1000;
 
+    @Id
     private final int id=countID++;
     private String titolo;
     private String descrizione;
-    private LocalDateTime dataPubblicazione;
-    private LocalDate dataAiuto;
-    private LocalTime oraAiuto;
+    private final LocalDateTime data_creazione = LocalDateTime.now();;
+    private LocalDate data_intervento;
+    private LocalTime orario_intervento;
     private final int punti;
     private boolean emergenza;
+
+
 
 
     public Richiesta() {
         this.punti = 50;
     }
 
-    public Richiesta(String titolo, String descrizione, LocalDateTime dataPubblicazione, LocalDate dataAiuto, LocalTime oraAiuto, boolean emergenza) {
+    public Richiesta(String titolo, String descrizione, LocalDate data_intervento, LocalTime orario_intervento, boolean emergenza) {
         this.titolo = titolo;
         this.descrizione = descrizione;
-        this.dataPubblicazione = dataPubblicazione;
-        this.dataAiuto = dataAiuto;
-        this.oraAiuto = oraAiuto;
+        this.data_intervento = data_intervento;
+        this.orario_intervento = orario_intervento;
 
         this.emergenza = emergenza;
         if(this.emergenza){
@@ -41,24 +53,33 @@ public class Richiesta {
         return id;
     }
 
+    @NotBlank(message = "Il titolo non può essere vuoto.")
+    @Size(max = 100, message = "Il titolo non può superare i 100 caratteri.")
     public String getTitolo() {
         return titolo;
     }
 
+
+    @NotBlank(message = "La descrizione non può essere vuota.")
+    @Size(max = 500, message = "La descrizione non può superare i 500 caratteri.")
     public String getDescrizione() {
         return descrizione;
     }
 
+    @NotNull(message = "La data di pubblicazione non può essere nulla.")
     public LocalDateTime getDataPubblicazione() {
-        return dataPubblicazione;
+        return data_creazione;
     }
 
+    @NotNull(message = "L'ora di aiuto è obbligatoria.")
     public LocalTime getOraAiuto() {
-        return oraAiuto;
+        return orario_intervento;
     }
 
+    @NotNull(message = "La data di aiuto è obbligatoria.")
+    @Future(message = "La data di aiuto deve essere futura.")
     public LocalDate getDataAiuto() {
-        return dataAiuto;
+        return data_intervento;
     }
 
     public int getPunti() {
@@ -77,16 +98,13 @@ public class Richiesta {
         this.descrizione = descrizione;
     }
 
-    public void setDataPubblicazione(LocalDateTime dataPubblicazione) {
-        this.dataPubblicazione = dataPubblicazione;
-    }
 
     public void setDataAiuto(LocalDate dataAiuto) {
-        this.dataAiuto = dataAiuto;
+        this.data_intervento = dataAiuto;
     }
 
     public void setOraAiuto(LocalTime oraAiuto) {
-        this.oraAiuto = oraAiuto;
+        this.orario_intervento = oraAiuto;
     }
 
 
@@ -100,9 +118,9 @@ public class Richiesta {
                 "id=" + id +
                 ", titolo='" + titolo + '\'' +
                 ", descrizione='" + descrizione + '\'' +
-                ", dataPubblicazione=" + dataPubblicazione +
-                ", dataAiuto=" + dataAiuto +
-                ", oraAiuto=" + oraAiuto +
+                ", dataPubblicazione=" + data_creazione +
+                ", dataAiuto=" + data_intervento +
+                ", oraAiuto=" + orario_intervento +
                 ", punti=" + punti +
                 ", emergenza=" + emergenza +
                 '}';

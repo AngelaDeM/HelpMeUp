@@ -1,15 +1,36 @@
 package com.example.helpmeup.model;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Volontario {
+@Entity
+public class Volontario extends Utente{
 
     private int punti;
-    private ArrayList<String> certificazioni;
+    @ManyToMany
+    @JoinTable(
+            name = "riscatti_premi",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "premio_id")
+    )
 
-    public Volontario(int punti, ArrayList<String> certificazioni) {
+    private ArrayList<Premio> premi = new ArrayList<>();
+
+
+    public Volontario() {
+    }
+
+    public Volontario(String nome, String cognome, String username, String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono, int punti, ArrayList<Premio> premi) {
+        super(nome, cognome, username, sesso, password, dataNascita, email, indirizzo, numeroTelefono);
         this.punti = punti;
-        this.certificazioni = certificazioni;
+        this.premi = premi;
+    }
+    public Volontario(Utente utente, int punti, ArrayList<Premio> premi) {
+        super(utente.getNome(), utente.getCognome(), utente.getUsername(), utente.getSesso(), utente.getPassword(), utente.getDataNascita(), utente.getEmail(), utente.getIndirizzo(), utente.getNumeroTelefono());
+        this.punti = punti;
+        this.premi = premi;
     }
 
     public int getPunti() {
@@ -20,20 +41,23 @@ public class Volontario {
         this.punti = punti;
     }
 
-    public ArrayList<String> getCertificazioni() {
-        return certificazioni;
+    public void addPunti(int punti) {
+        this.punti += punti;
+    }
+    public ArrayList<Premio> getPremi() {
+        return premi;
     }
 
-    public void setCertificazioni(ArrayList<String> certificazioni) {
-        this.certificazioni = certificazioni;
+    public void setPremi(ArrayList<Premio> premi) {
+        this.premi = premi;
     }
 
-    public void addCertificazione(String certificazione) {
-        certificazioni.add(certificazione);
+    public void addPremi(Premio premio) {
+        premi.add(premio);
     }
 
-    public void removeCertificazione(String certificazione) {
-        certificazioni.remove(certificazione);
+    public void removePremio(Premio premio) {
+        premi.remove(premio);
     }
 
     @Override
@@ -41,7 +65,7 @@ public class Volontario {
         return "Volontario{" +
                 super.toString() +
                 "punti=" + punti +
-                ", certificazioni=" + certificazioni +
+                ", premi=" + premi +
                 '}';
     }
 }

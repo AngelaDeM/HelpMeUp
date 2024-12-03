@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Invio Richiesta</title>
+</head>
+<body>
+<h1>invio richiesta</h1>
+<form th:action="@{/api/richieste/pubblica}" method="POST">
+    <label for="titolo">Titolo:</label>
+    <input type="text" id="titolo" name="titolo" required><br><br>
+
+    <label for="descrizione">Descrizione:</label><br>
+    <textarea id="descrizione" name="descrizione" rows="4" cols="50" required></textarea><br><br>
+
+    <label for="data">Data:</label>
+    <input type="date" id="data" name="data" required><br><br>
+
+    <label for="ora">Ora:</label>
+    <input type="time" id="ora" name="ora" required><br><br>
+
+    <label for="emergenza">Emergenza:</label>
+    <input type="checkbox" id="emergenza" name="emergenza" value="si">
+    <label for="emergenza">Sì, è urgente</label><br><br>
+
+    <input type="submit" value="Invia richiesta">
+</form>
+</body>
+</html>
