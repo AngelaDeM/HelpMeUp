@@ -49,7 +49,6 @@ CREATE TABLE premio (
 
 -- Tabella Riscatti Premi
 CREATE TABLE riscatti_premi (
-                                id INT AUTO_INCREMENT PRIMARY KEY,
                                 account_id INT NOT NULL,
                                 premio_id INT NOT NULL,
                                 data_riscatto TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
