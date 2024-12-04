@@ -1,12 +1,18 @@
 package com.example.helpmeup.model;
 
-public class Premio {
+import jakarta.persistence.*;
 
-    private static int countID=100;
-    private final int id=countID++;
+import java.util.ArrayList;
+
+@Entity
+public class Premio{
+
+    @Id
     private  String nome;
     private  String descrizione;
-    private int puntiRiscossione;
+    private int puntiRichiesti;
+    @ManyToMany(mappedBy = "premi")
+    private ArrayList<Volontario> volontari;
 
     public Premio() {
     }
@@ -14,11 +20,7 @@ public class Premio {
     public Premio( String nome, String descrizione, int puntiRiscossione) {
         this.nome = nome;
         this.descrizione = descrizione;
-        this.puntiRiscossione = puntiRiscossione;
-    }
-
-    public int getId() {
-        return id;
+        this.puntiRichiesti = puntiRichiesti;
     }
 
     public String getNome() {
@@ -37,11 +39,11 @@ public class Premio {
         this.descrizione = descrizione;
     }
 
-    public int getPuntiRiscossione() {
-        return puntiRiscossione;
+    public int getPuntiRichiesti() {
+        return puntiRichiesti;
     }
 
-    public void setPuntiRiscossione(int puntiRiscossione) {
-        this.puntiRiscossione = puntiRiscossione;
+    public void setPuntiRichiesti(int puntiRichiesti) {
+        this.puntiRichiesti = puntiRichiesti;
     }
 }
