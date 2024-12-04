@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Personale</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .card { border: 1px solid #ccc; padding: 20px; border-radius: 5px; }
+        h1 { color: #007BFF; }
+        .info { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Benvenuto nella tua Area Personale!</h1>
+    <div class="card">
+        <h2>Informazioni Personali</h2>
+        <p class="info"><strong>Nome:</strong> <span th:text="${utente.nome}"></span></p>
+        <p class="info"><strong>Cognome:</strong> <span th:text="${utente.cognome}"></span></p>
+        <p class="info"><strong>Email:</strong> <span th:text="${utente.email}"></span></p>
+        <p class="info"><strong>Username:</strong> <span th:text="${utente.username}"></span></p>
+
+        <div th:if="${tipo == 'volontario'}">
+            <h2>Sezione Volontario</h2>
+            <p class="info"><strong>Punti accumulati:</strong> <span th:text="${utente.punti}"></span></p>
+            <h3>Premi Riscattati:</h3>
+            <ul>
+                <li th:each="premio : ${utente.premi}">
+                    <span th:text="${premio.nome}"></span> - <span th:text="${premio.descrizione}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <div th:if="${tipo == 'assistito'}">
+            <h2>Sezione Assistito</h2>
+            <p>Benvenuto, <span th:text="${utente.nome}"></span>. Qui puoi vedere le tue richieste di aiuto.</p>
+            <!-- Eventuale logica per visualizzare richieste -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

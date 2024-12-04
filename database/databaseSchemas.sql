@@ -1,9 +1,8 @@
 -- Tabella Account
-CREATE TABLE account (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Utente (
                          nome VARCHAR(50) NOT NULL,
                          cognome VARCHAR(50) NOT NULL,
-                         username VARCHAR(50) UNIQUE NOT NULL,
+                         username VARCHAR(50) PRIMARY KEY,
                          tipo_account ENUM('volontario', 'assistito') NOT NULL,
                          password VARCHAR(255) NOT NULL,
                          data_nascita DATE NOT NULL,
@@ -11,67 +10,46 @@ CREATE TABLE account (
                          email VARCHAR(100) NOT NULL UNIQUE,
                          indirizzo VARCHAR(255) NOT NULL,
                          numero_telefono VARCHAR(10),
-                         punti INT DEFAULT 0,
-                         certificazioni VARCHAR(1000)
+                         punti INT DEFAULT 0
 );
-
-CREATE TABLE certificazione(
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        titolo VARCHAR(50) NOT NULL,
-                        account_id INT NOT NULL,
-                        FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
-);
-
 
 -- Tabella Richieste
-CREATE TABLE richiesta (
+CREATE TABLE Richiesta (
                            id INT AUTO_INCREMENT PRIMARY KEY,
                            titolo VARCHAR(100) NOT NULL,
                            descrizione TEXT NOT NULL,
-                           data DATE NOT NULL,
-                           orario TIME NOT NULL,
-                           stato ENUM('emergenza', 'no_emergenza') NOT NULL,
-                           account_id INT NOT NULL,
-                           FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
+                           data_creazione DATE NOT NULL,
+                           data_intervento DATE NOT NULL,
+                           orario_intervento TIME NOT NULL,
+                           emergenza BOOLEAN NOT NULL,
+                           account_id VARCHAR(50) NOT NULL,
+                           FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE
 );
 
 -- Tabella Forum Messaggi
-CREATE TABLE messaggio (
+CREATE TABLE Messaggio (
                            id INT AUTO_INCREMENT PRIMARY KEY,
                            titolo VARCHAR(100),  -- Sarà NULL se è una risposta
                            contenuto TEXT NOT NULL,
                            data_invio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                           account_id INT NOT NULL,
+                           account_id VARCHAR(50) NOT NULL,
                            forum_id INT,  -- NULL se è un messaggio di apertura
-                           FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE,
-                           FOREIGN KEY (forum_id) REFERENCES messaggio(id) ON DELETE CASCADE
-);
-
--- Tabella Calendario (per gestire gli eventi o appuntamenti legati a richieste)
-CREATE TABLE calendario (
-                            id INT AUTO_INCREMENT PRIMARY KEY,
-                            richiesta_id INT NOT NULL,
-                            evento_data DATE NOT NULL,
-                            evento_orario TIME NOT NULL,
-                            descrizione TEXT,
-                            FOREIGN KEY (richiesta_id) REFERENCES richiesta(id) ON DELETE CASCADE
+                           FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE,
+                           FOREIGN KEY (forum_id) REFERENCES Messaggio(id) ON DELETE CASCADE
 );
 
 -- Tabella Premi
-CREATE TABLE premio (
-                       id INT AUTO_INCREMENT PRIMARY KEY,
-                       nome VARCHAR(100) NOT NULL,
+CREATE TABLE Premio (
+                       nome VARCHAR(100) PRIMARY KEY,
                        descrizione TEXT,
-                       punti_richiesti INT NOT NULL,
-                       disponibilita INT NOT NULL  -- Numero di premi disponibili
+                       punti_richiesti INT NOT NULL
 );
 
 -- Tabella Riscatti Premi
 CREATE TABLE riscatti_premi (
-                                id INT AUTO_INCREMENT PRIMARY KEY,
-                                account_id INT NOT NULL,
-                                premio_id INT NOT NULL,
+                                account_id VARCHAR(50) NOT NULL,
+                                premio_id VARCHAR(100) NOT NULL,
                                 data_riscatto TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE,
-                                FOREIGN KEY (premio_id) REFERENCES premio(id) ON DELETE CASCADE
+                                FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE,
+                                FOREIGN KEY (premio_id) REFERENCES Premio(nome) ON DELETE CASCADE
 );
