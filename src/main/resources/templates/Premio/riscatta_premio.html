@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>riscatta premio</h1>
-<form th:action="@{/api/premio/riscatta}" method="POST">
-    <label for="premio">Premio:</label>
+<form action="/riscatta" method="POST">
+    <label for="premio">premio:</label>
     <input type="text" id="premio" name="premio" required><br><br>
-    <label for="utente">Utente:</label>
+    <label for="utente">utente:</label>
     <input type="text" id="utente" name="utente" required><br><br>
     <input type="submit" value="riscatta premio">
 </form>

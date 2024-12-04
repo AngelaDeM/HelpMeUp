@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -52,5 +53,26 @@ public class PremioController {
         return ResponseEntity.ok("Premio aggiunto con successo.");
     }
 
+    @GetMapping("/getAll")
+    public String mostraPremi() {
+        return "Premio/visualizza_premi";
+    }
 
+    @GetMapping("/visualizza")
+    public ResponseEntity<List<Premio>> visualizzaTuttiIPremi() {
+        List<Premio> premi = premioService.getAllPremi();
+        return ResponseEntity.ok(premi);
+    }
+
+    @GetMapping("/getAllByUser")
+    public String mostraPremiByUser() {
+        return "Premio/visualizza_premi_utente";
+    }
+
+    @PostMapping("/visualizzaByUtente")
+    public ResponseEntity<List<Premio>> visualizzaByUtente(@Valid @RequestParam Map<String, String> dati) {
+        String utente = dati.get("utente");
+        List<Premio> premi = premioService.getAllPremiByUser(utente);
+        return ResponseEntity.ok(premi);
+    }
 }
