@@ -19,12 +19,6 @@ public class utenteController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody Utente utente) {
 
-        // Verifica che la data di nascita non sia nel futuro
-        if (utente.getDataNascita().isAfter(LocalDate.now())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Errore: la data di nascita non può essere nel futuro!");
-        }
-
         // Verifica se l'email è già presente nel database
         if (utenteService.verificaEmail(utente.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -44,4 +38,3 @@ public class utenteController {
                 .body("Utente registrato con successo!");
     }
 }
-

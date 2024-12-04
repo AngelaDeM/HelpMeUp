@@ -5,14 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UtenteRepository extends JpaRepository<Utente, String> {
-
-    // Verifica se l'email esiste nel database
+public interface UtenteRepository extends JpaRepository<Utente, Long> {
     boolean existsByEmail(String email);
-
-    // Verifica se lo username esiste nel database
     boolean existsByUsername(String username);
-
-    // Trova un utente per username
-    Utente findByUsername(String username); // Trova un utente per username
 }

@@ -1,78 +1,106 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrazione Utente</title>
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-<h2>Registrazione </h2>
-<html lang="it">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrazione</title>
-    <link rel="stylesheet" href="/css/style.css">
-  </head>
-  <body>
-  <div th:insert="fragments/header :: header"></div>
+<div class="registration-container">
+  <h2>Registrazione</h2>
+  <form action="/register" method="POST" th:object="${user}">
+    <div class="input-group">
+      <label>Tipo di utente:</label>
 
-  <div class="container">
-    <form action="/register" method="POST" th:object="${user}">
-      <!-- Nome -->
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" name="nome" th:field="*{nome}" required maxlength="20" pattern="[A-Za-zàèìòùÁÉÍÓÚàáäëïöü ]+" title="Solo lettere e spazi" />
+      <div class="radio-group">
+        <input type="radio" id="volontario" name="user_type" value="volontario" required>
+        <label for="volontario">Volontario</label>
 
-      <!-- Cognome -->
+        <input type="radio" id="bisognoso di assistenza" name="user_type" value="bisognoso di assistenza" required>
+        <label for="bisognoso di assistenza">Bisognoso di assistenza</label>
+
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" name="nome" required>
+    </div>
+
+    <div class="input-group">
       <label for="cognome">Cognome:</label>
-      <input type="text" id="cognome" name="cognome" th:field="*{cognome}" required maxlength="20" pattern="[A-Za-zàèìòùÁÉÍÓÚàáäëïöü ]+" title="Solo lettere e spazi" />
+      <input type="text" id="cognome" name="cognome" required>
+    </div>
 
-      <!-- Username -->
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" th:field="*{username}" required />
+    <div class="input-group">
+      <label>Sesso:</label>
+      <div class="radio-group">
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="male">Maschio</label>
+        <input type="radio" id="female" name="gender" value="female" required>
+        <label for="female">Femmina</label>
+      </div>
+      <div></div>
+      <br>
+      <div>
+        <label for="birthdate">Data di nascita:</label>
+        <input type="date" id="birthdate" name="birthdate" required>
+      </div>
 
-      <!-- Tipo Account -->
-      <label for="tipo_account">Tipo Account:</label>
-      <select id="tipo_account" name="userType" required>
-        <option value="Volontario">Volontario</option>
-        <option value="Assistito">Assistito</option>
-      </select>
+      <div class="address-container">
+        <div class="address-row">
+          <div class="city-province">
+            <label for="province">Provincia</label>
+            <input type="text" id="province" name="province" placeholder="Provincia" required>
+            <label for="city">Citta':</label>
+            <input type="text" id="city" name="city" placeholder="Citta'" required>
+          </div>
+        </div>
+        <div class="address-section">
+          <label for="address">Via:</label>
+          <input type="text" id="address" name="address" required>
+          <span> </span>
+          <label for="number">numero civico:</label>
+          <input type="text" id="number" name="number" required>
+        </div>
+      </div>
+      <span> </span>
+      <br>
+      <div class="input-group">
+        <label for="phone">Numero di Telefono:</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div></div>
+      <div class="input-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
 
-      <!-- Data di nascita -->
-      <label for="data_nascita">Data di nascita:</label>
-      <input type="date" id="data_nascita" name="data_nascita" th:field="*{dataNascita}" required />
+      <div class="input-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
 
-      <!-- Email -->
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" th:field="*{email}" placeholder="Inserisci la tua email" required />
+      <div class="input-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
 
-      <!-- Numero di telefono -->
-      <label for="numero_telefono">Numero di telefono:</label>
-      <input type="text" id="numero_telefono" name="numero_telefono" th:field="*{numeroTelefono}" placeholder="Inserisci il tuo numero di telefono" pattern="\d{10}" title="Numero di telefono valido (10 cifre)" required />
+      <div class="input-group">
+        <label for="confirm-password">Conferma Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
 
-      <!-- Sesso -->
-      <label for="sesso">Sesso:</label>
-      <select id="sesso" name="sesso" th:field="*{sesso}" required>
-        <option value="M">Maschile</option>
-        <option value="F">Femminile</option>
-      </select>
+      <div class="checkbox-group">
+        <input type="checkbox" id="privacy">
+        <label for="privacy">Ho letto e accetto la <a href="#">normativa sulla privacy</a></label>
+      </div>
 
-      <!-- Indirizzo -->
-      <label for="indirizzo">Indirizzo:</label>
-      <input type="text" id="indirizzo" name="indirizzo" th:field="*{indirizzo}" placeholder="Salerno, Fisciano, Via Rossi, 29" required pattern="[a-zA-ZàèìòùÁÉÍÓÚàáäëïöü0-9\s,]+" title="Formato indirizzo valido" />
 
-      <!-- Password -->
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" th:field="*{password}" required minlength="3" maxlength="15" />
-
-      <!-- Conferma Password -->
-      <label for="confirmPassword">Conferma Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required minlength="3" maxlength="15" />
-
-      <!-- Pulsante di invio -->
       <button type="submit">Registrati</button>
-    </form>
-  </div>
-  </body>
+    </div>
+  </form>
+</div>
+</body>
 </html>
-
