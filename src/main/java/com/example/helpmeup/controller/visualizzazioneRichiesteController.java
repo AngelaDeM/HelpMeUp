@@ -11,6 +11,7 @@ import java.util.List;
 
 @Controller
 @SessionAttributes("richiesta")
+//TODO: Gestire il controllo degli accessi, in modo che solo gli utenti volontari possano visualizzare le richieste
 public class visualizzazioneRichiesteController {
     private final RichiestaRepository richiestaRepository;
     public visualizzazioneRichiesteController(RichiestaRepository richiestaRepository) {
