@@ -1,0 +1,29 @@
+package com.example.helpmeup.service;
+
+import com.example.helpmeup.model.Premio;
+import com.example.helpmeup.repository.PremioRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class PremioService {
+
+    private final PremioRepository premioRepository;
+
+    public PremioService(PremioRepository premioRepository) {
+        this.premioRepository = premioRepository;
+    }
+
+    public void riscattaPremio(String premio,String utente) {
+        premioRepository.riscattaPremio(premio,utente);
+    }
+
+    public  List<Premio> getAllPremi() {
+        return premioRepository.findAll();
+    }
+
+    public List<Premio> getAllPremiByUser(String utente){
+        return premioRepository.getPremioByVolontari(utente);
+    }
+}
