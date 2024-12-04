@@ -3,6 +3,7 @@ package com.example.helpmeup.controller;
 import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.repository.RichiestaRepository;
 import com.example.helpmeup.service.RichiestaService;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class RichiestaController {
     }
 
     @PostMapping("/pubblica")
-    public ResponseEntity<String> registraRichiesta(@RequestParam Map<String, String> dati) {
+    public ResponseEntity<String> registraRichiesta(@Valid @RequestParam Map<String, String> dati) {
         try{
             String titolo = dati.get("titolo");
             String descrizione = dati.get("descrizione");
@@ -63,7 +64,7 @@ public class RichiestaController {
     }
 
     @PostMapping("/modifica")
-    public ResponseEntity<String> modificaRichiesta(@RequestBody Map<String, String> dati) {
+    public ResponseEntity<String> modificaRichiesta(@Valid @RequestBody Map<String, String> dati) {
         try {
             // Estrai i dati dal corpo della richiesta
             int id = Integer.parseInt(dati.get("id"));
@@ -109,6 +110,11 @@ public class RichiestaController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante l'eliminazione della richiesta: " + e.getMessage());
         }
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> handleValidationExceptions(ConstraintViolationException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore di validazione: " + e.getMessage());
     }
 
 }

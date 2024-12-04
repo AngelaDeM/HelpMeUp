@@ -5,10 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "richiesta")
@@ -76,7 +73,6 @@ public class Richiesta {
     }
 
     @NotNull(message = "La data di aiuto è obbligatoria.")
-    @Future(message = "La data di aiuto deve essere futura.")
     public LocalDate getDataAiuto() {
         return data_intervento;
     }
@@ -109,6 +105,17 @@ public class Richiesta {
 
     public void setEmergenza(boolean emergenza) {
         this.emergenza = emergenza;
+    }
+
+    @AssertTrue(message = "Se la data di aiuto è oggi, l'orario di aiuto deve essere successivo all'ora attuale.")
+    public boolean isValidOrarioIntervento() {
+        if (data_intervento == null || orario_intervento == null) {
+            return true; // Lascia che altri validatori @NotNull gestiscano i null
+        }
+        if (data_intervento.isEqual(LocalDate.now())) {
+            return orario_intervento.isAfter(LocalTime.now());
+        }
+        return true; // Se la data è futura, non è necessario il controllo sull'ora
     }
 
     @Override
