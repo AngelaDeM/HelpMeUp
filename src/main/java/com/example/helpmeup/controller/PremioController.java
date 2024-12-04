@@ -1,7 +1,9 @@
 package com.example.helpmeup.controller;
 
+import com.example.helpmeup.model.Premio;
 import com.example.helpmeup.repository.PremioRepository;
 import com.example.helpmeup.service.PremioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,18 +24,33 @@ public class PremioController {
     }
 
     @GetMapping("/riscatta")
-    public String mostraFormPubblicazione() {
+    public String mostraFormRiscatto() {
         return "Premio/riscatta_premio";
     }
 
     @PostMapping("/riscatta")
-    public ResponseEntity<String>   riscattaPremio(@RequestBody Map<String, String> dati) {
+    public ResponseEntity<String> riscattaPremio(@Valid @RequestParam Map<String, String> dati) {
         String id_premio = dati.get("premio");
         String utente = dati.get("utente");
-        premioService.riscattaPremio(id_premio,utente);
+       premioService.riscattaPremio(id_premio,utente);
         return ResponseEntity.ok("Premio riscattato con successo.");
     }
 
+
+    @GetMapping("/aggiungi")
+    public String mostraFormCreazione() {
+        return "Premio/aggiungi_premio";
+    }
+
+    @PostMapping("/aggiungi")
+    public ResponseEntity<String>   creaPremio(@Valid @RequestParam Map<String, String> dati) {
+        String nome = dati.get("nome");
+        String descrizione = dati.get("descrizione");
+        int punti = Integer.parseInt(dati.get("punti"));
+        Premio p = new Premio(nome,descrizione,punti);
+        premioService.InsertPremio(p);
+        return ResponseEntity.ok("Premio aggiunto con successo.");
+    }
 
 
 }

@@ -22,9 +22,7 @@ CREATE TABLE Richiesta (
                            data_intervento DATE NOT NULL,
                            orario_intervento TIME NOT NULL,
                            emergenza BOOLEAN NOT NULL,
-                           punti INT NOT NULL,
-                           account_id VARCHAR(50),
-                           FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE
+                           punti INT NOT NULL
 );
 
 -- Tabella Forum Messaggi

@@ -1,23 +1,43 @@
 package com.example.helpmeup.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Premio{
+@Table(name = "premio")  // Assicurati che il nome corrisponda alla tabella nel database
+public class Premio {
 
     @Id
-    private  String nome;
-    private  String descrizione;
-    private int puntiRichiesti;
-    @ManyToMany(mappedBy = "premi")
-    private ArrayList<Volontario> volontari;
+    @Column(name = "nome", nullable = false, unique = true)  // Definisce la chiave primaria
+    @NotBlank(message = "Il nome del premio non può essere vuoto.")
+    private String nome;
 
+    @Column(name = "descrizione", length = 500)  // Limite di lunghezza opzionale
+    @NotBlank(message = "La descrizione del premio non può essere vuota.")
+    private String descrizione;
+
+    @Column(name = "punti_richiesti", nullable = false)
+    @Positive(message = "I punti richiesti devono essere un valore positivo.")
+    private int puntiRichiesti;
+
+    @ManyToMany
+    @JoinTable(
+            name = "riscatti_premi",
+            joinColumns = @JoinColumn(name = "premio_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_id")
+    )
+    private List<Volontario> volontari = new ArrayList<>();
+
+
+    // Costruttore vuoto necessario per JPA
     public Premio() {
     }
 
-    public Premio( String nome, String descrizione, int puntiRiscossione) {
+    public Premio(String nome, String descrizione, int puntiRichiesti) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.puntiRichiesti = puntiRichiesti;
@@ -45,5 +65,13 @@ public class Premio{
 
     public void setPuntiRichiesti(int puntiRichiesti) {
         this.puntiRichiesti = puntiRichiesti;
+    }
+
+    public List<Volontario> getVolontari() {
+        return volontari;
+    }
+
+    public void setVolontari(List<Volontario> volontari) {
+        this.volontari = volontari;
     }
 }

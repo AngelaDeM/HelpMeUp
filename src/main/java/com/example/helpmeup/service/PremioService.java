@@ -23,7 +23,10 @@ public class PremioService {
         return premioRepository.findAll();
     }
 
+    public void InsertPremio(Premio premio) { premioRepository.save(premio);};
+
     public List<Premio> getAllPremiByUser(String utente){
         return premioRepository.getPremioByVolontari(utente);
     }
+
 }
