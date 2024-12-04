@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Future;
@@ -16,13 +14,14 @@ import jakarta.validation.constraints.Size;
 @Table(name = "richiesta")
 public class Richiesta {
 
-    private static int countID=1000;
+
 
     @Id
-    private final int id=countID++;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  int id;
     private String titolo;
     private String descrizione;
-    private final LocalDateTime data_creazione = LocalDateTime.now();;
+    private final LocalDate data_creazione = LocalDate.now();;
     private LocalDate data_intervento;
     private LocalTime orario_intervento;
     private final int punti;
@@ -67,7 +66,7 @@ public class Richiesta {
     }
 
     @NotNull(message = "La data di pubblicazione non può essere nulla.")
-    public LocalDateTime getDataPubblicazione() {
+    public LocalDate getDataPubblicazione() {
         return data_creazione;
     }
 
