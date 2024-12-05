@@ -1,27 +1,29 @@
 package com.example.helpmeup.service;
 
-import com.example.helpmeup.model.Utente;
-import com.example.helpmeup.repository.UtenteRepository;
+import com.example.helpmeup.model.Volontario;
+import com.example.helpmeup.repository.VolontarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UtenteService {
 
-    @Autowired
-    private UtenteRepository utenteRepository;
+    private final VolontarioRepository volontarioRepository;
 
-    @Transactional
-    public void salvaUtente(Utente utente) {
-        utenteRepository.save(utente);
+    @Autowired
+    public UtenteService(VolontarioRepository volontarioRepository) {
+        this.volontarioRepository = volontarioRepository;
+    }
+
+    public void salvaUtente(Volontario utente) {
+        volontarioRepository.save(utente);
     }
 
     public boolean verificaEmail(String email) {
-        return utenteRepository.existsByEmail(email);
+        return volontarioRepository.existsByEmail(email);
     }
 
     public boolean verificaUsername(String username) {
-        return utenteRepository.existsByUsername(username);
+        return volontarioRepository.existsByUsername(username);
     }
 }

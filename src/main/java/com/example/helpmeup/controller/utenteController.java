@@ -1,6 +1,7 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class utenteController {
         }
 
         // Se tutte le verifiche passano, salva l'utente nel database
-        utenteService.salvaUtente(utente);
+        utenteService.salvaUtente((Volontario) utente);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Utente registrato con successo!");
