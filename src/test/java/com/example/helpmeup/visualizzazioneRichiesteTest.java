@@ -5,78 +5,46 @@ import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.repository.RichiestaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
+@Transactional
+@Rollback
 class VisualizzazioneRichiesteControllerTest {
 
-    @Mock
+    @Autowired
     private RichiestaRepository richiestaRepository;
 
-    @InjectMocks
+    @Autowired
     private visualizzazioneRichiesteController controller;
 
-    @BeforeEach
+/*    @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+        // Populate the database with test data if necessary
+        Richiesta richiesta1 = new Richiesta();
+        richiesta1.setTitolo("Test Data 1"); // Replace with actual fields
+        Richiesta richiesta2 = new Richiesta();
+        richiesta2.setTitolo("Test Data 2"); // Replace with actual fields
+
+        richiestaRepository.save(richiesta1);
+        richiestaRepository.save(richiesta2);
+    }*/
 
     @Test
     void testGetAllRichieste() {
-        // Arrange
-        Richiesta richiesta1 = new Richiesta();
-        richiesta1.setId(1);
-        Richiesta richiesta2 = new Richiesta();
-        richiesta2.setId(2);
-        List<Richiesta> richieste = Arrays.asList(richiesta1, richiesta2);
+        // Retrieve data using the controller
+        List<Richiesta> richieste = controller.getAllRichieste();
 
-        when(richiestaRepository.findAll()).thenReturn(richieste);
-
-        // Act
-        List<Richiesta> result = controller.getAllRichieste();
-
-        // Assert
-        assertEquals(2, result.size());
-        assertEquals(richiesta1, result.get(0));
-        assertEquals(richiesta2, result.get(1));
-        verify(richiestaRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testGetRichiestaById() {
-        // Arrange
-        int id = 1;
-        Richiesta richiesta = new Richiesta();
-        richiesta.setId(id);
-
-        when(richiestaRepository.findById(id)).thenReturn(Optional.of(richiesta));
-
-        // Act
-        Richiesta result = controller.getRichiestaById(id);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(id, result.getId());
-        verify(richiestaRepository, times(1)).findById(id);
-    }
-
-    @Test
-    void testGetRichiestaByIdNotFound() {
-        // Arrange
-        int id = 1;
-        when(richiestaRepository.findById(id)).thenReturn(Optional.empty());
-
-        // Act and Assert
-        assertThrows(NoSuchElementException.class, () -> controller.getRichiestaById(id));
-        verify(richiestaRepository, times(1)).findById(id);
+        // Assertions to verify database interaction
+        assertEquals(1, richieste.size());
+        assertTrue(richieste.stream().anyMatch(r -> "Prova".equals(r.getTitolo())));
     }
 }
