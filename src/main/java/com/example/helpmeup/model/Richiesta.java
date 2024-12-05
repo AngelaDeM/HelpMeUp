@@ -1,10 +1,13 @@
 package com.example.helpmeup.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Richiesta {
@@ -17,7 +20,15 @@ public class Richiesta {
     private LocalDate data_intervento;
     private LocalTime orario_intervento;
     private boolean emergenza;
+    //Foreign key for Utente
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @JsonIgnore
+    private Assistito account_id;
 
+    @ManyToMany
+    @JsonIgnore
+    private List<Volontario> volontari;
 
     public Richiesta() {
     }
@@ -97,6 +108,7 @@ public class Richiesta {
                 ", data_intervento=" + data_intervento +
                 ", orario_intervento=" + orario_intervento +
                 ", emergenza=" + emergenza +
+                ", account_id=" + account_id +
                 '}';
     }
 }

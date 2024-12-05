@@ -13,7 +13,7 @@ public class Messaggio {
     private LocalDateTime data_invio;
     private int account_id;
     @ManyToOne
-    @JoinColumn(name = "forum_id")
+    @JoinColumn(name = "Messaggio.id")
     private Messaggio forum;
     private int forum_id;
 

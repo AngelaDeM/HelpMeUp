@@ -2,12 +2,14 @@ package com.example.helpmeup.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name="utente")
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_account", discriminatorType = DiscriminatorType.STRING)
 public abstract class Utente {
 
     private String nome;

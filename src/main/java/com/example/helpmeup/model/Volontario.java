@@ -3,9 +3,11 @@ package com.example.helpmeup.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@DiscriminatorValue("volontario")
 public class Volontario extends Utente{
 
     private int punti;
@@ -17,6 +19,13 @@ public class Volontario extends Utente{
     )
     private ArrayList<Premio> premi;
 
+    @ManyToMany
+    @JoinTable(
+    name = "richieste_volontari",
+    joinColumns = @JoinColumn(name = "account_id"),
+    inverseJoinColumns = @JoinColumn(name = "richiesta_id")
+    )
+    List<Richiesta> richieste;
 
     public Volontario() {
     }
