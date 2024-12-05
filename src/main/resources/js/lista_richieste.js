@@ -17,3 +17,44 @@
 }
 });
 });
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/richieste')
+            .then(response => response.json())
+            .then(data => {
+                const requestsList = document.querySelector('.requests-list');
+                requestsList.innerHTML = ''; // Svuota la lista esistente
+
+                data.forEach(request => {
+                    const requestItem = `
+                    <label for="request${request.id}" class="request-item">
+                        <div>
+                            <h3>${request.titolo}</h3>
+                            <p><strong>Data:</strong> ${request.data}</p>
+                            <p><strong>Ora:</strong> ${request.ora}</p>
+                            <p><strong>Luogo:</strong> ${request.luogo}</p>
+                            <p>${request.descrizione}</p>
+                        </div>
+                    </label>
+                    <input type="checkbox" id="request${request.id}" class="modal-trigger">
+                    <div class="modal" id="modal${request.id}">
+                        <div class="modal-content">
+                            <label for="request${request.id}" class="close-btn">×</label>
+                            <h3>${request.titolo}</h3>
+                            <p><strong>Data:</strong> ${request.data}</p>
+                            <p><strong>Ora:</strong> ${request.ora}</p>
+                            <p><strong>Luogo:</strong> ${request.luogo}</p>
+                            <p>${request.descrizione}</p>
+                            <div class="action-buttons">
+                                <button class="accept-btn">Accetta</button>
+                                <button class="reject-btn">Rifiuta</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    requestsList.insertAdjacentHTML('beforeend', requestItem);
+                });
+            })
+            .catch(error => console.error('Errore nel caricamento delle richieste:', error));
+    });
