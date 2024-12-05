@@ -1,16 +1,19 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Premio;
-import com.example.helpmeup.repository.PremioRepository;
 import com.example.helpmeup.service.PremioService;
-import com.example.helpmeup.service.UtenteService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +24,11 @@ import java.util.Map;
 public class PremioController {
 
     private final PremioService premioService;
-    private final UtenteService utenteService;
+
 
     public PremioController(PremioService premioService) {
         this.premioService = premioService;
-        utenteService = null;
+
     }
 
     @GetMapping("/riscatta")
@@ -37,11 +40,6 @@ public class PremioController {
     public ResponseEntity<?> riscattaPremio(@Valid @RequestParam Map<String, String> dati) {
         String id_premio = dati.get("premio");
         String utente = dati.get("utente");
-        if (!UtenteService.exist(utente)) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Utente non trovato");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
        premioService.riscattaPremio(id_premio,utente);
         return ResponseEntity.ok("Premio riscattato con successo.");
     }
@@ -79,15 +77,35 @@ public class PremioController {
         return "Premio/visualizza_premi_utente";
     }
 
+   
+
     @PostMapping("/visualizzaByUtente")
-    public ResponseEntity<?> visualizzaByUtente(@Valid @RequestParam Map<String, String> dati) {
+    public ResponseEntity<List<Object[]>> visualizzaPremiByUtente(@Valid @RequestBody Map<String, String> dati) {
         String utente = dati.get("utente");
-        if (!UtenteService.exist(utente)) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Utente non trovato");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        System.out.println(utente);
+        List<Object[]> premi = premioService.getAllPremiByUser(utente);
+
+        // Formatter per ottenere solo "yyyy-MM-dd HH:mm:ss"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        List<Object[]> premiFormattati = new ArrayList<>();
+
+        for (Object[] premio : premi) {
+            String nome = (String) premio[0];
+            String descrizione = (String) premio[1];
+            Timestamp dataRiscattoObj = (Timestamp) premio[2];
+
+            // Formatta la data e ora senza fuso orario
+            String dataRiscattoFormatted = dataRiscattoObj.toLocalDateTime().format(formatter);
+
+            // Crea un array di oggetti formattati
+            Object[] premioFormattato = {nome, descrizione, dataRiscattoFormatted};
+
+            premiFormattati.add(premioFormattato);
         }
-        List<Premio> premi = premioService.getAllPremiByUser(utente);
-        return ResponseEntity.ok(premi);
+
+        return ResponseEntity.ok(premiFormattati);
     }
+
+
 }

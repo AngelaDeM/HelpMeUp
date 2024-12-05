@@ -33,65 +33,54 @@
 <script>
     // Gestisce il submit del form
     document.getElementById("utente-form").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Previene il refresh della pagina
+        event.preventDefault();
 
-        const utente = document.getElementById("utente").value.trim(); // Ottiene l'utente dal form
+        const utente = document.getElementById("utente").value.trim();
         if (!utente) {
             alert("Inserisci un nome utente valido!");
             return;
         }
 
-        caricaPremi(utente); // Chiama la funzione per caricare i premi
+        await caricaPremi(utente);
     });
 
-    // Funzione per caricare tutti i premi di un utente
     async function caricaPremi(utente) {
         const tableBody = document.querySelector("#premi-table tbody");
         const errorDiv = document.getElementById("error");
 
         try {
-            // Effettua una richiesta POST all'API con il corpo contenente l'utente
             const response = await fetch("/api/premio/visualizzaByUtente", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ utente }) // Passa l'utente nel corpo della richiesta
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ utente }) // Utente come chiave unica
             });
 
             if (response.status === 404) {
                 throw new Error("Nessun premio trovato per l'utente specificato.");
             }
             if (!response.ok) {
-                throw new Error("Si è verificato un errore durante il recupero dei premi.");
+                throw new Error("Errore durante il recupero dei premi.");
             }
 
-            // Converte la risposta in JSON
             const premi = await response.json();
-
-            // Pulisce la tabella prima di riempirla
             tableBody.innerHTML = "";
 
-            // Popola la tabella con i premi
             premi.forEach(premio => {
                 const row = document.createElement("tr");
-
                 row.innerHTML = `
-                    <td>${premio.premi_id}</td>
-                    <td>${premio.data_riscatto}</td>
-                `;
-
+                <td>${premio[0]}</td>
+                <td>${premio[2]}</td>
+            `;
                 tableBody.appendChild(row);
             });
 
-            // Nasconde eventuali errori
             errorDiv.style.display = "none";
         } catch (error) {
-            // Mostra un messaggio di errore
             errorDiv.textContent = error.message;
             errorDiv.style.display = "block";
         }
     }
+
 </script>
 </body>
 </html>

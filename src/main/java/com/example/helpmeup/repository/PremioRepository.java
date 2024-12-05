@@ -20,7 +20,10 @@ public interface PremioRepository extends JpaRepository<Premio, Integer> {
     void riscattaPremio(@Param("premio_id") String premio_id, @Param("account_id") String account_id);
 
     @Modifying
-    @Query(value = "SELECT p FROM riscatti_premi p WHERE p.account_id =:account_id", nativeQuery = true)
-    List<Premio> getPremioByVolontari(@Param("account_id") String account_id);
+    @Query(value = "SELECT p.nome, p.descrizione, rp.data_riscatto " +
+            "FROM Premio p " +
+            "JOIN riscatti_premi rp ON p.nome = rp.premio_id " +
+            "WHERE rp.account_id = :username", nativeQuery = true)
+    List<Object[]> getPremioByVolontari(@Param("username") String username);
 
 }
