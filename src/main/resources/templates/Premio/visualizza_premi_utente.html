@@ -22,8 +22,7 @@
     <thead>
     <tr>
         <th>Nome</th>
-        <th>Descrizione</th>
-        <th>Punti</th>
+        <th>Data</th>
     </tr>
     </thead>
     <tbody>
@@ -78,9 +77,8 @@
                 const row = document.createElement("tr");
 
                 row.innerHTML = `
-                    <td>${premio.nome}</td>
-                    <td>${premio.descrizione}</td>
-                    <td>${premio.puntiRichiesti}</td>
+                    <td>${premio.premi_id}</td>
+                    <td>${premio.data_riscatto}</td>
                 `;
 
                 tableBody.appendChild(row);

@@ -3,6 +3,7 @@ package com.example.helpmeup.controller;
 import com.example.helpmeup.model.Premio;
 import com.example.helpmeup.repository.PremioRepository;
 import com.example.helpmeup.service.PremioService;
+import com.example.helpmeup.service.UtenteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +21,11 @@ import java.util.Map;
 public class PremioController {
 
     private final PremioService premioService;
+    private final UtenteService utenteService;
 
     public PremioController(PremioService premioService) {
         this.premioService = premioService;
+        utenteService = null;
     }
 
     @GetMapping("/riscatta")
@@ -30,9 +34,14 @@ public class PremioController {
     }
 
     @PostMapping("/riscatta")
-    public ResponseEntity<String> riscattaPremio(@Valid @RequestParam Map<String, String> dati) {
+    public ResponseEntity<?> riscattaPremio(@Valid @RequestParam Map<String, String> dati) {
         String id_premio = dati.get("premio");
         String utente = dati.get("utente");
+        if (!UtenteService.exist(utente)) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Utente non trovato");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
        premioService.riscattaPremio(id_premio,utente);
         return ResponseEntity.ok("Premio riscattato con successo.");
     }
@@ -71,8 +80,13 @@ public class PremioController {
     }
 
     @PostMapping("/visualizzaByUtente")
-    public ResponseEntity<List<Premio>> visualizzaByUtente(@Valid @RequestParam Map<String, String> dati) {
+    public ResponseEntity<?> visualizzaByUtente(@Valid @RequestParam Map<String, String> dati) {
         String utente = dati.get("utente");
+        if (!UtenteService.exist(utente)) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Utente non trovato");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
         List<Premio> premi = premioService.getAllPremiByUser(utente);
         return ResponseEntity.ok(premi);
     }
