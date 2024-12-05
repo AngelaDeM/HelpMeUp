@@ -20,7 +20,7 @@
 
 
     document.addEventListener('DOMContentLoaded', () => {
-        fetch('/api/richieste')
+        fetch('/findAllRichieste')
             .then(response => response.json())
             .then(data => {
                 const requestsList = document.querySelector('.requests-list');
@@ -31,9 +31,9 @@
                     <label for="request${request.id}" class="request-item">
                         <div>
                             <h3>${request.titolo}</h3>
-                            <p><strong>Data:</strong> ${request.data}</p>
-                            <p><strong>Ora:</strong> ${request.ora}</p>
-                            <p><strong>Luogo:</strong> ${request.luogo}</p>
+                            <p><strong>Data:</strong> ${request.data_intervento}</p>
+                            <p><strong>Ora:</strong> ${request.orario_intervento}</p>
+                            <p><strong>Luogo:</strong> ${request.utente.indirizzo}</p>
                             <p>${request.descrizione}</p>
                         </div>
                     </label>
@@ -42,9 +42,9 @@
                         <div class="modal-content">
                             <label for="request${request.id}" class="close-btn">×</label>
                             <h3>${request.titolo}</h3>
-                            <p><strong>Data:</strong> ${request.data}</p>
-                            <p><strong>Ora:</strong> ${request.ora}</p>
-                            <p><strong>Luogo:</strong> ${request.luogo}</p>
+                            <p><strong>Data:</strong> ${request.data_intervento}</p>
+                            <p><strong>Ora:</strong> ${request.orario_intervento}</p>
+                            <p><strong>Luogo:</strong> ${request.utente.indirizzo}</p>
                             <p>${request.descrizione}</p>
                             <div class="action-buttons">
                                 <button class="accept-btn">Accetta</button>

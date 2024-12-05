@@ -17,11 +17,11 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
     List<Richiesta> findAll();
 
     @Modifying
-    @Query(value = "SELECT r FROM richiesta_utenti r WHERE r.account_id= :username", nativeQuery = true)
+    @Query(value = "SELECT r FROM richiesta r WHERE r.account_id= :username", nativeQuery = true)
     List<Richiesta> findAllByUsername(String username);
 
     @Modifying
-    @Query(value = "INSERT INTO richiesta_utenti (account_id, richiesta) VALUES (:idVolontario, :idRichiesta)", nativeQuery = true)
+    @Query(value = "INSERT INTO richiesta (account_id, richiesta) VALUES (:idVolontario, :idRichiesta)", nativeQuery = true)
     int accettaRichiesta(@Param("idRichiesta") int idRichiesta, @Param("idVolontario") String idVolontario);
 
 }
