@@ -23,6 +23,7 @@
 
 <script>
     // Funzione per caricare tutti i premi
+    // Funzione per caricare tutti i premi
     async function caricaPremi() {
         const tableBody = document.querySelector("#premi-table tbody");
         const errorDiv = document.getElementById("error");
@@ -37,23 +38,31 @@
 
             // Converte la risposta in JSON
             const premi = await response.json();
+            console.log(premi);  // Mostra i premi ricevuti
 
             // Pulisce la tabella prima di riempirla
             tableBody.innerHTML = "";
 
-            // Popola la tabella con i premi
-            premi.forEach(premio => {
-                const row = document.createElement("tr");
+            // Controlla se ci sono premi nella risposta
+            if (premi && premi.length > 0) {
+                // Popola la tabella con i premi
+                premi.forEach(premio => {
+                    const row = document.createElement("tr");
 
-                row.innerHTML = `
-                        <td>${premio.nome}</td>
-                        <td>${premio.descrizione}</td>
-                        <td>${premio.puntiRichiesti}</td>
+                    row.innerHTML = `
+                    <td>${premio.nome}</td>
+                    <td>${premio.descrizione}</td>
+                    <td>${premio.puntiRichiesti}</td>
+                `;
 
-                    `;
-
-                tableBody.appendChild(row);
-            });
+                    tableBody.appendChild(row);
+                });
+            } else {
+                // Mostra un messaggio se non ci sono premi
+                const noPremiRow = document.createElement("tr");
+                noPremiRow.innerHTML = `<td colspan="3">Nessun premio disponibile.</td>`;
+                tableBody.appendChild(noPremiRow);
+            }
 
             // Nasconde eventuali errori
             errorDiv.style.display = "none";
@@ -66,6 +75,7 @@
 
     // Carica i premi al caricamento della pagina
     document.addEventListener("DOMContentLoaded", caricaPremi);
+
 </script>
 </body>
 </html>

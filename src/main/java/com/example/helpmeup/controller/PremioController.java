@@ -61,10 +61,11 @@ public class PremioController {
     @GetMapping("/visualizza")
     public ResponseEntity<List<Premio>> visualizzaTuttiIPremi() {
         List<Premio> premi = premioService.getAllPremi();
+        System.out.println(premi);  // Log per vedere cosa restituisce l'API
         return ResponseEntity.ok(premi);
     }
 
-    @GetMapping("/getAllByUser")
+    @GetMapping("/visualizzaByUtente")
     public String mostraPremiByUser() {
         return "Premio/visualizza_premi_utente";
     }

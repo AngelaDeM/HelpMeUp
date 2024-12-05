@@ -1,5 +1,6 @@
 package com.example.helpmeup.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -30,6 +31,7 @@ public class Premio {
             joinColumns = @JoinColumn(name = "premio_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id")
     )
+    @JsonIgnore
     private List<Volontario> volontari = new ArrayList<>();
 
 
@@ -73,5 +75,15 @@ public class Premio {
 
     public void setVolontari(List<Volontario> volontari) {
         this.volontari = volontari;
+    }
+
+    @Override
+    public String toString() {
+        return "Premio{" +
+                "nome='" + nome + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", puntiRichiesti=" + puntiRichiesti +
+
+                '}';
     }
 }

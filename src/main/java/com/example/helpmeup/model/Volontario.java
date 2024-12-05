@@ -1,5 +1,6 @@
 package com.example.helpmeup.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public class Volontario extends Utente{
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "premio_id")
     )
-
+    @JsonIgnore
     private ArrayList<Premio> premi = new ArrayList<>();
 
 
