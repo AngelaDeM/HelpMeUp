@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funzionalità di HelpMeUp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/learn_more.css">
+</head>
+
+<body>
+<div id="navbar"></div>
+<main>
+    <section id="hero">
+        <h1>Benvenuti su HelpMeUp</h1>
+        <p class="text">Modernizziamo il volontariato attraverso la tecnologia.</p>
+        <button onclick="scrollToSection('features')">Scopri le funzionalità</button>
+    </section>
+
+    <section class="about">
+        <p>
+            HelpMeUp è una piattaforma digitale che nasce con l'obiettivo di rivoluzionare il mondo del volontariato, semplificando il processo di connessione tra chi desidera offrire aiuto e chi si trova in difficoltà. Attraverso un sistema innovativo, HelpMeUp rende possibile creare una rete di supporto locale basata sulla vicinanza geografica e sulla disponibilità immediata.
+            L’obiettivo di HelpMeUp è creare una comunità solidale e tecnologicamente avanzata, in cui il volontariato diventa più accessibile, moderno e organizzato. La piattaforma vuole favorire l’interazione tra persone, promuovendo un senso di responsabilità collettiva e offrendo un supporto concreto a chi ne ha bisogno. HelpMeUp mira a fare la differenza nel quotidiano di molte persone, con un impatto positivo e duraturo.
+        </p>
+    </section>
+
+    <section id="features">
+        <h2>Funzionalità principali</h2>
+        <div class="features-container">
+            <div class="feature-card">
+                <h3>1. Connessione Locale</h3>
+                <p>Ricevi notifiche personalizzate e connettiti con persone in difficoltà vicino a te.
+                    La localizzazione delle richieste di aiuto permette alle persone in difficoltà di pubblicare
+                    le loro necessità direttamente sulla piattaforma. Grazie alla geolocalizzazione,
+                    i volontari possono facilmente visualizzare le richieste più vicine alla loro posizione,
+                    ottimizzando così il loro impegno.</p>
+            </div>
+            <div class="feature-card">
+                <h3>2. Sistema di Notifiche Intelligenti</h3>
+                <p>Notifiche inviate solo a volontari nelle vicinanze per interventi rapidi ed efficienti.
+                    Quando una nuova richiesta viene pubblicata nelle vicinanze di un volontario,
+                    quest’ultimo riceve una notifica in tempo reale, permettendogli di decidere immediatamente se rispondere.</p>
+            </div>
+            <div class="feature-card">
+                <h3>3. Forum di Supporto</h3>
+                <p>Comunica e scambia esperienze con altri volontari attraverso il nostro forum dedicato.
+                    HelpMeUp offre un forum dedicato dove i volontari e le persone in difficoltà possono
+                    scambiarsi opinioni, consigli e organizzare iniziative. È un luogo dove si possono discutere
+                    eventi di volontariato, iniziative locali e idee per campagne di sensibilizzazione. </p>
+            </div>
+
+        </div>
+    </section>
+
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+    $(function() {
+        $("#navbar").load("navbar.html");
+    });
+</script>
+
+
+
+</body>
+</html>

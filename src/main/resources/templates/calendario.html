@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/calendario.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="info">
+        <h1>Calendario</h1>
+        <p>Qui puoi inserire tutti i tuoi impegni.</p>
+    </div>
+    <div class="calendar" id="calendar-app">
+        <div class="calendar--day-view" id="day-view">
+            <span class="day-view-exit" id="day-view-exit">&times;</span>
+            <span class="day-view-date" id="day-view-date">2 Dicembre 2024</span>
+            <div class="day-view-content">
+                <div class="day-highlight">
+                    <span class="day-events" id="day-events"> </span>. &nbsp; <span tabindex="0" onkeyup="if(event.keyCode != 13) return; this.click();" class="day-events-link" id="add-event" data-date>Vuoi aggiungere un nuovo evento?</span>
+                </div>
+                <div class="day-add-event" id="add-day-event-box" data-active="false">
+                    <div class="row">
+                        <div class="half">
+                            <label class="add-event-label">
+                                Nome dell'evento
+                                <input type="text" class="add-event-edit add-event-edit--long" placeholder="New event" id="input-add-event-name">
+
+                            </label>
+                        </div>
+                        <div class="qtr">
+                            <label class="add-event-label">
+                                Start Time
+                                <input type="text" class="add-event-edit" placeholder="8:15" id="input-add-event-start-time" data-options="1,2,3,4,5,6,7,8,9,10,11,12" data-format="datetime">
+                                <input type="text" class="add-event-edit" placeholder="am" id="input-add-event-start-ampm" data-options="a,p,am,pm">
+                            </label>
+                        </div>
+                        <div class="qtr">
+                            <label class="add-event-label">
+                                End Time
+                                <input type="text" class="add-event-edit" placeholder="9" id="input-add-event-end-time" data-options="1,2,3,4,5,6,7,8,9,10,11,12" data-format="datetime">
+                                <input type="text" class="add-event-edit" placeholder="am" id="input-add-event-end-ampm" data-options="a,p,am,pm">
+                            </label>
+                        </div>
+                        <div class="half">
+                            <a onkeyup="if(event.keyCode != 13) return; this.click();" tabindex="0" id="add-event-save" class="event-btn--save event-btn">save</a>
+                            <a tabindex="0" id="add-event-cancel" class="event-btn--cancel event-btn">cancel</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="day-events-list" class="day-events-list">
+
+                </div>
+                <div class="day-inspiration-quote" id="inspirational-quote">
+                    Every child is an artist.  The problem is how to remain an artist once he grows up. –Pablo Picasso
+                </div>
+            </div>
+        </div>
+        <div class="calendar--view" id="calendar-view">
+            <div class="cview__month">
+                <span class="cview__month-last" id="calendar-month-last">Aprile</span>
+                <span class="cview__month-current" id="calendar-month">Maggio</span>
+                <span class="cview__month-next" id="calendar-month-next">Giugno</span>
+            </div>
+            <div class="cview__header">Dom</div>
+            <div class="cview__header">Lun</div>
+            <div class="cview__header">Mar</div>
+            <div class="cview__header">Mer</div>
+            <div class="cview__header">Gio</div>
+            <div class="cview__header">Ven</div>
+            <div class="cview__header">Sab</div>
+
+            <div class="calendar--view" id="dates">
+            </div>
+        </div>
+        <div class="footer">
+            <span><span id="footer-date" class="footer__link">Oggi è il 30</span></span>
+        </div>
+    </div>
+</div>
+<script src="../js/calendario.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

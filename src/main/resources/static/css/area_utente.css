@@ -1,0 +1,148 @@
+
+    /* Layout base */
+body{
+    font-family: 'Roboto', sans-serif;
+
+    justify-content: center;
+    align-items: center;
+}
+.total{
+    margin-top:60px;
+}
+/* Barra laterale */
+.sidebar {
+    width: 250px;
+    background-color: #e05252;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding-top: 90px;
+
+}
+
+.sidebar .user-heading {
+    background: #fbe5d5;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.sidebar .user-heading a img {
+    width: 100px;
+    height: 90px;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.3);
+}
+
+.sidebar .user-heading h1 {
+    font-size: 22px;
+    font-weight: 300;
+    margin: 10px 0;
+    color:black;;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+    line-height: 30px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    border-left: 5px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #fbe5d5;
+    color: #333;
+    border-left: 5px solid #e6b490;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+}
+
+/* Menu a destra */
+.content {
+    margin-left: 250px;
+
+
+}
+
+.content h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+/* Hamburger Icon */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #000000;
+    margin-left: 20px;
+}
+
+
+
+
+
+    /* Styling aggiuntivo per il layout */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+        position: fixed;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: #e05252;
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(-100%);
+        z-index: 1000;
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Mostra la sidebar */
+    }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .hamburger {
+
+        display: block;
+        cursor: pointer;
+        font-size: 30px;
+        color: #000000;
+        margin-left: 8px;
+        position: fixed;
+        top: 15px;
+        left: 80px;
+        z-index: 2000;
+    }
+
+}
+

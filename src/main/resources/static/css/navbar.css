@@ -1,0 +1,286 @@
+ *,
+ *::before,
+ *::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.body{
+    font-family: 'Roboto', sans-serif;
+
+}
+
+/* Nascondi l'input checkbox e le linee dell'hamburger */
+.navbar input[type="checkbox"],
+.navbar .hamburger-lines{
+    display: none;
+}
+
+/* Navbar fissa in alto con ombra e sfondo */
+.navbar{
+    box-shadow: 0px 5px 10px 0px #aaa;
+    width: 100%;
+    background: #de6061;
+    color: #ffffff;
+    z-index: 100;
+    position: relative;
+}
+/* Contenitore della navbar con spazio tra logo e menu */
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    align-items: center;
+    width: 100%;
+}
+
+.menu-items{
+    order: 2;
+    display: flex;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Impostazioni per ogni voce del menu */
+.menu-items li{
+    list-style: none;
+    margin-left: 1.5rem;
+    font-size: 1.3rem;
+}
+
+#b1,#b2,#b3{
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+    margin-left: 20px;
+}
+
+#b1:hover,#b2:hover,#b3:hover{
+    color: #000000;
+}
+
+/* Impostazioni per il logo */
+.logo{
+    font-size: 2.3rem;
+    order: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.logo-img {
+    width: 85px;
+    height: auto;
+    margin-right: 15px;
+    margin-left: 30px;
+}
+
+.logo h1 {
+    font-size: 2.3rem;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Icona dell'utente */
+.user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    order: 3;
+}
+
+#icon-img1 {
+    font-size: 32px;
+    color: #fbe5d5;
+    cursor: pointer;
+    margin-right: 40px;
+
+}
+
+/* Menu a discesa per l'utente */
+.dropdown-menu {
+    display: none; /* Nasconde il dropdown inizialmente */
+    position: absolute;
+    list-style: none;
+    top: 50px; /* Posiziona sotto l'icona */
+    right: 0;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 3px 5px 2px #ebebeb;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dropdown-menu li {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.dropdown-menu li a {
+    color: #000000;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.dropdown-menu li:hover {
+    background: #f6c6ac;
+}
+
+.dropdown-menu li:hover a {
+    color: #F9F8FD;
+}
+
+.user-icon:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Media query per schermi piccoli (max-width: 768px) */
+@media (max-width: 768px){
+
+
+    .navbar-container input[type="checkbox"],
+    .navbar-container .hamburger-lines{
+        display: block;
+    }
+
+    .navbar-container{
+        display: block;
+        position: relative;
+        height: 64px;
+    }
+
+    .navbar-container input[type="checkbox"]{
+        position: absolute;
+        display: block;
+        height: 32px;
+        width: 30px;
+        top: 20px;
+        left: 20px;
+        z-index: 5;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .navbar-container .hamburger-lines{
+        display: block;
+        height: 28px;
+        width: 35px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .navbar-container .hamburger-lines .line{
+        display: block;
+        height: 4px;
+        width: 100%;
+        border-radius: 10px;
+        background: #333;
+    }
+
+    .navbar-container .hamburger-lines .line1{
+        transform-origin: 0% 0%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar-container .hamburger-lines .line2{
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .navbar-container .hamburger-lines .line3{
+        transform-origin: 0% 100%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Menu laterale per schermi piccoli */
+    .navbar .menu-items{
+        padding-top: 100px;
+        background: #de6061;
+        height: 100vh;
+        max-width: 300px;
+        transform: translate(-150%);
+        display: flex;
+        flex-direction: column;
+        margin-left: -40px;
+        padding-left: 40px;
+        transition: transform 0.5s ease-in-out;
+        box-shadow:  5px 0px 10px 0px #aaa;
+        overflow: scroll;
+    }
+
+    .navbar .menu-items li{
+        margin-bottom: 1.8rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    /* Animazioni per l'apertura del menu mobile */
+    .navbar-container input[type="checkbox"]:checked ~ .menu-items{
+        transform: translateX(0);
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line1{
+        transform: rotate(45deg);
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line2{
+        transform: scaleY(0);
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line3{
+        transform: rotate(-45deg);
+    }
+
+    .user-icon {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    #c,#c1{
+        color: #000000;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease-in-out;
+
+    }
+    #c:hover,#c1:hover {
+        color: #ffffff;
+        transition: color 0.3s ease-in-out;
+    }
+    .logo {
+        display: none;
+
+    }
+
+
+    .logo-img {
+        display: none;
+    }
+
+
+    }
+
+
+/* Stile responsive per dispositivi più piccoli (max-width: 500px)*/
+@media (max-width: 500px){
+    .navbar-container input[type="checkbox"]:checked ~ .logo{
+        display: none;
+    }
+}
