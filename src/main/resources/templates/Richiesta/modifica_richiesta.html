@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>modifica richiesta</h1>
-<form action="/modifica" method="POST">
+<form th:action="@{/api/richieste/modifica}" method="POST">
 
     <label for="richiesta">Titolo:</label>
     <input type="text" id="richiesta" name="richiesta" required><br><br>

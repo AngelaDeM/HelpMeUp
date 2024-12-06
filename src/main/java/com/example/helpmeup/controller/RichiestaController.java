@@ -96,6 +96,11 @@ public class RichiestaController {
         }
     }
 
+    @GetMapping("/elimina")
+    public String mostraFormEliminazione() {
+        return "Richiesta/elimina_richiesta";
+    }
+
     @PostMapping("/elimina")
     public ResponseEntity<String> deleteRichiesta(@RequestBody Map<String, String> dati) {
         try {
