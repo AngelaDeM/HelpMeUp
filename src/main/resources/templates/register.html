@@ -7,7 +7,7 @@
 <body>
 <div class="registration-container">
   <h2>Registrazione</h2>
-  <form action="/register" method="POST" th:object="${user}">
+  <form th:action="@{/register}" method="POST" th:object="${user}">
     <div class="input-group">
       <label>Tipo di utente:</label>
       <div class="radio-group">
@@ -89,7 +89,7 @@
       <input type="checkbox" id="privacy" required>
       <label for="privacy">Ho letto e accetto la <a href="#">normativa sulla privacy</a></label>
     </div>
-
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <button type="submit">Registrati</button>
   </form>
 </div>

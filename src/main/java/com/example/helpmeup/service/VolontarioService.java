@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UtenteService {
+public class VolontarioService {
 
     private final VolontarioRepository volontarioRepository;
 
     @Autowired
-    public UtenteService(VolontarioRepository volontarioRepository) {
+    public VolontarioService(VolontarioRepository volontarioRepository) {
         this.volontarioRepository = volontarioRepository;
     }
 
@@ -26,4 +26,6 @@ public class UtenteService {
     public boolean verificaUsername(String username) {
         return volontarioRepository.existsByUsername(username);
     }
+
+
 }

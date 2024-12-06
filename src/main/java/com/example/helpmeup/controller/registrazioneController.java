@@ -1,7 +1,10 @@
 package com.example.helpmeup.controller;
 
+import com.example.helpmeup.model.Assistito;
 import com.example.helpmeup.model.Volontario;
-import com.example.helpmeup.service.UtenteService;
+import com.example.helpmeup.repository.AssistitoRepository;
+import com.example.helpmeup.service.AssistitoService;
+import com.example.helpmeup.service.VolontarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,18 +12,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Controller
 public class registrazioneController {
 
-    private final UtenteService utenteService;
+    private final VolontarioService volontarioService;
+    private final AssistitoService assistitoService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public registrazioneController(UtenteService utenteService, PasswordEncoder passwordEncoder) {
-        this.utenteService = utenteService;
+    public registrazioneController(VolontarioService volontarioService, AssistitoService assistitoService, PasswordEncoder passwordEncoder, AssistitoRepository assistitoRepository) {
+        this.volontarioService = volontarioService;
+        this.assistitoService = assistitoService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -51,6 +57,7 @@ public class registrazioneController {
         utente.setUsername(utente.getUsername());
         utente.setEmail(utente.getEmail());
         utente.setPassword(utente.getPassword());
+        utente.setTipo_account(userType);
 
         // Validazione del nome
         if (!utente.getNome().matches("^[a-zA-Z]{1,50}$")) {
@@ -88,8 +95,8 @@ public class registrazioneController {
         }
 
         // Validazione della password
-        if (!utente.getPassword().matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{5,}$")) {
-            model.addAttribute("error", "Errore: la password deve contenere almeno 5 caratteri, includere lettere, numeri e simboli!");
+        if (utente.getPassword().length() < 5) {
+            model.addAttribute("error", "Errore: la password deve contenere almeno 5 caratteri!");
             model.addAttribute("user", utente);
             return "register";
         }
@@ -109,7 +116,7 @@ public class registrazioneController {
         }
 
         // Controlla il formato dell'indirizzo
-        String indirizzoPattern = "^[a-zA-Z]+, [a-zA-Z]+, [a-zA-Z0-9\\s]+, \\d+[A-Za-z0-9]*$";
+        String indirizzoPattern = "^[a-zA-Z\\s]+, [a-zA-Z\\s]+, [a-zA-Z\\s]+, \\d+[0-9]*$";
         Pattern pattern = Pattern.compile(indirizzoPattern);
         Matcher matcher = pattern.matcher(indirizzo);
 
@@ -122,10 +129,37 @@ public class registrazioneController {
         // Imposta la password codificata
         utente.setPassword(passwordEncoder.encode(utente.getPassword()));
 
-        // Salva l'utente nel database
-        utenteService.salvaUtente(utente);
+            // Check if email or username already exists
+            if (volontarioService.verificaEmail(utente.getEmail()) || assistitoService.verificaEmail(utente.getEmail())) {
+                model.addAttribute("error", "Errore: l'email è già in uso!");
+                model.addAttribute("user", utente);
+                return "register";
+            }
+
+            if (volontarioService.verificaUsername(utente.getUsername()) || assistitoService.verificaUsername(utente.getUsername())) {
+                model.addAttribute("error", "Errore: lo username è già in uso!");
+                model.addAttribute("user", utente);
+                return "register";
+            }
+
+        // Create the appropriate user type
+        if ("volontario".equalsIgnoreCase(userType)) {
+            Volontario volontario = new Volontario(utente, 0, new ArrayList<>());
+            volontarioService.salvaUtente(volontario);
+        } else if ("assistito".equalsIgnoreCase(userType)) {
+            Assistito assistito = new Assistito(utente);
+            assistitoService.salvaAssistito(assistito);
+        } else {
+            model.addAttribute("error", "Errore: tipo di utente non valido!");
+            model.addAttribute("user", utente);
+            return "register";
+        }
 
         // Reindirizza alla pagina di successo
-        return "redirect:/success";  // Reindirizza a /success dopo il salvataggio
+        return "redirect:/success"; // Reindirizza a /success dopo il salvataggio
+    }
+    @GetMapping("/success")
+    public String showSuccessPage() {
+        return "success"; // Reindirizza a /success dopo il salvataggio
     }
 }

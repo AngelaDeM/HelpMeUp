@@ -15,6 +15,7 @@ public abstract class Utente {
     //primary key
     @Id
     private String username;
+    private String tipo_account;
     private String sesso; // "Maschio" o "Femmina" come String
     private String password;
     private LocalDate dataNascita;
@@ -23,7 +24,7 @@ public abstract class Utente {
     private String numeroTelefono;
 
 
-    public Utente(String nome, String cognome, String username,  String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono) {
+    public Utente(String nome, String cognome, String username,  String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono, String tipo_account) {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
@@ -33,11 +34,16 @@ public abstract class Utente {
         this.email = email;
         this.indirizzo = indirizzo;
         this.numeroTelefono = numeroTelefono;
+        this.tipo_account = tipo_account;
     }
 
     public Utente() {
 
     }
+
+    public String getTipo_account() { return tipo_account;}
+
+    public void setTipo_account(String tipo_account) { this.tipo_account = tipo_account;}
 
     public String getEmail() {
         return email;
@@ -123,6 +129,7 @@ public abstract class Utente {
                 ", sesso='" + sesso + '\'' +
                 ", indirizzo='" + indirizzo + '\'' +
                 ", numeroTelefono='" + numeroTelefono + '\'' +
+                ", tipoAccount='" + tipo_account +
                 '}';
     }
 }
