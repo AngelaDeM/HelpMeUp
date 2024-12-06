@@ -1,8 +1,12 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Premio;
+import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.service.PremioService;
+import com.example.helpmeup.service.UtenteService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -24,11 +28,12 @@ import java.util.Map;
 public class PremioController {
 
     private final PremioService premioService;
+    private final UtenteService utenteService;
 
-
-    public PremioController(PremioService premioService) {
+    public PremioController(PremioService premioService, UtenteService utenteService) {
         this.premioService = premioService;
 
+        this.utenteService = utenteService;
     }
 
     @GetMapping("/riscatta")
@@ -38,10 +43,31 @@ public class PremioController {
 
     @PostMapping("/riscatta")
     public ResponseEntity<?> riscattaPremio(@Valid @RequestParam Map<String, String> dati) {
-        String id_premio = dati.get("premio");
-        String utente = dati.get("utente");
-       premioService.riscattaPremio(id_premio,utente);
-        return ResponseEntity.ok("Premio riscattato con successo.");
+        try{
+            String id_premio = dati.get("premio");
+            String utente = dati.get("utente");
+            Volontario v =  utenteService.getVolontarioByUsername(utente);
+            Premio p = premioService.getPremioByNome(id_premio);
+            int pt= v.getPunti();
+
+            int pr=p.getPuntiRichiesti();
+
+            if(pt>=pr){
+                premioService.riscattaPremio(id_premio,utente);
+                v.removePunti(pr);
+                pt=pt-pr;
+                utenteService.updatePuntiVolontario(v.getUsername(),pt);
+                return ResponseEntity.ok("Premio riscattato con successo.");
+            }else{
+                String messaggio = "Non hai abbastanza punti per riscattare questo premio. "
+                        + "Punti richiesti: " + p.getPuntiRichiesti() + ", punti disponibili: " + v.getPunti();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(messaggio);
+            }
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante il riscatto del premio: " + e.getMessage());
+        }
+
     }
 
 

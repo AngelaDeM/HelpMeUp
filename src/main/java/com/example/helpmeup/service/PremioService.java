@@ -26,7 +26,11 @@ public class PremioService {
     public void InsertPremio(Premio premio) { premioRepository.save(premio);};
 
     public List<Object[]> getAllPremiByUser(String utente){
-        return premioRepository.getPremioByVolontari(utente);
+        return premioRepository.getByVolontario(utente);
+    }
+
+    public Premio getPremioByNome(String id) {
+        return premioRepository.getByNome(id);
     }
 
 }

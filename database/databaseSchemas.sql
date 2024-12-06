@@ -3,7 +3,7 @@ CREATE TABLE Utente (
                         nome VARCHAR(50) NOT NULL,
                         cognome VARCHAR(50) NOT NULL,
                         username VARCHAR(50) PRIMARY KEY,
-                        tipo_account ENUM('volontario', 'assistito') NOT NULL,
+                        tipo_account ENUM('Volontario', 'Assistito') NOT NULL,
                         password VARCHAR(255) NOT NULL,
                         data_nascita DATE NOT NULL,
                         sesso ENUM('M', 'F') NOT NULL,
@@ -70,7 +70,7 @@ CREATE TRIGGER before_insert_richiesta_utenti
     FOR EACH ROW
 BEGIN
     -- Recupera il tipo_account dell'utente dalla tabella Utente
-    DECLARE user_type ENUM('volontario', 'assistito');
+    DECLARE user_type ENUM('Volontario', 'Assistito');
 
     -- Ottieni il tipo_account dell'utente
     SELECT tipo_account INTO user_type
