@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue("volontario")
 public class Volontario extends Utente{
 
     private int punti;
@@ -23,13 +24,13 @@ public class Volontario extends Utente{
     public Volontario() {
     }
 
-    public Volontario(String nome, String cognome, String username, String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono, int punti, List<Premio> premi, String tipo_account) {
-        super(nome, cognome, username, sesso, password, dataNascita, email, indirizzo, numeroTelefono, tipo_account);
+    public Volontario(String nome, String cognome, String username, String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono, int punti, List<Premio> premi) {
+        super(nome, cognome, username, sesso, password, dataNascita, email, indirizzo, numeroTelefono);
         this.punti = punti;
         this.premi = premi;
     }
     public Volontario(Utente utente, int punti, ArrayList<Premio> premi) {
-        super(utente.getNome(), utente.getCognome(), utente.getUsername(), utente.getSesso(), utente.getPassword(), utente.getDataNascita(), utente.getEmail(), utente.getIndirizzo(), utente.getNumeroTelefono(), utente.getTipo_account());
+        super(utente.getNome(), utente.getCognome(), utente.getUsername(), utente.getSesso(), utente.getPassword(), utente.getDataNascita(), utente.getEmail(), utente.getIndirizzo(), utente.getNumeroTelefono());
         this.punti = punti;
         this.premi = premi;
     }

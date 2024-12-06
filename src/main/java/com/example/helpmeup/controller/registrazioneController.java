@@ -57,7 +57,6 @@ public class registrazioneController {
         utente.setUsername(utente.getUsername());
         utente.setEmail(utente.getEmail());
         utente.setPassword(utente.getPassword());
-        utente.setTipo_account(userType);
 
         // Validazione del nome
         if (!utente.getNome().matches("^[a-zA-Z]{1,50}$")) {
