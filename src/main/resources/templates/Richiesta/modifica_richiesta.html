@@ -8,7 +8,7 @@
 <h1>modifica richiesta</h1>
 <form th:action="@{/api/richieste/modifica}" method="POST">
 
-    <label for="richiesta">Titolo:</label>
+    <label for="richiesta">id:</label>
     <input type="text" id="richiesta" name="richiesta" required><br><br>
 
     <label for="titolo">Titolo:</label>
@@ -24,10 +24,10 @@
     <input type="time" id="ora" name="ora" required><br><br>
 
     <label for="emergenza">Emergenza:</label>
-    <input type="checkbox" id="emergenza" name="emergenza" value="si">
+    <input type="checkbox" id="emergenza" name="emergenza" value="true">
     <label for="emergenza">Sì, è urgente</label><br><br>
 
-    <input type="submit" value="Invia richiesta">
+    <input type="submit" value="modifica richiesta">
 </form>
 </body>
 </html>

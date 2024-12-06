@@ -19,9 +19,11 @@ public class RichiestaService {
         return richiestaRepository.save(richiesta);
     }
 
-    public Richiesta updateRichiesta(Richiesta richiesta) {
-        richiestaRepository.delete(richiesta);
-        return richiestaRepository.save(richiesta);
+    public void updateRichiesta(Richiesta richiesta) {
+                richiestaRepository.updateRichiesta(richiesta.getId(),richiesta.getTitolo(),
+                richiesta.getDescrizione(),richiesta.getDataPubblicazione(),
+                richiesta.getDataAiuto(),richiesta.getOraAiuto(),
+                richiesta.isEmergenza(),richiesta.getPunti());
     }
 
     public void eliminaRichiesta(Richiesta richiesta) {

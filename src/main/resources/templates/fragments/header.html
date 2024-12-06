@@ -9,12 +9,10 @@
     </div>
     <nav>
       <ul class="menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="/register">Unisciti a noi</a></li>
+        <a th:href="@{/api/richieste/modifica}">Modifica Richiesta</a>
+        <a th:href="@{/api/richieste/accetta}">Accetta Richiesta</a>
         <a th:href="@{/api/richieste/pubblica}">Pubblica Richiesta</a>
-        <li><a href="/calendario">Calendario</a></li>
-        <li><a href="/forum">Forum</a></li>
-        <li><a href="/premi">Premi</a></li>
+        <a th:href="@{/api/richieste/elimina}">Elimina Richiesta</a>
       </ul>
     </nav>
   </header>
