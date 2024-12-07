@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // script.js
         const usernameInput = document.getElementById('username');
         const passwordInput = document.getElementById('password');
+        let username = usernameInput.value;
+        let password = passwordInput.value;
 
         usernameInput.addEventListener('focus', () => {
             usernameInput.classList.add('focus');
@@ -31,33 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Additional validation (optional)
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters long.');
+        if (password.length < 5) {
+            alert('Password must be at least 5 characters long.');
             return;
         }
 
-        // Simulate sending data to the server (replace with actual server-side logic)
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Successful login
-                    alert('Login successful!');
-                    // Redirect to the desired page
-                    window.location.href = 'dashboard.html'; // Replace with your desired URL
-                } else {
-                    // Handle login failure
-                    alert('Login failed. Please check your credentials.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again later.');
-            });
+        // Submit the form
+        loginForm.submit();
     });
 });

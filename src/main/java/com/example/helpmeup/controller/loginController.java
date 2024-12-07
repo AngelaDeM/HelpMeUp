@@ -29,6 +29,9 @@ public class loginController {
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
         Utente utente = utenteRepository.findByUsername(username);
 
+        //stampa di prova
+        System.out.println("User: " + utente.getNome());
+
         if (utente == null) {
             // Handle user not found case
             return "redirect:/login?error";
@@ -38,6 +41,9 @@ public class loginController {
             // Handle wrong password case
             return "redirect:/login?error";
         }
+
+        // Set the user in the session
+        model.addAttribute("utente", utente);
 
         return "redirect:/success"; // Reindirizza alla homepage
     }

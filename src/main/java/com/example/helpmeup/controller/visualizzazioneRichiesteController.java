@@ -32,4 +32,11 @@ public class visualizzazioneRichiesteController {
     public Richiesta getRichiestaById(int id){
         return richiestaService.getRichiestaById(id);
     }
+
+    //Restituisce tutte le richieste di un determinato volontario
+    @GetMapping("/findRichiesteByVolontario")
+    public List<Richiesta> getRichiesteByVolontario(String username){
+        System.out.println("Richieste by volontario");
+        return richiestaService.getRichiesteByVolontario(username);
+    }
 }

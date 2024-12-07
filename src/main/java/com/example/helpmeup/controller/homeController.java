@@ -8,6 +8,6 @@ public class homeController {
 
     @GetMapping("/")
     public String homepage() {
-        return "index"; // Nome del file HTML senza estensione
+        return "homepage"; // Nome del file HTML senza estensione
     }
 }

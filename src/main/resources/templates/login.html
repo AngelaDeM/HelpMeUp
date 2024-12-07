@@ -2,24 +2,23 @@
 <html lang="it">
 <head>
     <title>Form di Registrazione</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
     <script src="/js/script.js"></script>
 </head>
 
 <body>
 <div class="login-container">
     <h2>Accedi al tuo account</h2>
-    <form>
+    <form action="/login" method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" placeholder="username">
+        <input type="text" id="username" name="username" placeholder="username">
 
         <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="password">
+        <input type="password" id="password" name="password" placeholder="password">
 
         <button type="submit">Accedi</button>
 
-        <p>Non hai un account? <a href="#">Registrati</a></p>
-
+        <p>Non hai un account? <a href="register">Registrati</a></p>
     </form>
 
 </div>

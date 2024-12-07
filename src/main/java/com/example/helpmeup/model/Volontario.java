@@ -11,7 +11,7 @@ import java.util.List;
 public class Volontario extends Utente{
 
     private int punti;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
     name = "riscatti_premi",
     joinColumns = @JoinColumn(name = "account_id"),

@@ -32,6 +32,11 @@ public class RichiestaService {
         return richiestaRepository.findAll();
     }
 
+    //get richieste by volontario
+    public List<Richiesta> getRichiesteByVolontario(String username){
+        return richiestaRepository.getRichiesteByVolontario(username);
+    }
+
     public Richiesta getRichiestaById(int id){
         return richiestaRepository.findById(id).get();
     }
