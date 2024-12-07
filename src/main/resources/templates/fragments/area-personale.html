@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Area Personale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .content {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Benvenuto nella tua Area Personale</h1>
+    </div>
+    <div class="content">
+        <p><strong>Nome:</strong> <span th:text="${utente.nome}"></span></p>
+        <p><strong>Cognome:</strong> <span th:text="${utente.cognome}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${utente.email}"></span></p>
+        <p><strong>Ruolo:</strong> <span th:text="${tipo} == 'volontario' ? 'Volontario' : 'Assistito'"></span></p>
+
+        <!-- Informazioni Volontario -->
+        <div th:if="${tipo} == 'volontario'">
+            <h3>Informazioni Volontario</h3>
+            <p><strong>Punti:</strong> <span th:text="${punti}"></span></p>
+            <h4>Premi riscattati:</h4>
+            <ul>
+                <li th:each="premio : ${premi}" th:text="${premio.nome}"></li>
+            </ul>
+        </div>
+
+        <!-- Informazioni Assistito -->
+        <div th:if="${tipo} == 'assistito'">
+            <h3>Informazioni Assistito</h3>
+            <p>Benvenuto assistito! Qui troverai le informazioni relative al tuo profilo.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
