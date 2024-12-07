@@ -50,8 +50,13 @@ public class RichiestaService {
         return richiestaRepository.getVolontari(idRichiesta);
     }
 
-    public void completaRichiesta(int idRichiesta, List<String> volontari) {
+    public void completaRichiesta(int idRichiesta, List<String> volontari,int punti) {
         richiestaRepository.completa(idRichiesta);
-        //richiestaRepository.aggiorna_punti(volontari);
+        for(String v: volontari)
+            richiestaRepository.aggiornaPunti(punti,v);
+    }
+
+    public boolean statoAccettoVolontario(int idRichiesta, String volontario) {
+        return richiestaRepository.esisteVolontario(volontario,idRichiesta)==1;
     }
 }

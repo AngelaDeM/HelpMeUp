@@ -1,6 +1,7 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Richiesta;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.repository.RichiestaRepository;
 import com.example.helpmeup.service.RichiestaService;
 import jakarta.validation.ConstraintViolationException;
@@ -67,8 +68,16 @@ public class RichiestaController {
         try{
         int id_richiesta = Integer.parseInt(dati.get("richiesta"));
         String id_volontario = dati.get("volontario");
-        richiestaService.accettaRichiesta(id_richiesta,id_volontario);
-        return ResponseEntity.ok("Richiesta accettata con successo.");
+        Richiesta r = richiestaService.getRichiestaById(id_richiesta);
+        boolean giaAccettato= richiestaService.statoAccettoVolontario(id_richiesta,id_volontario);
+        if(!r.isCompletato() && !giaAccettato){
+            richiestaService.accettaRichiesta(id_richiesta,id_volontario);
+            return ResponseEntity.ok("Richiesta accettata con successo.");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta già accettata dall'utente.");
+        }
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante l'accettazione della richiesta: " + e.getMessage());
         }
@@ -81,7 +90,6 @@ public class RichiestaController {
 
     @PostMapping("/modifica")
     public ResponseEntity<String> modificaRichiesta(@Valid @RequestParam Map<String, String> dati) {
-        System.out.println("lol");
         try {
             // Estrai i dati dal corpo della richiesta
             int id = Integer.parseInt(dati.get("richiesta"));
@@ -95,16 +103,19 @@ public class RichiestaController {
             Optional<Richiesta> richiestaOptional = Optional.ofNullable(richiestaService.getRichiestaById(id));
             if (richiestaOptional.isPresent()) {
                 Richiesta richiesta = richiestaOptional.get();
-                richiesta.setTitolo(titolo);
-                richiesta.setDescrizione(descrizione);
-                richiesta.setDataAiuto(dataAiuto);
-                richiesta.setOraAiuto(oraAiuto);
-                richiesta.setEmergenza(emergenza);
-                 // Settiamo la data di pubblicazione come attuale
+                if(richiesta.isCompletato()){
+                    richiesta.setTitolo(titolo);
+                    richiesta.setDescrizione(descrizione);
+                    richiesta.setDataAiuto(dataAiuto);
+                    richiesta.setOraAiuto(oraAiuto);
+                    richiesta.setEmergenza(emergenza);
+                    // Settiamo la data di pubblicazione come attuale
 
-                // modifica la richiesta aggiornata nel database
-                richiestaService.updateRichiesta(richiesta);
-                return ResponseEntity.ok("Richiesta aggiornata con successo.");
+                    // modifica la richiesta aggiornata nel database
+                    richiestaService.updateRichiesta(richiesta);
+                    return ResponseEntity.ok("Richiesta aggiornata con successo.");
+                }
+                else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta già completata.");
 
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta non trovata.");
@@ -124,8 +135,13 @@ public class RichiestaController {
         try {
             int id_richiesta = Integer.parseInt(dati.get("richiesta"));
             Richiesta richiesta = richiestaService.getRichiestaById(id_richiesta);
-            richiestaService.eliminaRichiesta(richiesta);
-            return ResponseEntity.ok("Richiesta eliminata con successo.");
+            if(!richiesta.isCompletato()){
+                richiestaService.eliminaRichiesta(richiesta);
+                return ResponseEntity.ok("Richiesta eliminata con successo.");
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta già completata.");
+            }
         } catch (NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID richiesta non valido: " + e.getMessage());
         } catch (RuntimeException e) {
@@ -145,7 +161,9 @@ public class RichiestaController {
         try{
             int id_richiesta = Integer.parseInt(dati.get("richiesta"));
             List<String> volontari=richiestaService.getVolontari(id_richiesta);
-            richiestaService.completaRichiesta(id_richiesta,volontari);
+            Richiesta r = richiestaService.getRichiestaById(id_richiesta);
+            richiestaService.completaRichiesta(id_richiesta,volontari,r.getPunti());
+            richiestaService.getRichiestaById(id_richiesta).setCompletato(true);
             return ResponseEntity.ok("Richiesta completata con successo.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante il completamento della richiesta: " + e.getMessage());

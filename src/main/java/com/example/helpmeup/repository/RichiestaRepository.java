@@ -54,6 +54,18 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
     @Transactional
     @Query(value = "UPDATE Richiesta SET completato = true WHERE id =:idRichiesta",nativeQuery = true)
     void completa(@Param("idRichiesta") int idRichiesta);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Utente SET punti = punti + :puntiRichiesta WHERE username = :username", nativeQuery = true)
+    void aggiornaPunti(@Param("puntiRichiesta") int puntiRichiesta, @Param("username") String username);
+
+
+
+    @Query(value = "SELECT CASE WHEN EXISTS (SELECT 1 FROM richiesta_utenti r WHERE account_id = :volontario AND richiesta = :richiesta) THEN TRUE ELSE FALSE END", nativeQuery = true)
+    Long esisteVolontario(@Param("volontario") String volontario,@Param("richiesta") int richiesta);
+
 }
 
 

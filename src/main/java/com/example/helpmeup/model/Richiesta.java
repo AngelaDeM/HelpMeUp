@@ -23,8 +23,7 @@ public class Richiesta {
     private LocalTime orario_intervento;
     private final int punti;
     private boolean emergenza;
-
-
+    private boolean completato = false;
 
 
     public Richiesta() {
@@ -83,6 +82,14 @@ public class Richiesta {
 
     public boolean isEmergenza() {
         return emergenza;
+    }
+
+    public boolean isCompletato() {
+        return completato;
+    }
+
+    public void setCompletato(boolean completato) {
+        this.completato = completato;
     }
 
     public void setTitolo(String titolo) {
