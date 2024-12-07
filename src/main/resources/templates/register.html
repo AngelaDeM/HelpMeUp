@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
 <div class="registration-container">
   <h2>Registrazione</h2>
   <form th:action="@{/register}" method="POST" th:object="${user}">
@@ -31,9 +32,9 @@
     <div class="input-group">
       <label>Sesso:</label>
       <div class="radio-group">
-        <input type="radio" id="male" th:field="*{sesso}" value="male" required>
+        <input type="radio" id="male" th:field="*{sesso}" value="M" required>
         <label for="male">Maschio</label>
-        <input type="radio" id="female" th:field="*{sesso}" value="female" required>
+        <input type="radio" id="female" th:field="*{sesso}" value="F" required>
         <label for="female">Femmina</label>
       </div>
     </div>
