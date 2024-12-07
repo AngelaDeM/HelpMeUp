@@ -7,14 +7,12 @@ import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/api")
 @SessionAttributes("richiesta")
 //TODO: Gestire il controllo degli accessi, in modo che solo gli utenti volontari possano visualizzare le richieste
 public class visualizzazioneRichiesteController {
