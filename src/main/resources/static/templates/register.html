@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="registration-container">
+  <h2>Registrazione</h2>
+  <form th:action="@{/register}" method="POST" th:object="${user}">
+    <div class="input-group">
+      <label>Tipo di utente:</label>
+      <div class="radio-group">
+        <input type="radio" id="volontario" name="user_type" value="volontario" required>
+        <label for="volontario">Volontario</label>
+        <input type="radio" id="assistito" name="user_type" value="assistito" required>
+        <label for="assistito">Assistito</label>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" th:field="*{nome}" required>
+    </div>
+
+    <div class="input-group">
+      <label for="cognome">Cognome:</label>
+      <input type="text" id="cognome" th:field="*{cognome}" required>
+    </div>
+
+    <div class="input-group">
+      <label>Sesso:</label>
+      <div class="radio-group">
+        <input type="radio" id="male" th:field="*{sesso}" value="male" required>
+        <label for="male">Maschio</label>
+        <input type="radio" id="female" th:field="*{sesso}" value="female" required>
+        <label for="female">Femmina</label>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="birthdate">Data di nascita:</label>
+      <input type="date" id="birthdate" th:field="*{dataNascita}" required>
+    </div>
+
+    <div class="address-container">
+      <div class="address-row">
+        <div class="city-province">
+          <label for="province">Provincia</label>
+          <input type="text" id="province" name="province" placeholder="Provincia" required>
+          <label for="city">Città:</label>
+          <input type="text" id="city" name="city" placeholder="Città" required>
+        </div>
+      </div>
+      <div class="address-section">
+        <label for="address">Via:</label>
+        <input type="text" id="address" name="address" required>
+        <label for="number">Numero civico:</label>
+        <input type="text" id="number" name="number" required>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="phone">Numero di Telefono:</label>
+      <input type="tel" id="phone" th:field="*{numeroTelefono}" required>
+    </div>
+
+    <div class="input-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" th:field="*{username}" required>
+    </div>
+
+    <div class="input-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" th:field="*{email}" required>
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" th:field="*{password}" required>
+    </div>
+
+    <div class="input-group">
+      <label for="confirm-password">Conferma Password:</label>
+      <input type="password" id="confirm-password" name="confirm-password" required>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="privacy" required>
+      <label for="privacy">Ho letto e accetto la <a href="#">normativa sulla privacy</a></label>
+    </div>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <button type="submit">Registrati</button>
+  </form>
+</div>
+</body>
+</html>
