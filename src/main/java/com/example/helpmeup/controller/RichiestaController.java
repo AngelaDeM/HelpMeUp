@@ -38,6 +38,7 @@ public class RichiestaController {
     @PostMapping("/pubblica")
     public ResponseEntity<String> registraRichiesta(@Valid @RequestParam Map<String, String> dati) {
         try{
+            String username = dati.get("assistito");
             String titolo = dati.get("titolo");
             String descrizione = dati.get("descrizione");
             LocalDateTime dataPubblicazione = LocalDateTime.now();
@@ -47,6 +48,7 @@ public class RichiestaController {
 
             Richiesta richiesta = new Richiesta(titolo, descrizione, dataAiuto, oraAiuto, emergenza);
             richiestaService.pubblicaRichiesta(richiesta);
+            richiestaService.aiutoRichiesta(richiesta.getId(),username);
             return ResponseEntity.ok("Registrazione richiesta avvenuta con successo.");
         }
         catch (Exception e) {
@@ -140,7 +142,14 @@ public class RichiestaController {
 
     @PostMapping("/completa")
     public ResponseEntity<String> completaRichiesta(@Valid @RequestParam Map<String, String> dati) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore completa richiesta non implementato");
+        try{
+            int id_richiesta = Integer.parseInt(dati.get("richiesta"));
+            List<String> volontari=richiestaService.getVolontari(id_richiesta);
+            richiestaService.completaRichiesta(id_richiesta,volontari);
+            return ResponseEntity.ok("Richiesta completata con successo.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante il completamento della richiesta: " + e.getMessage());
+        }
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

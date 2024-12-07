@@ -26,6 +26,11 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
 
     @Modifying
     @Transactional
+    @Query(value = "INSERT INTO richiesta_utenti (account_id, richiesta) VALUES (:UserAssistito, :idRichiesta)", nativeQuery = true)
+    int assistitoRichiesta(@Param("idRichiesta") int idRichiesta, @Param("UserAssistito") String UserAssistito);
+
+    @Modifying
+    @Transactional
     @Query(value = "INSERT INTO richiesta_utenti (account_id, richiesta) VALUES (:idVolontario, :idRichiesta)", nativeQuery = true)
     int accettaRichiesta(@Param("idRichiesta") int idRichiesta, @Param("idVolontario") String idVolontario);
 
@@ -39,4 +44,16 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
                          @Param("newDescrizione")String newDescrizione,@Param("newDCrea")LocalDate newDCrea,
                          @Param("newDataInter") LocalDate newDataInter,@Param("newOraInter") LocalTime newOraInter,
                          @Param("newEmer") boolean newEmer,@Param("newPunti") int newPunti);
+
+
+    @Modifying
+    @Query(value = "SELECT r.account_id FROM richiesta_utenti r WHERE richiesta = :idRichiesta", nativeQuery = true)
+    List<String> getVolontari(@Param("idRichiesta") int idRichiesta);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Richiesta SET completato = true WHERE id =:idRichiesta",nativeQuery = true)
+    void completa(@Param("idRichiesta") int idRichiesta);
 }
+
+

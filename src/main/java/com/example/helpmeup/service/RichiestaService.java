@@ -41,4 +41,17 @@ public class RichiestaService {
     public int accettaRichiesta(int idRichiesta, String idVolontario) {
         return richiestaRepository.accettaRichiesta(idRichiesta,idVolontario);
     }
+
+    public int aiutoRichiesta(int idRichiesta, String userAssistito){
+        return richiestaRepository.assistitoRichiesta(idRichiesta,userAssistito);
+    }
+
+    public List<String> getVolontari(int idRichiesta) {
+        return richiestaRepository.getVolontari(idRichiesta);
+    }
+
+    public void completaRichiesta(int idRichiesta, List<String> volontari) {
+        richiestaRepository.completa(idRichiesta);
+        //richiestaRepository.aggiorna_punti(volontari);
+    }
 }

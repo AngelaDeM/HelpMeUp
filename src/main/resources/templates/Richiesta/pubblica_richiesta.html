@@ -7,7 +7,12 @@
 <body>
 <h1>invio richiesta</h1>
 <form th:action="@{/api/richieste/pubblica}" method="POST">
+
+    <label for="assistito">Username assistito:</label>
+    <input type="text" id="assistito" name = "assistito" required><br><br>
+
     <label for="titolo">Titolo:</label>
+
     <input type="text" id="titolo" name="titolo" required><br><br>
 
     <label for="descrizione">Descrizione:</label><br>

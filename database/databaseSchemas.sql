@@ -22,7 +22,8 @@ CREATE TABLE Richiesta (
                            data_intervento DATE NOT NULL,
                            orario_intervento TIME NOT NULL,
                            emergenza BOOLEAN NOT NULL,
-                           punti INT NOT NULL
+                           punti INT NOT NULL,
+                           completato bool default false
 );
 
 -- Tabella Forum Messaggi
