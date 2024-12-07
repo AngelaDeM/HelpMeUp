@@ -7,8 +7,9 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="utente")
-
-public abstract class Utente{
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_account", discriminatorType = DiscriminatorType.STRING)
+public abstract class Utente {
 
     private String nome;
     private String cognome;
