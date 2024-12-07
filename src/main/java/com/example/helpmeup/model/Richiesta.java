@@ -3,6 +3,11 @@ package com.example.helpmeup.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -87,16 +92,8 @@ public class Richiesta {
         return punti;
     }
 
-    public boolean isEmergenza() {
-        return emergenza;
-    }
-
     public void setTitolo(String titolo) {
         this.titolo = titolo;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
     }
 
     public void setDescrizione(String descrizione) {
