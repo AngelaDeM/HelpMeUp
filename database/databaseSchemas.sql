@@ -26,6 +26,7 @@ CREATE TABLE Richiesta (
                            data_intervento DATE NOT NULL,
                            orario_intervento TIME NOT NULL,
                            emergenza BOOLEAN NOT NULL,
+                           punti INT NOT NULL,
                            account_id VARCHAR(50) NOT NULL,
                            FOREIGN KEY (account_id) REFERENCES Utente(username) ON DELETE CASCADE
 );
@@ -58,7 +59,7 @@ CREATE TABLE riscatti_premi (
                                 FOREIGN KEY (premio_id) REFERENCES Premio(nome) ON DELETE CASCADE
 );
 
--- Associazione tra Richiesta e Utente
+-- Tabella Riscatti Premi
 CREATE TABLE richiesta_utenti (
                                   id INT AUTO_INCREMENT PRIMARY KEY,
                                   account_id VARCHAR(50) NOT NULL,
