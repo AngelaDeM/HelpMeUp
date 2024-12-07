@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Utente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/area_utente.css">
+
+</head>
+
+
+
+<body>
+<div id="navbar"></div>
+<div class="total">
+<!-- Icona hamburger -->
+<div class="hamburger" id="hamburger">
+    <i class="fa-solid fa-arrow-right"></i>
+</div>
+<div class="sidebar" id="sidebar">
+    <div class="panel">
+        <div class="user-heading">
+            <a href="#">
+                <img src="/image/cuore.jpg" alt="Profilo">
+            </a>
+            <h1>AREA UTENTE VOLONTARIO</h1>
+        </div>
+        <ul class="nav">
+            <li><a href="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
+            <li><a href="#richieste"><i class="fas fa-clipboard-list"></i> Le Tue Richieste</a></li>
+            <li><a href="#calendario"><i class="fas fa-calendar"></i> Calendario</a></li>
+            <li><a href="#punti"><i class="fas fa-gem"></i> I tuoi Punti</a></li>
+        </ul>
+    </div>
+</div>
+
+<main class="content">
+    <section id="dati" class="section">
+        <h1>Dati Anagrafici</h1>
+        <p><strong>Usename: </strong> <span id="username" th:text="${utente.username}"></span></p>
+        <p><strong>Nome:</strong> <span th:text="${utente.nome}"></span></p>
+        <p><strong>Cognome:</strong> <span th:text="${utente.cognome}"></span></p>
+        <p><strong>Data di nascita:</strong> <span th:text="${utente.dataNascita}"></span></p>
+        <p><strong>Indirizzo:</strong> <span th:text="${utente.indirizzo}"></span></p>
+        <p><strong>Telefono:</strong> <span th:text="${utente.numeroTelefono}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${utente.email}"></span></p>
+        <p><strong>Ruolo:</strong> <span th:text="${tipo} == 'volontario' ? 'Volontario' : 'Assistito'"></span></p>
+    </section>
+
+    <section id="richieste" class="section">
+        <div class="request"></div>
+    </section>
+
+    <section id="calendario" class="section">
+        <h1>Calendario</h1>
+        <p>Contenuto per la sezione Calendario...</p>
+
+    </section>
+
+    <section id="punti" class="section">
+        <h1>I tuoi Punti</h1>
+        <p>Contenuto per la sezione I tuoi Punti...</p>
+    </section>
+</main>
+</div>
+
+<script src="/js/area_utente.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function() {
+        $("#navbar").load("navbar.html");
+    });
+
+    $(document).ready(function() {
+        // Ottieni l'username dell'utente attualmente loggato
+        let username = $('#username').data('username');
+        // Effettua la richiesta AJAX per ottenere le richieste di un determinato volontario
+        $.ajax({
+            url: '/findRichiesteByVolontario?username=' + encodeURIComponent(username),
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Genera dinamicamente il contenuto per la sezione delle richieste
+                let htmlContent = '';
+                if (data && data.length > 0) {
+                    data.forEach(function(richiesta) {
+                        htmlContent += `
+                        <div class="richiesta">
+                            <h2>${richiesta.titolo}</h2>
+                            <p><strong>Descrizione:</strong> ${richiesta.descrizione}</p>
+                            <p><strong>Data di Creazione:</strong> ${richiesta.dataCreazione}</p>
+                            <p><strong>Data di Intervento:</strong> ${richiesta.dataIntervento}</p>
+                            <p><strong>Orario di Intervento:</strong> ${richiesta.orarioIntervento}</p>
+                            <p><strong>Emergenza:</strong> ${richiesta.emergenza ? 'Sì' : 'No'}</p>
+                            <p><strong>Punti:</strong> ${richiesta.punti}</p>
+                        </div>
+                    `;
+                    });
+                } else {
+                    htmlContent = '<p>Non ci sono richieste disponibili.</p>';
+                }
+                // Inserisci il contenuto nella sezione #richieste
+                $('#richieste').html(htmlContent);
+            },
+            error: function(xhr, status, error) {
+                console.error('Errore nella richiesta AJAX:', error);
+                $('#richieste').html('<p>Si è verificato un errore nel recupero delle richieste.</p>');
+            }
+        });
+    });
+
+
+    $(function() {
+        $("#calendario").load("calendario.html");
+    });
+
+    $(function() {
+        $("#punti").load("punti.html");
+    });
+
+</script>
+</body>
+</html>
+

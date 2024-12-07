@@ -21,6 +21,9 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
     List<Richiesta> findAllByUsername(String username);
 
     @Modifying
+    @Query(value = "SELECT r FROM Richiesta r JOIN richiesta_utenti ru ON r.id = ru.richiesta WHERE ru.account_id = username", nativeQuery = true)
+    List<Richiesta> getRichiesteByVolontario(String username);
+    @Modifying
     @Query(value = "INSERT INTO richiesta (account_id, richiesta) VALUES (:idVolontario, :idRichiesta)", nativeQuery = true)
     int accettaRichiesta(@Param("idRichiesta") int idRichiesta, @Param("idVolontario") String idVolontario);
 

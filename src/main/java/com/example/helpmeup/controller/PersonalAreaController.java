@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PersonalAreaController {
 
-    @GetMapping("/area-personale")
+    @GetMapping("/area_utente")
     public String visualizzaAreaPersonale(HttpSession session, Model model) {
         // Recupero dell'utente dalla sessione (simulazione)
         Utente utente = (Utente) session.getAttribute("utente");
@@ -33,6 +33,6 @@ public class PersonalAreaController {
             // Eventuali altre informazioni per l'assistito
         }
 
-        return "area-personale";  // Nome del template da visualizzare
+        return "area_utente";  // Nome del template da visualizzare
     }
 }

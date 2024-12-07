@@ -59,7 +59,7 @@ CREATE TABLE riscatti_premi (
                                 FOREIGN KEY (premio_id) REFERENCES Premio(nome) ON DELETE CASCADE
 );
 
--- Tabella Riscatti Premi
+-- Tabella richiesta utenti
 CREATE TABLE richiesta_utenti (
                                   id INT AUTO_INCREMENT PRIMARY KEY,
                                   account_id VARCHAR(50) NOT NULL,
