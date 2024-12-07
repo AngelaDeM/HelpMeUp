@@ -1,0 +1,769 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #c56c6c;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Contenitore principale che avvolge tutto il contenuto */
+.container {
+    display: flex;
+}
+
+.content {
+    width: 60%;
+}
+
+.right-sidebar {
+    width: 20%;
+}
+
+/* Stile per la sidebar sinistra */
+.sidebar {
+    width: 250px; /* Adjust width as needed */
+    background-color: #dfd1d1;
+    padding: 20px;
+    border-right: 1px solid #ccc; /* Aggiungi un bordo destro per separarla dal contenuto */
+
+    /* Stile per i link all'interno della sidebar */
+    a {
+        color: #d53737; /* Verde */
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #d53737; /* Verde più scuro */
+        text-decoration: underline;
+    }
+
+}
+
+
+.sidebar-link {
+    color: #333;
+    text-decoration: none;
+    display: block; /* Per rendere i link a blocchi e occupare tutta la larghezza */
+    padding: 5px 0; /* Aggiungi un po' di padding per dare spazio */
+}
+
+
+.sidebar-link:hover {
+    background-color: #f0f0f0; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+.section {
+    /* Stile delle sezioni */
+    margin-bottom: 10px;
+}
+
+.section-container {
+    display: flex;
+    flex-direction: column; /* Impila le sezioni verticalmente */
+    gap: 10px; /* Spazio tra le sezioni */
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc; /* Bordo inferiore per separare le sezioni */
+}
+
+.section:last-child {
+    border-bottom: none; /* Rimuovi il bordo inferiore dall'ultima sezione */
+}
+
+.section i {
+    margin-right: 10px;
+}
+
+.badge {
+    background-color: #d53737;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.user-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+
+.content {
+    width: 90%;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .message-composer textarea {
+        height: 50px; /* Adjust height for smaller screens */
+    }
+}
+
+.message-composer {
+    width: 80%; /* Occupa tutta la larghezza del contenitore */
+    margin: 15px; /* Centra la sezione */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#messageTitle {
+    /* Stili per il campo del titolo */
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.message-composer h2 {
+    text-align: center;
+    margin: 0; /* Remove top and bottom margins */
+}
+
+.message-composer textarea {
+    text-align: center;
+    width: 80%;
+    height: 10px; /* Adatta l'altezza in base alle tue esigenze */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical; /* Permette di ridimensionare solo in verticale */
+}
+
+.message-composer button {
+    display: block;
+    margin: 10px auto 0;
+    padding: 10px 20px;
+    background-color: #de6061;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.box-container {
+    text-align: center;
+    display: flex;
+    justify-content: space-around; /*spazio tra i box */
+    flex-wrap: wrap; /* Permette alle box di andare a capo se non c'è spazio sufficiente */
+    padding: 20px;
+}
+
+.box {
+    text-align: center; /* Centra il contenuto del box */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 250px; /* Imposta la larghezza di ogni box, puoi modificarla in base alle tue esigenze */
+    margin: 10px; /* Aggiunge un margine per separare le box */
+
+    a {
+        color: #d53737; /* Verde */
+        text-decoration: none;
+    }
+    a:hover {
+        color: #d53737; /* Verde più scuro */
+        text-decoration: underline;
+    }
+}
+
+.box img {
+    max-width: 100%; /* Assicura che l'immagine non superi la larghezza del contenitore */
+    height: auto; /* Mantiene le proporzioni dell'immagine */
+}
+
+
+@media (max-width: 768px) {
+    .box-container {
+        flex-direction: column; /* Impila i box verticalmente */
+    }
+
+    .member-section {
+        width: 150px; /* Adatta la larghezza in base al tuo layout */
+        padding: 20px;
+        background-color: #f0f0f0;
+    }
+
+    .member-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .member-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .member-list img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .member-info {
+        flex: 1;
+    }
+}
+
+
+@media (min-width: 769px) {
+    /* Regole per schermi più grandi*/
+    .tag {
+        /* Modifica i valori di clip-path o altri stili se necessario*/
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
+
+.tag-list {
+    flex-direction: column; /* Stack tags vertically*/
+    gap: 10px; /* Adjust gap as needed */
+}
+
+.tag {
+    background-color: #d53737;
+    color: #f2f2f2;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.tag:hover {
+    background-color: #cc3333;
+}
+
+
+
+
+/* Layout base */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #c56c6c;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+}
+
+
+/* Barra laterale */
+.sidebar {
+    width: 200px;
+    background-color: #de6061;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding-top: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar .user-heading {
+    background: #fbe5d5;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.sidebar .user-heading a img {
+    width: 100px;
+    height: 90px;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.3);
+}
+
+.sidebar .user-heading h1 {
+    font-size: 22px;
+    font-weight: 300;
+    margin: 10px 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+    line-height: 30px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    border-left: 5px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #fbe5d5;
+    color: #333;
+    border-left: 5px solid #e6b490;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+}
+
+/* Menu a destra */
+.content {
+    margin-left: 200px;
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+.content h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+/* Hamburger Icon */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #fff;
+    margin-left: 20px;
+}
+
+/* Styling aggiuntivo per il layout */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none; /* Nascondi il menu laterale su dispositivi mobili */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: -100%;
+        background-color: #de6061;
+        transition: left 0.3s ease-in-out;
+    }
+
+    .sidebar.active {
+        left: 0; /* Mostra il menu quando la classe 'active' è aggiunta */
+    }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .hamburger {
+        display: block; /* Mostra l'icona a tre linee */
+    }
+}
+
+.user-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+@media (max-width: 768px) {
+    .message-composer textarea {
+        height: 50px; /* Adjust height for smaller screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .message-composer {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 767px) {
+    .message-composer {
+        flex-direction: column;
+    }
+}
+
+.message-composer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.message-composer h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.message-composer textarea {
+    width: 80%;
+    height: 50px;
+    padding: 10px;
+    resize: vertical;
+}
+
+.message-composer button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #de6061;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.container {
+    padding: 20px;
+}
+
+.intro{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#icon-img{
+    font-size: 32px; /* Modifica la dimensione in base alle tue preferenze */
+    color: #e04c4c;
+    cursor: pointer;
+    margin: 10px;
+
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.requests-list {
+    margin-top: 20px;
+}
+
+.request-item {
+    display: flex;
+    align-items: center;
+    background-color: #fbe5d5; /* Sfondo bianco */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 150ms all ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+
+.request-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 2px 40px #d7dfe2;
+}
+
+.request-item::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #e04c4c; /* Colore freccia */
+    clip-path: polygon(100% 50%, 0% 100%, 0% 0%);
+    margin-right: 10px;
+}
+
+.request-item h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.request-item p {
+    margin: 0;
+    color: #666;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.search-input-container {
+    position: relative;
+    width: 30%;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Allinea tutto a sinistra */
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #de6061;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    padding-left: 40px; /* Aggiungi spazio per l'icona */
+}
+
+#searchInput::placeholder {
+    color: #999;
+}
+
+#searchInput:focus {
+    border-color: #de6061;
+    box-shadow: 0 0 8px #de6061;
+}
+
+#search-icon {
+    position: absolute;
+    left: 10px; /* Posiziona l'icona a sinistra */
+    top: 50%;
+    transform: translateY(-50%); /* Centra verticalmente l'icona */
+    font-size: 18px; /* Modifica la dimensione dell'icona */
+    color: #de6061; /* Colore dell'icona */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 40%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+}
+
+label.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-trigger:checked + .modal {
+    display: flex;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.accept-btn {
+    background-color: #de6061;
+    color: white;
+}
+
+.reject-btn {
+    background-color: #d53737;
+    color: white;
+}
+.accept-btn, .reject-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.accept-btn:hover {
+    background-color: #b34545;
+}
+
+.reject-btn:hover {
+    background-color: #c82333;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-composer, .discussion-list {
+    width: 80%; /* Ensure full width within the main-content */
+    margin-bottom: 20px;
+}
+
+.discussion-container {
+    width: 90%; /* Adatta la larghezza in base al tuo layout */
+    height: 50px; /* Adjust the height as needed */
+    margin-left: 150px; /* Assumendo che la sidebar abbia larghezza 250px */
+    /*margin: 0 auto;  Centra orizzontalmente */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px; /* Add margin to push the container down */
+}
+
+@media (max-width: 768px) {
+    .discussion-container {
+        width: 80%; /* Occupa quasi tutta la larghezza */
+        margin: 0 auto; /* Centra orizzontalmente */
+    }
+}
+
+/* Stile di base per le discussioni */
+.discussion {
+    background-color: #fff;
+    border: 1px solid #ddd; /* Initial border style */
+    transition: border-color 0.3s ease-in-out; /* Transition for smooth effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+
+.discussion:hover {
+    border-color: #d53737; /* Change border color on hover */
+}
+
+.discussion-header {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.discussion-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.discussion-header p {
+    margin: 0;
+    color: #666;
+}
+
+
+.user {
+    display: flex;
+    align-items: center;
+}
