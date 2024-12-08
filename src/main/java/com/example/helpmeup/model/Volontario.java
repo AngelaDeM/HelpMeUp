@@ -52,6 +52,9 @@ public class Volontario extends Utente{
     public void addPunti(int punti) {
         this.punti += punti;
     }
+    public void removePunti(int punti) {
+        this.punti -= punti;
+    }
     public ArrayList<Premio> getPremi() {
         return premi;
     }

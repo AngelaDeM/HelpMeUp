@@ -32,8 +32,8 @@ public class registrazioneController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new Volontario()); // Puoi decidere un valore predefinito
-        return "register"; // Restituisce la vista 'register.html'
+        model.addAttribute("user", new Volontario());
+        return "Registrazione/Registrazione";
     }
 
     @PostMapping("/register")
@@ -63,56 +63,56 @@ public class registrazioneController {
         if (!utente.getNome().matches("^[a-zA-Z]{1,50}$")) {
             model.addAttribute("error", "Errore: il nome deve contenere solo lettere e avere un massimo di 50 caratteri!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Validazione del cognome
         if (!utente.getCognome().matches("^[a-zA-Z]{1,50}$")) {
             model.addAttribute("error", "Errore: il cognome deve contenere solo lettere e avere un massimo di 50 caratteri!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Validazione dello username
         if (!utente.getUsername().matches("^[a-zA-Z0-9]{1,20}$")) {
             model.addAttribute("error", "Errore: lo username deve contenere solo lettere e numeri e avere un massimo di 20 caratteri!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Validazione del numero di telefono
         if (!utente.getNumeroTelefono().matches("^\\d{10}$")) {
             model.addAttribute("error", "Errore: il numero di telefono deve contenere solo numeri e avere esattamente 10 cifre!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Validazione dell'email
         if (!utente.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             model.addAttribute("error", "Errore: l'email deve rispettare il formato classico (esempio: ciao@gmail.com)!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Validazione della password
         if (utente.getPassword().length() < 5) {
             model.addAttribute("error", "Errore: la password deve contenere almeno 5 caratteri!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Validazione della conferma della password
         if (!utente.getPassword().equals(confirmPassword)) {
             model.addAttribute("error", "Errore: le password non corrispondono!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Controllo se la data di nascita è nel futuro
         if (utente.getDataNascita().isAfter(LocalDate.now())) {
             model.addAttribute("error", "Errore: la data di nascita non può essere nel futuro!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Controlla il formato dell'indirizzo
@@ -123,7 +123,7 @@ public class registrazioneController {
         if (!matcher.matches()) {
             model.addAttribute("error", "L'indirizzo non è nel formato corretto (Provincia, Città, via, numerocivico)!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Imposta la password codificata
@@ -133,13 +133,13 @@ public class registrazioneController {
             if (volontarioService.verificaEmail(utente.getEmail()) || assistitoService.verificaEmail(utente.getEmail())) {
                 model.addAttribute("error", "Errore: l'email è già in uso!");
                 model.addAttribute("user", utente);
-                return "register";
+                return "Registrazione/Registrazione";
             }
 
             if (volontarioService.verificaUsername(utente.getUsername()) || assistitoService.verificaUsername(utente.getUsername())) {
                 model.addAttribute("error", "Errore: lo username è già in uso!");
                 model.addAttribute("user", utente);
-                return "register";
+                return "Registrazione/Registrazione";
             }
 
         // Create the appropriate user type
@@ -152,7 +152,7 @@ public class registrazioneController {
         } else {
             model.addAttribute("error", "Errore: tipo di utente non valido!");
             model.addAttribute("user", utente);
-            return "register";
+            return "Registrazione/Registrazione";
         }
 
         // Reindirizza alla pagina di successo

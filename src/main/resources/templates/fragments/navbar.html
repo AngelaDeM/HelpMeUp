@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/css/navbar.css">
+
 </head>
 
 <body>
-<nav class="navbar">
+<nav th:fragment="navbar" class="navbar">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <div class="navbar-container">
         <input type="checkbox" name="" id="">
         <!-- Icona hamburger per menu mobile -->
@@ -20,9 +20,9 @@
         </div>
         <!-- Menu principale -->
         <ul class="menu-items">
-            <li><a href="homepage.html" id="b1">Home</a></li>
-            <li><a href="chi_siamo.html" id="b2">Chi siamo</a></li>
-            <li><a href="#" id="b3">Forum</a></li>
+            <li><a th:href="@{/index}" id="b1">Home</a></li>
+            <li><a th:href="@{/chi_siamo}" id="b2">Chi siamo</a></li>
+            <li><a th:href="@{/forum}" id="b3">Forum</a></li>
         </ul>
         <!-- Logo -->
         <div class="logo">

@@ -26,7 +26,7 @@ public class Assistito extends Utente{
         return richieste;
     }
 
-    public void setRichieste(List<Richiesta> richiest) {
+    public void setRichieste(List<Richiesta> richieste) {
         this.richieste = richieste;
     }
     @Override

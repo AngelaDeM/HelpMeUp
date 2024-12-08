@@ -22,7 +22,7 @@ public class loginController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "login";
+        return "Login/Login";
     }
 
     @PostMapping("/login")
@@ -50,6 +50,6 @@ public class loginController {
     @GetMapping("/logout")
     public String logoutUser(SessionStatus sessionStatus) {
         sessionStatus.setComplete(); // Completa la sessione
-        return "redirect:/login"; // Reindirizza alla pagina di login
+        return "redirect:/Login/Login"; // Reindirizza alla pagina di login
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 @SessionAttributes("richiesta")
 //TODO: Gestire il controllo degli accessi, in modo che solo gli utenti volontari possano visualizzare le richieste
 public class visualizzazioneRichiesteController {
+
     private static final Logger logger = LoggerFactory.getLogger(visualizzazioneRichiesteController.class);
     private final RichiestaService richiestaService;
     public visualizzazioneRichiesteController(RichiestaRepository richiestaRepository) {
@@ -26,11 +27,13 @@ public class visualizzazioneRichiesteController {
     public @ResponseBody List<Richiesta> getAllRichieste() {
         return richiestaService.getAllRichieste();
     }
+
     //Restituisce una richiesta specifica
     @GetMapping("/findRichiestaById")
     public Richiesta getRichiestaById(int id){
         return richiestaService.getRichiestaById(id);
     }
+
 
     //Restituisce tutte le richieste di un determinato volontario
     @GetMapping("/findRichiesteByVolontario")
