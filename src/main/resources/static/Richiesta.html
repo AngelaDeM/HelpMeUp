@@ -2,7 +2,8 @@
 <html lang="it">
 <head>
   <title>Invia la tua Richiesta</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="Richiesta.css">
+  <script src="richiesta.js"></script>
 </head>
 
 <body>
@@ -15,17 +16,19 @@
     <label for="descrizione">Descrizione Dettagliata:</label>
     <textarea id="descrizione" name="descrizione" required></textarea>
 
-    <label for="data">Data della Richiesta:</label>
-    <input type="date" id="data" name="data" required>
+    <div class="data-ora-container">
+      <label for="data-ora">Data e Ora della Richiesta:</label>
+      <span id="data-ora"></span>
+      <span id="ora-attuale"></span>
+    </div>
 
-    <label for="ora">Ora della Richiesta:</label>
-    <input type="time" id="ora" name="ora" required>
-
-    <label for="emergenza">Emergenza?</label>
-    <select id="emergenza" name="emergenza">
-      <option value="no">No</option>
-      <option value="si">Si</option>
-    </select>
+    <div class="emergenza-container">
+      <label for="emergenza-si">Emergenza?</label>
+      <input type="radio" id="emergenza-si" name="emergenza" value="si">
+      <label for="emergenza-si" class="emergenza-label">Si</label>
+      <input type="radio" id="emergenza-no" name="emergenza" value="no">
+      <label for="emergenza-no" class="emergenza-label">No</label>
+    </div>
 
     <div class="button-container">
       <input type="submit" value="Invia Richiesta">
