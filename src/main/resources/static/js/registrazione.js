@@ -7,9 +7,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    // Implement your password strength check here
-    // Example: minimum length, uppercase, lowercase, numbers, symbols
-    return password.length >= 8 && // Minimum length
+    return password.length >= 5 && // Minimum length
         /[a-z]/.test(password) && // Lowercase letter
         /[A-Z]/.test(password) && // Uppercase letter
         /[0-9]/.test(password); // Number
@@ -44,7 +42,7 @@ inputs.forEach(input => {
                 break;
             case 'password':
                 if (!value || !validatePassword(value)) {
-                    showError(input, 'Password must be at least 8 characters and include uppercase, lowercase letters, and numbers.');
+                    showError(input, 'Password must be at least 5 characters and include uppercase, lowercase letters, and numbers.');
                 }
                 break;
             default:
@@ -61,7 +59,7 @@ form.addEventListener('submit', (event) => {
     let isValid = true;
 
     const name = document.getElementById('name').value;
-    const surname = document.getElementById('surname').value;
+    const surname = document.getElementById('cognome').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
@@ -80,8 +78,17 @@ form.addEventListener('submit', (event) => {
         isValid = false;
     }
 
+    if (!validateEmail(email)) {
+        showError(document.getElementById('email'), 'Please enter a valid email address.');
+        isValid = false;
+    }
+
+    if (!validatePassword(password)) {
+        showError(document.getElementById('password'), 'Password must be at least 5 characters and include uppercase, lowercase letters, and numbers.');
+        isValid = false;
+    }
+
     if (isValid) {
-        // Form submission logic (e.g., sending data to server)
-        // ... (code remains the same)
+        form.submit(); // Submit the form if all validations pass
     }
 });

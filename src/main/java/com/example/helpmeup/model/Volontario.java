@@ -17,7 +17,7 @@ public class Volontario extends Utente{
     joinColumns = @JoinColumn(name = "account_id"),
     inverseJoinColumns = @JoinColumn(name = "premio_id")
     )
-    private ArrayList<Premio> premi;
+    private List<Premio> premi;
 
     @ManyToMany
     @JoinTable(
@@ -30,12 +30,12 @@ public class Volontario extends Utente{
     public Volontario() {
     }
 
-    public Volontario(String nome, String cognome, String username, String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono, int punti, ArrayList<Premio> premi) {
+    public Volontario(String nome, String cognome, String username, String sesso, String password, LocalDate dataNascita, String email, String indirizzo, String numeroTelefono, int punti, List<Premio> premi) {
         super(nome, cognome, username, sesso, password, dataNascita, email, indirizzo, numeroTelefono);
         this.punti = punti;
         this.premi = premi;
     }
-    public Volontario(Utente utente, int punti, ArrayList<Premio> premi) {
+    public Volontario(Utente utente, int punti, List<Premio> premi) {
         super(utente.getNome(), utente.getCognome(), utente.getUsername(), utente.getSesso(), utente.getPassword(), utente.getDataNascita(), utente.getEmail(), utente.getIndirizzo(), utente.getNumeroTelefono());
         this.punti = punti;
         this.premi = premi;
@@ -55,7 +55,7 @@ public class Volontario extends Utente{
     public void removePunti(int punti) {
         this.punti -= punti;
     }
-    public ArrayList<Premio> getPremi() {
+    public List<Premio> getPremi() {
         return premi;
     }
 

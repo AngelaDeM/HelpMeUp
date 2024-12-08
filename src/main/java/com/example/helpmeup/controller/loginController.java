@@ -1,7 +1,6 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Utente;
-import com.example.helpmeup.model.Volontario;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,7 @@ public class loginController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "Login/Login";
+        return "login";
     }
 
     @PostMapping("/login")
@@ -50,6 +49,6 @@ public class loginController {
     @GetMapping("/logout")
     public String logoutUser(SessionStatus sessionStatus) {
         sessionStatus.setComplete(); // Completa la sessione
-        return "redirect:/Login/Login"; // Reindirizza alla pagina di login
+        return "redirect:login"; // Reindirizza alla pagina di login
     }
 }
