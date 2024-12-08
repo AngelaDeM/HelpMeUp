@@ -3,7 +3,6 @@ package com.example.helpmeup.controller;
 import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.repository.RichiestaRepository;
 import com.example.helpmeup.service.RichiestaService;
-import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,5 +30,12 @@ public class visualizzazioneRichiesteController {
     @GetMapping("/findRichiestaById")
     public Richiesta getRichiestaById(int id){
         return richiestaService.getRichiestaById(id);
+    }
+
+    //Restituisce tutte le richieste di un determinato volontario
+    @GetMapping("/findRichiesteByVolontario")
+    public List<Richiesta> getRichiesteByVolontario(String username){
+        System.out.println("Richieste by volontario");
+        return richiestaService.getRichiesteByVolontario(username);
     }
 }

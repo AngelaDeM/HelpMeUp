@@ -2,7 +2,6 @@ package com.example.helpmeup.service;
 
 import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.repository.RichiestaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +29,11 @@ public class RichiestaService {
 
     public List<Richiesta> getAllRichieste() {
         return richiestaRepository.findAll();
+    }
+
+    //get richieste by volontario
+    public List<Richiesta> getRichiesteByVolontario(String username){
+        return richiestaRepository.getRichiesteByVolontario(username);
     }
 
     public Richiesta getRichiestaById(int id){

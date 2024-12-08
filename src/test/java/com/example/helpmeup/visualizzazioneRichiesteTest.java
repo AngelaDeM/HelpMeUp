@@ -3,7 +3,6 @@ package com.example.helpmeup;
 import com.example.helpmeup.controller.visualizzazioneRichiesteController;
 import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.repository.RichiestaRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
