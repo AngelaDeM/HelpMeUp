@@ -38,14 +38,7 @@
 <main class="content">
     <section id="dati" class="section">
         <h1>Dati Anagrafici</h1>
-        <p><strong>Usename: </strong> <span id="username" th:text="${utente.username}"></span></p>
-        <p><strong>Nome:</strong> <span th:text="${utente.nome}"></span></p>
-        <p><strong>Cognome:</strong> <span th:text="${utente.cognome}"></span></p>
-        <p><strong>Data di nascita:</strong> <span th:text="${utente.dataNascita}"></span></p>
-        <p><strong>Indirizzo:</strong> <span th:text="${utente.indirizzo}"></span></p>
-        <p><strong>Telefono:</strong> <span th:text="${utente.numeroTelefono}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${utente.email}"></span></p>
-        <p><strong>Ruolo:</strong> <span th:text="${tipo} == 'volontario' ? 'Volontario' : 'Assistito'"></span></p>
+        <p>Contenuto per la sezione Dati Anagrafici...</p>
     </section>
 
     <section id="richieste" class="section">
@@ -65,52 +58,18 @@
 </main>
 </div>
 
-<script src="/js/area_utente.js"></script>
+<script src="../static/js/area_utente.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(function() {
         $("#navbar").load("navbar.html");
     });
-
     $(document).ready(function() {
-        // Ottieni l'username dell'utente attualmente loggato
-        let username = $('#username').data('username');
-        // Effettua la richiesta AJAX per ottenere le richieste di un determinato volontario
-        $.ajax({
-            url: '/findRichiesteByVolontario?username=' + encodeURIComponent(username),
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                // Genera dinamicamente il contenuto per la sezione delle richieste
-                let htmlContent = '';
-                if (data && data.length > 0) {
-                    data.forEach(function(richiesta) {
-                        htmlContent += `
-                        <div class="richiesta">
-                            <h2>${richiesta.titolo}</h2>
-                            <p><strong>Descrizione:</strong> ${richiesta.descrizione}</p>
-                            <p><strong>Data di Creazione:</strong> ${richiesta.dataCreazione}</p>
-                            <p><strong>Data di Intervento:</strong> ${richiesta.dataIntervento}</p>
-                            <p><strong>Orario di Intervento:</strong> ${richiesta.orarioIntervento}</p>
-                            <p><strong>Emergenza:</strong> ${richiesta.emergenza ? 'Sì' : 'No'}</p>
-                            <p><strong>Punti:</strong> ${richiesta.punti}</p>
-                        </div>
-                    `;
-                    });
-                } else {
-                    htmlContent = '<p>Non ci sono richieste disponibili.</p>';
-                }
-                // Inserisci il contenuto nella sezione #richieste
-                $('#richieste').html(htmlContent);
-            },
-            error: function(xhr, status, error) {
-                console.error('Errore nella richiesta AJAX:', error);
-                $('#richieste').html('<p>Si è verificato un errore nel recupero delle richieste.</p>');
-            }
+        $("#richieste").load("lista_richieste.html", function() {
+            // Applica il CSS dinamicamente, se necessario
+            $('<link rel="stylesheet" href="/css/lista_richieste.css">').appendTo('head');
         });
-    }); 
-
-
+    });
     $(function() {
         $("#calendario").load("calendario.html");
     });
