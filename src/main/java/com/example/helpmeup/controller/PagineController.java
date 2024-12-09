@@ -28,4 +28,10 @@ public class PagineController {
     public String mostraForum() {
         return "Varie/forum";
     }
+
+
+@GetMapping("/punti")
+public String mostraPunti() {
+    return "Punti/punti";
+}
 }

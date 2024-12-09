@@ -33,6 +33,6 @@ public class PersonalAreaController {
             // Eventuali altre informazioni per l'assistito
         }
 
-        return "area_utente";  // Nome del template da visualizzare
+        return "AreaUtente/area_utente";  // Nome del template da visualizzare
     }
 }

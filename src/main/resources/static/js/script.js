@@ -35,29 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Password must be at least 8 characters long.');
             return;
         }
+        loginForm.submit();
 
-        // Simulate sending data to the server (replace with actual server-side logic)
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Successful login
-                    alert('Login successful!');
-                    // Redirect to the desired page
-                    window.location.href = 'dashboard.html'; // Replace with your desired URL
-                } else {
-                    // Handle login failure
-                    alert('Login failed. Please check your credentials.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again later.');
-            });
     });
 });

@@ -1,24 +1,21 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Richiesta;
-import com.example.helpmeup.model.Volontario;
-import com.example.helpmeup.repository.RichiestaRepository;
 import com.example.helpmeup.service.RichiestaService;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.time.LocalDate;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Optional;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/richieste")
@@ -31,6 +28,10 @@ public class RichiestaController {
         this.richiestaService = richiestaService;
     }
 
+    @GetMapping("/lista")
+    public String mostraLista() {
+        return "Richiesta/lista_richieste";
+    }
     @GetMapping("/pubblica")
     public String mostraFormPubblicazione() {
         return "Richiesta/pubblica_richiesta";

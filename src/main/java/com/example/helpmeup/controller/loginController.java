@@ -44,7 +44,7 @@ public class loginController {
         // Set the user in the session
         model.addAttribute("utente", utente);
 
-        return "redirect:/success"; // Reindirizza alla homepage
+        return "redirect:/"; // Reindirizza alla homepage
     }
     @GetMapping("/logout")
     public String logoutUser(SessionStatus sessionStatus) {
