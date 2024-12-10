@@ -154,10 +154,11 @@ public class registrazioneController {
         }
 
         // Reindirizza alla pagina di successo
-        return "redirect:/success"; // Reindirizza a /success dopo il salvataggio
+        model.addAttribute("user", utente);
+        return "success"; // Reindirizza a /success dopo il salvataggio
     }
     @GetMapping("/success")
     public String showSuccessPage() {
-        return "success"; // Reindirizza a /success dopo il salvataggio
+        return "success"; // Reindirizza a /success
     }
 }
