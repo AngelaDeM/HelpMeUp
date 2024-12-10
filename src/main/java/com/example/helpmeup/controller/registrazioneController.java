@@ -45,8 +45,6 @@ public class registrazioneController {
                                @RequestParam("number") String numeroCivico,
                                @ModelAttribute("user") Volontario utente,
                                Model model) {
-        //stampa di prova
-        System.out.println("User type: " + userType);
         // Mappa i campi dal form all'oggetto utente
         utente.setNome(utente.getNome());
         utente.setCognome(utente.getCognome());
