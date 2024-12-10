@@ -58,23 +58,22 @@
 </main>
 </div>
 
-<script src="../../static/js/area_utente.js"></script>
+<script th:href="@{/js/area_utente.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $("#richieste").load("lista_richieste.html", function() {
+        $("#richieste").load("/lista_richieste", function() {
             // Applica il CSS dinamicamente, se necessario
             $('<link rel="stylesheet" href="/css/lista_richieste.css">').appendTo('head');
         });
     });
     $(function() {
-        $("#calendario").load("calendario.html");
+        $("#calendario").load("/calendario");
     });
 
     $(function() {
-        $("#punti").load("punti.html");
+        $("#punti").load("/punti");
     });
-
 </script>
 </body>
 </html>
