@@ -68,7 +68,7 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
 
 
     @Modifying
-    @Query(value = "SELECT r FROM Richiesta r JOIN richiesta_utenti ru ON r.id = ru.richiesta WHERE ru.account_id = username", nativeQuery = true)
+    @Query(value = "SELECT r FROM Richiesta r JOIN richiesta_utenti ru ON r.id = ru.richiesta WHERE ru.account_id = :username", nativeQuery = true)
     List<Richiesta> getRichiesteByVolontario(String username);
 
 
