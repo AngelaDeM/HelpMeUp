@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import com.example.helpmeup.controller.EmergenzaListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
+@EntityListeners(EmergenzaListener.class)
 @Table(name = "richiesta")
 public class Richiesta {
 
