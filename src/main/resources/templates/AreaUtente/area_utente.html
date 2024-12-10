@@ -12,7 +12,7 @@
 
 
 <body>
-<div id="navbar"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="total">
 <!-- Icona hamburger -->
 <div class="hamburger" id="hamburger">
@@ -61,9 +61,6 @@
 <script src="../../static/js/area_utente.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(function() {
-        $("#navbar").load("navbar.html");
-    });
     $(document).ready(function() {
         $("#richieste").load("lista_richieste.html", function() {
             // Applica il CSS dinamicamente, se necessario
