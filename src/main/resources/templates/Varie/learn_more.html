@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div id="navbar"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
 <main>
     <section id="hero">
         <h1>Benvenuti su HelpMeUp</h1>
@@ -60,10 +60,6 @@
     function scrollToSection(sectionId) {
     document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
 }
-
-    $(function() {
-        $("#navbar").load("navbar.html");
-    });
 </script>
 
 
