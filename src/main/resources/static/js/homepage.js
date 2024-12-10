@@ -19,7 +19,7 @@ for (var i = 0; i < classname.length; i++) {
 
 
     document.getElementById("button").addEventListener("click", function() {
-    window.location.href = "learn_more.html";
+    window.location.href = "learn_more";
 });
 
 
