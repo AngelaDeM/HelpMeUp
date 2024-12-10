@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
-@DiscriminatorValue("volontario")
+@DiscriminatorValue("Volontario")
 public class Volontario extends Utente{
 
     private int punti;

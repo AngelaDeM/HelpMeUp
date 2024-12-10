@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("assistito")
+@DiscriminatorValue("Assistito")
 public class Assistito extends Utente{
     @OneToMany
     private List<Richiesta> richieste;
