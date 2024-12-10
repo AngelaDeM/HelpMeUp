@@ -3,6 +3,7 @@ package com.example.helpmeup.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 import com.example.helpmeup.controller.EmergenzaListener;
 import jakarta.persistence.*;
@@ -12,9 +13,6 @@ import jakarta.validation.constraints.*;
 @EntityListeners(EmergenzaListener.class)
 @Table(name = "richiesta")
 public class Richiesta {
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
@@ -27,6 +25,13 @@ public class Richiesta {
     private boolean emergenza;
     private boolean completato = false;
 
+    //Many to many with Utente
+    @ManyToMany
+    @JoinTable(
+            name = "richiesta_utenti",
+            joinColumns = @JoinColumn(name = "richiesta_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_id"))
+    private List<Utente> utenti;
 
     public Richiesta() {
         this.punti = 50;
