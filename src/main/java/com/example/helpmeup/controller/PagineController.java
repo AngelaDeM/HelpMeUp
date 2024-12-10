@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 public class PagineController {
 
-    public PagineController(){}
+    public PagineController() {
+    }
 
     @GetMapping("/index")
     public String mostraIndex() {
@@ -29,9 +30,20 @@ public class PagineController {
         return "Varie/forum";
     }
 
+    @GetMapping("/punti")
+    public String mostraPunti() {
+        return "Punti/punti";
+    }
 
-@GetMapping("/punti")
-public String mostraPunti() {
-    return "Punti/punti";
-}
+    //Visualizza lista richieste
+    @GetMapping("/lista_richieste")
+    public String mostraRichieste() {
+        return "Richiesta/lista_richieste";
+    }
+
+    //Visualizza calendario
+    @GetMapping("/calendario")
+    public String mostraCalendario() {
+        return "AreaUtente/calendario";
+    }
 }
