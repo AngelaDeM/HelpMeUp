@@ -9,7 +9,8 @@
 </head>
 
 <body>
-<div id="navbar"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
+
 
 <main>
     <section class="introduzione">
@@ -98,11 +99,5 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    $(function() {
-        $("#navbar").load("navbar.html");
-    });
-</script>
 </body>
 </html>
