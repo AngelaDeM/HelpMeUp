@@ -10,20 +10,44 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.support.SessionStatus;
 import com.example.helpmeup.repository.UtenteRepository;
+
+/**
+ * Controller per la gestione del login.
+ *
+ * @Author Claudio
+ */
 @Controller
 @SessionAttributes("utente")
 public class loginController {
     private final UtenteRepository utenteRepository;
 
+    /**
+     * Costruttore del controller per il login.
+     *
+     * @param utenteRepository il repository degli utenti
+     */
     public loginController(UtenteRepository utenteRepository) {
         this.utenteRepository = utenteRepository;
     }
 
+    /**
+     * Mostra il form di login.
+     *
+     * @return String
+     */
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
     }
 
+    /**
+     * Gestisce il login dell'utente.
+     *
+     * @param username l'username dell'utente
+     * @param password la password dell'utente
+     * @param model il modello
+     * @return String
+     */
     @PostMapping("/login")
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
         Utente utente = utenteRepository.findByUsername(username);
@@ -46,6 +70,13 @@ public class loginController {
 
         return "redirect:/"; // Reindirizza alla homepage
     }
+
+    /**
+     * Gestisce il logout dell'utente.
+     *
+     * @param sessionStatus lo stato della sessione
+     * @return String
+     */
     @GetMapping("/logout")
     public String logoutUser(SessionStatus sessionStatus) {
         sessionStatus.setComplete(); // Completa la sessione
