@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Controller per la gestione della registrazione degli utenti.
+ *
+ * @author Domenico
+ */
 @Controller
 public class registrazioneController {
 
@@ -23,6 +28,14 @@ public class registrazioneController {
     private final AssistitoService assistitoService;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Costruttore del controller di registrazione.
+     *
+     * @param volontarioService il servizio per la gestione dei volontari
+     * @param assistitoService il servizio per la gestione degli assistiti
+     * @param passwordEncoder l'encoder per la codifica delle password
+     * @param assistitoRepository il repository per la gestione degli assistiti
+     */
     @Autowired
     public registrazioneController(VolontarioService volontarioService, AssistitoService assistitoService, PasswordEncoder passwordEncoder, AssistitoRepository assistitoRepository) {
         this.volontarioService = volontarioService;
@@ -30,12 +43,31 @@ public class registrazioneController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Mostra il form di registrazione.
+     *
+     * @param model il modello per la vista
+     * @return il nome della vista di registrazione
+     */
     @GetMapping("/registrazione")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Volontario());
         return "registrazione";
     }
 
+    /**
+     * Registra un nuovo utente.
+     *
+     * @param userType il tipo di utente (volontario o assistito)
+     * @param confirmPassword la conferma della password
+     * @param provincia la provincia dell'indirizzo
+     * @param citta la città dell'indirizzo
+     * @param via la via dell'indirizzo
+     * @param numeroCivico il numero civico dell'indirizzo
+     * @param utente l'oggetto utente da registrare
+     * @param model il modello per la vista
+     * @return il nome della vista di successo o di registrazione in caso di errore
+     */
     @PostMapping("/registrazione")
     public String registerUser(@RequestParam("user_type") String userType,
                                @RequestParam("confirm-password") String confirmPassword,
@@ -56,6 +88,10 @@ public class registrazioneController {
         utente.setUsername(utente.getUsername());
         utente.setEmail(utente.getEmail());
         utente.setPassword(utente.getPassword());
+
+        /**
+         * Validazione dei campi del form
+         */
 
         // Validazione del nome
         if (!utente.getNome().matches("^[a-zA-Z]{1,50}$")) {
@@ -127,18 +163,18 @@ public class registrazioneController {
         // Imposta la password codificata
         utente.setPassword(passwordEncoder.encode(utente.getPassword()));
 
-            // Check if email or username already exists
-            if (volontarioService.verificaEmail(utente.getEmail()) || assistitoService.verificaEmail(utente.getEmail())) {
-                model.addAttribute("error", "Errore: l'email è già in uso!");
-                model.addAttribute("user", utente);
-                return "registrazione";
-            }
+        // Check if email or username already exists
+        if (volontarioService.verificaEmail(utente.getEmail()) || assistitoService.verificaEmail(utente.getEmail())) {
+            model.addAttribute("error", "Errore: l'email è già in uso!");
+            model.addAttribute("user", utente);
+            return "registrazione";
+        }
 
-            if (volontarioService.verificaUsername(utente.getUsername()) || assistitoService.verificaUsername(utente.getUsername())) {
-                model.addAttribute("error", "Errore: lo username è già in uso!");
-                model.addAttribute("user", utente);
-                return "registrazione";
-            }
+        if (volontarioService.verificaUsername(utente.getUsername()) || assistitoService.verificaUsername(utente.getUsername())) {
+            model.addAttribute("error", "Errore: lo username è già in uso!");
+            model.addAttribute("user", utente);
+            return "registrazione";
+        }
 
         // Create the appropriate user type
         if ("volontario".equalsIgnoreCase(userType)) {
@@ -157,6 +193,12 @@ public class registrazioneController {
         model.addAttribute("user", utente);
         return "success"; // Reindirizza a /success dopo il salvataggio
     }
+
+    /**
+     * Mostra la pagina di successo.
+     *
+     * @return il nome della vista di successo
+     */
     @GetMapping("/success")
     public String showSuccessPage() {
         return "success"; // Reindirizza a /success
