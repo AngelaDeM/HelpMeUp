@@ -37,8 +37,8 @@ public class EventoService {
      * @param data la data dell'evento
      * @param ora l'ora dell'evento
      */
-    public void insertEvento(String nome, LocalDate data, LocalTime ora) {
-        eventoRepository.insertEvento(nome, data, ora);
+    public void insertEvento(String nome, LocalDate data, LocalTime ora, String utente) {
+        eventoRepository.insertEvento(nome, data, ora, utente);
     }
 
     /**
@@ -69,6 +69,16 @@ public class EventoService {
      */
     public List<Evento> findAll() {
         return eventoRepository.findAll();
+    }
+
+    /**
+     * Restituisce tutti gli eventi di un utente.
+     *
+     * @param username l'username dell'utente di cui si vogliono ottenere gli eventi
+     * @return la lista di tutti gli eventi dell'utente
+     */
+    public List<Evento> findByUtente(String username) {
+        return eventoRepository.findByUtente(username);
     }
 
     /**
