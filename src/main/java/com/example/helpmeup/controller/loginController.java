@@ -14,7 +14,7 @@ import com.example.helpmeup.repository.UtenteRepository;
 /**
  * Controller per la gestione del login.
  *
- * @Author Claudio
+ * @author Claudio
  */
 @Controller
 @SessionAttributes("utente")

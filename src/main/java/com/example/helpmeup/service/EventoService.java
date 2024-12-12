@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Service per la gestione degli eventi.
  *
- * @Author Claudio
+ * @author Claudio
  */
 @Service
 public class EventoService {

@@ -15,7 +15,7 @@ import java.time.LocalTime;
  *
  * @see Evento
  *
- * @Author Claudio
+ * @author Claudio
  */
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Integer> {
