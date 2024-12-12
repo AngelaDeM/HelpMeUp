@@ -37,14 +37,22 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
     List<Evento> findAll();
 
     /**
+     * Restituisce tutti gli eventi di un utente.
+     *
+     * @param username l'username dell'utente di cui si vogliono ottenere gli eventi
+     * @return la lista di tutti gli eventi dell'utente
+     */
+    List<Evento> findByUtente(String username);
+
+    /**
      * Inserisce un nuovo evento.
      *
      * @param nome il nome dell'evento
      * @param data la data dell'evento
      * @param ora l'ora dell'evento
      */
-    @Query(value = "INSERT INTO evento (nome, data_evento, ora) VALUES (:nome, :data, :ora)", nativeQuery = true)
-    void insertEvento(String nome, LocalDate data, LocalTime ora);
+    @Query(value = "INSERT INTO evento (nome, data_evento, ora, utente) VALUES (:nome, :data, :ora, :utente)", nativeQuery = true)
+    void insertEvento(String nome, LocalDate data, LocalTime ora, String utente);
 
     /**
      * Elimina l'evento con l'id specificato.
