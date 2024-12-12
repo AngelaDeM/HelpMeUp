@@ -45,6 +45,17 @@ CREATE TABLE Premio (
                         punti_richiesti INT NOT NULL
 );
 
+--Tabella Evento per il calendario
+CREATE TABLE Evento(
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       utente VARCHAR(50),
+                       nome VARCHAR(100),
+                       data_evento DATE NOT NULL,
+                       ora TIME NOT NULL,
+
+                       FOREIGN KEY (utente) REFERENCES Utente(username) ON DELETE CASCADE
+);
+
 -- Tabella Riscatti Premi
 CREATE TABLE riscatti_premi (
                                 account_id VARCHAR(50) NOT NULL,
