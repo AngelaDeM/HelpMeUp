@@ -98,4 +98,10 @@ public class CalendarioController {
     public List<Evento> findByUtente(String username) {
         return eventoService.findByUtente(username);
     }
+
+    //restituisce la data odierna
+    @GetMapping("/getToday")
+    public LocalDate getToday() {
+        return LocalDate.now();
+    }
 }
