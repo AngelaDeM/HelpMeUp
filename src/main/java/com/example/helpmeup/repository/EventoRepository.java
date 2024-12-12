@@ -42,6 +42,7 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      * @param username l'username dell'utente di cui si vogliono ottenere gli eventi
      * @return la lista di tutti gli eventi dell'utente
      */
+    @Query(value = "SELECT * FROM Evento WHERE utente = :username   ", nativeQuery = true)
     List<Evento> findByUtente(String username);
 
     /**
@@ -51,7 +52,7 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      * @param data la data dell'evento
      * @param ora l'ora dell'evento
      */
-    @Query(value = "INSERT INTO evento (nome, data_evento, ora, utente) VALUES (:nome, :data, :ora, :utente)", nativeQuery = true)
+    @Query(value = "INSERT INTO Evento (nome, data_evento, ora, utente) VALUES (:nome, :data, :ora, :utente)", nativeQuery = true)
     void insertEvento(String nome, LocalDate data, LocalTime ora, String utente);
 
     /**
@@ -59,7 +60,7 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      *
      * @param id l'id dell'evento
      */
-    @Query(value = "DELETE FROM evento WHERE id = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM Evento WHERE id = :id", nativeQuery = true)
     void deleteEvento(int id);
 
     /**
@@ -70,6 +71,6 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      * @param data la data dell'evento
      * @param ora l'ora dell'evento
      */
-    @Query(value = "UPDATE evento SET nome = :nome, data_evento = :data, ora = :ora WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Evento SET nome = :nome, data_evento = :data, ora = :ora WHERE id = :id", nativeQuery = true)
     void updateEvento(int id, String nome, LocalDate data, LocalTime ora);
 }
