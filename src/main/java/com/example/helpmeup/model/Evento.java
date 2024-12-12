@@ -9,6 +9,9 @@ import java.time.LocalTime;
 public class Evento {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "utente")
+    private Utente utente;
     private String nome;
     @Column(name = "data_evento")
     private LocalDate data;
@@ -17,7 +20,7 @@ public class Evento {
     public Evento() {
     }
 
-    public Evento(String nome, LocalDate data, LocalTime ora) {
+    public Evento(String nome, LocalDate data, LocalTime ora, Utente utente) {
         this.nome = nome;
         this.data = data;
         this.ora = ora;
@@ -53,5 +56,23 @@ public class Evento {
 
     public void setOra(LocalTime ora) {
         this.ora = ora;
+    }
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", data=" + data +
+                ", ora=" + ora +
+                '}';
     }
 }
