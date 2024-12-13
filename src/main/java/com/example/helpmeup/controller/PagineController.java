@@ -1,6 +1,9 @@
 package com.example.helpmeup.controller;
 
+import com.example.helpmeup.model.Utente;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -45,5 +48,16 @@ public class PagineController {
     @GetMapping("/calendario")
     public String mostraCalendario() {
         return "AreaUtente/calendario";
+    }
+
+    //Visualizza dati anagrafici
+    @GetMapping("/dati_anagrafici")
+    public String mostraDatiAnagrafici(HttpSession session, Model model) {
+        // Recupera l'utente dalla sessione
+        Utente user = (Utente) session.getAttribute("utente");
+
+        // Aggiungi l'oggetto user al modello per Thymeleaf
+        model.addAttribute("utente", user);
+        return "AreaUtente/dati_anagrafici";
     }
 }

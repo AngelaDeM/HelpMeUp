@@ -16,6 +16,7 @@ import java.util.List;
  *
  * @author ROBERTO-SCARPA
  * @author fimiani
+ * @author Domenico
  *
  * @see Volontario
  */

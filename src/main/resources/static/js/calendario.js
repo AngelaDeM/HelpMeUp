@@ -61,7 +61,6 @@ function CalendarApp(date) {
     /* Start the app */
     this.showView(date);
     this.addEventListeners();
-    this.todayIsSpan.textContent = "Oggi è il " + date.getDate()  + " " + this.months[date.getMonth()] ;
 }
 
     CalendarApp.prototype.addEventListeners = function(){

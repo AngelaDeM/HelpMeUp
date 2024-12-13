@@ -16,24 +16,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller per la visualizzazione delle richieste.
+ *
+ * @author Claudio
+ */
 @Controller
 @RequestMapping("/api")
 @SessionAttributes("richiesta")
-//TODO: Gestire il controllo degli accessi, in modo che solo gli utenti volontari possano visualizzare le richieste
 public class visualizzazioneRichiesteController {
 
     private static final Logger logger = LoggerFactory.getLogger(visualizzazioneRichiesteController.class);
     private final RichiestaService richiestaService;
+
+    /**
+     * Costruttore del controller per la visualizzazione delle richieste.
+     *
+     * @param richiestaRepository il repository delle richieste
+     */
     public visualizzazioneRichiesteController(RichiestaRepository richiestaRepository) {
         this.richiestaService = new RichiestaService(richiestaRepository);
     }
 
-    //Restituisce tutte le richieste presenti nel database
+    /**Restituisce tutte le richieste presenti nel database
+     *
+     * @return List<Richiesta>
+     */
     @GetMapping("/findAllRichieste")
     public @ResponseBody List<Richiesta> getAllRichieste() {
         return richiestaService.getAllRichieste();
     }
 
+    /**Restituisce una richiesta specifica
+     *
+     * @param id l'id della richiesta
+     * @return
+     */
     @GetMapping("/visualizzaRichieste")
     public String mostraPremi() {
         return "Richiesta/visualizza_richieste";
@@ -46,7 +64,11 @@ public class visualizzazioneRichiesteController {
     }
 
 
-    //Restituisce tutte le richieste di un determinato volontario
+    /**Restituisce tutte le richieste di un determinato volontario
+     *
+     * @param username l'username del volontario
+     * @return
+     */
     @PostMapping("/findRichiesteByUser")
     public ResponseEntity<List<Richiesta>> getRichieste( HttpSession session){
         Utente utente = (Utente) session.getAttribute("utente");

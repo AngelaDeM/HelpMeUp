@@ -60,9 +60,9 @@
         </div>
         <div class="calendar--view" id="calendar-view">
             <div class="cview__month">
-                <span class="cview__month-last" id="calendar-month-last">Aprile</span>
-                <span class="cview__month-current" id="calendar-month">Maggio</span>
-                <span class="cview__month-next" id="calendar-month-next">Giugno</span>
+                <span class="cview__month-last" id="calendar-month-last">&lt;-</span>
+                <span class="cview__month-current" id="calendar-month"></span>
+                <span class="cview__month-next" id="calendar-month-next">-&gt;</span>
             </div>
             <div class="cview__header">Dom</div>
             <div class="cview__header">Lun</div>
@@ -76,12 +76,109 @@
             </div>
         </div>
         <div class="footer">
-            <span><span id="footer-date" class="footer__link">Oggi è il 30</span></span>
+            <span><span id="footer-date" class="footer__link"></span></span>
         </div>
     </div>
 </div>
 <script th:href="@{/js/calendario.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // URL del tuo endpoint
+        const eventiEndpoint = '/eventiByUtente';
+
+        // Recupera l'utente loggato
+        const username = 'mariorossi';
+
+        // Array per memorizzare le date degli eventi
+        let eventiDate = [];
+
+        // Ottieni gli eventi dell'utente
+        function loadEventi() {
+            $.ajax({
+                url: eventiEndpoint,
+                type: 'GET',
+                data: { username: username },
+                success: function (eventi) {
+                    eventiDate = eventi.map(evento => ({
+                        date: evento.data,
+                    }));
+                    console.log("eventi recuperati", eventiDate);
+                    // Ricarica il calendario per aggiungere gli eventi
+                    populateCalendar(month, year);
+                },
+                error: function () {
+                    console.error('Errore nel caricamento degli eventi');
+                }
+            });
+        }
+
+        // Carica la data di oggi
+        var d = new Date();
+        var month = d.getMonth() + 1; // I mesi in JavaScript sono indicizzati da 0
+        var day = d.getDate();
+        var year = d.getFullYear();
+
+        var monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+            "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+
+        // Funzione per calcolare il numero di giorni in un mese
+        function getDaysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        // Funzione per popolare i giorni del mese
+        function populateCalendar(month, year) {
+            var daysContainer = $('#dates');
+            daysContainer.empty();
+
+            var firstDay = new Date(year, month - 1, 1).getDay();
+            var daysInMonth = new Date(year, month, 0).getDate();
+
+            for (var i = 0; i < firstDay; i++) {
+                daysContainer.append('<div class="cview__day cview__day--empty"></div>');
+            }
+
+            for (var day = 1; day <= daysInMonth; day++) {
+                const fullDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasEvent = eventiDate.some(evento => evento.date === fullDate);
+
+                const dayClass = day === d.getDate() && month === (d.getMonth() + 1) && year === d.getFullYear()
+                    ? 'cview__day cview__day--today'
+                    : 'cview__day';
+
+                const eventIndicator = hasEvent ? '<div class="event-indicator"></div>' : '';
+
+                daysContainer.append('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
+            }
+                //cambia il nome del mese corrente
+            $('#calendar-month').text(monthNames[month - 1] + ' ' + year);
+        }
+
+        // Popola il calendario per il mese corrente
+        populateCalendar(month, year);
+
+        // Gestisce il cambio di mese (aggiungi i tuoi eventi click per i pulsanti "mese precedente" e "mese successivo")
+        $('#calendar-month-last').click(function() {
+            month--;
+            if (month < 1) {
+                month = 12;
+                year--;
+            }
+            populateCalendar(month, year);
+        });
+
+        $('#calendar-month-next').click(function() {
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+            populateCalendar(month, year);
+        });
+    });
+
+</script>
 </body>
 
 </html>

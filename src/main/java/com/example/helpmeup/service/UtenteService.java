@@ -15,6 +15,7 @@ import java.util.List;
  * @author ROBERTO-SCARPA
  * @author fimiani
  * @author Claudio
+ * @author Domenico
  */
 @Service
 public class UtenteService {
