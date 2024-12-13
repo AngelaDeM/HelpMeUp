@@ -27,10 +27,10 @@
             <h1>AREA UTENTE VOLONTARIO</h1>
         </div>
         <ul class="nav">
-            <li><a href="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
-            <li><a href="#richieste"><i class="fas fa-clipboard-list"></i> Le Tue Richieste</a></li>
-            <li><a href="#calendario"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li><a href="#punti"><i class="fas fa-gem"></i> I tuoi Punti</a></li>
+            <li><a href="#" class="nav-link" data-target="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
+            <li><a href="#" class="nav-link" data-target="#richieste"><i class="fas fa-clipboard-list"></i> Le Tue Richieste</a></li>
+            <li><a href="#" class="nav-link" data-target="#calendario"><i class="fas fa-calendar"></i> Calendario</a></li>
+            <li><a href="#" class="nav-link" data-target="#punti"><i class="fas fa-gem"></i> I tuoi Punti</a></li>
         </ul>
     </div>
 </div>
@@ -62,18 +62,39 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        // Inizialmente nascondi tutte le sezioni
+        $(".section").hide();
+
+        // Quando si clicca su un link, mostra la sezione corrispondente
+        $(".nav-link").click(function(e) {
+            e.preventDefault();  // Evita il comportamento predefinito del link
+
+            // Nascondi tutte le sezioni
+            $(".section").hide();
+
+            // Ottieni l'ID della sezione da mostrare
+            var target = $(this).data("target");
+
+            // Mostra la sezione selezionata
+            $(target).show();
+        });
+
+        // Carica dinamicamente le sezioni
         $("#richieste").load("/lista_richieste", function() {
-            // Applica il CSS dinamicamente, se necessario
             $('<link rel="stylesheet" href="/css/lista_richieste.css">').appendTo('head');
         });
-    });
-    $(function() {
-        $("#calendario").load("/calendario");
-    });
 
-    $(function() {
+        $("#calendario").load("/calendario", function(response, status, xhr) {
+            if (status === "error") {
+                console.log("Errore: " + xhr.status + " " + xhr.statusText);
+            } else {
+                $('<link rel="stylesheet" href="/css/calendario.css">').appendTo('head');
+            }
+        });
+
         $("#punti").load("/punti");
     });
+
 </script>
 </body>
 </html>
