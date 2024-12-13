@@ -1,6 +1,7 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Utente;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +50,7 @@ public class loginController {
      * @return String
      */
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+    public String loginUser(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
         Utente utente = utenteRepository.findByUsername(username);
 
         //stampa di prova
@@ -65,8 +66,8 @@ public class loginController {
             return "redirect:/login?error";
         }
 
-        // Set the user in the session
-        model.addAttribute("utente", utente);
+        // Memorizza l'utente nella sessione
+        session.setAttribute("utente", utente);
 
         return "redirect:/"; // Reindirizza alla homepage
     }
