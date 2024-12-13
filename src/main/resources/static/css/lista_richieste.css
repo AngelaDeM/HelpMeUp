@@ -24,7 +24,7 @@ body.list {
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
 }
 #icon-img{
     font-size: 32px; /* Modifica la dimensione in base alle tue preferenze */
@@ -33,13 +33,6 @@ body.list {
     margin: 10px;
 }
 
-/*h1 {
-    text-align: center;
-    color: #333;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-}
-*/
 .requests-list {
     margin-top: 20px;
 }
@@ -98,7 +91,7 @@ input[type="checkbox"] {
     align-items: flex-start; /* Allinea tutto a sinistra */
 }
 
-#searchInput {
+#searchInput1 {
     width: 100%;
     padding: 10px 15px;
     font-size: 16px;
