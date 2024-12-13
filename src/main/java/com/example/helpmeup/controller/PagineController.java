@@ -46,4 +46,10 @@ public class PagineController {
     public String mostraCalendario() {
         return "AreaUtente/calendario";
     }
+
+    //Visualizza dati anagrafici
+    @GetMapping("/dati_anagrafici")
+    public String mostraDatiAnagrafici() {
+        return "AreaUtente/dati_anagrafici";
+    }
 }

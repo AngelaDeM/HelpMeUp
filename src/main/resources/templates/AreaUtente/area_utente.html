@@ -80,6 +80,10 @@
         });
 
         // Carica dinamicamente le sezioni
+        $("#dati").load("/dati_anagrafici", function() {
+            $('<link rel="stylesheet" href="/css/dati_anagrafici.css">').appendTo('head');
+        });
+
         $("#richieste").load("/lista_richieste", function() {
             $('<link rel="stylesheet" href="/css/lista_richieste.css">').appendTo('head');
         });
