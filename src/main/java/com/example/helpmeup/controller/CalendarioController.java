@@ -3,10 +3,7 @@ package com.example.helpmeup.controller;
 import com.example.helpmeup.model.Evento;
 import com.example.helpmeup.service.EventoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -84,7 +81,7 @@ public class CalendarioController {
      */
 
     @GetMapping("/findAllEventi")
-    public List<Evento> findAll() {
+    public @ResponseBody List<Evento> findAll() {
         return eventoService.findAll();
     }
 
@@ -95,13 +92,7 @@ public class CalendarioController {
      * @return List<Evento>
      */
     @GetMapping("/findByUtente")
-    public List<Evento> findByUtente(String username) {
+    public @ResponseBody List<Evento> findByUtente(String username) {
         return eventoService.findByUtente(username);
-    }
-
-    //restituisce la data odierna
-    @GetMapping("/getToday")
-    public LocalDate getToday() {
-        return LocalDate.now();
     }
 }
