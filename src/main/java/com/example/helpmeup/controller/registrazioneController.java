@@ -5,6 +5,7 @@ import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.repository.AssistitoRepository;
 import com.example.helpmeup.service.AssistitoService;
 import com.example.helpmeup.service.VolontarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,7 +77,7 @@ public class registrazioneController {
                                @RequestParam("address") String via,
                                @RequestParam("number") String numeroCivico,
                                @ModelAttribute("user") Volontario utente,
-                               Model model) {
+                               Model model, HttpSession session) {
         // Mappa i campi dal form all'oggetto utente
         utente.setNome(utente.getNome());
         utente.setCognome(utente.getCognome());
@@ -188,7 +189,9 @@ public class registrazioneController {
             model.addAttribute("user", utente);
             return "registrazione";
         }
-
+        
+        // Memorizza l'utente nella sessione
+        session.setAttribute("utente", utente);
         // Reindirizza alla pagina di successo
         model.addAttribute("user", utente);
         return "success"; // Reindirizza a /success dopo il salvataggio
