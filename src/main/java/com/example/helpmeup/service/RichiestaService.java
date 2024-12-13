@@ -58,7 +58,8 @@ public class RichiestaService {
      * @throws RuntimeException Se si verifica un errore durante l'eliminazione della richiesta.
      */
     public void eliminaRichiesta(Richiesta richiesta) {
-        richiestaRepository.delete(richiesta);
+        richiestaRepository.eliminaRichiestaUtenti(richiesta.getId());
+        richiestaRepository.deleteRichiesta(richiesta.getId());
     }
 
     /**
@@ -146,8 +147,8 @@ public class RichiestaService {
      * @param username Il nome del volontario di cui si desidera ottenere le richieste.
      * @return Una lista di oggetti Richiesta associati al volontario.
      */
-    public List<Richiesta> getRichiesteByVolontario(String username) {
-        return richiestaRepository.getRichiesteByVolontario(username);
+    public List<Richiesta> getRichieste(String username) {
+        return richiestaRepository.getRichieste(username);
     }
 
     /**

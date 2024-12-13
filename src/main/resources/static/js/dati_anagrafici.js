@@ -22,10 +22,10 @@
     document.getElementById('email').value = data.email || '';
 
     // Seleziona il tipo di utente
-    if (data.tipo_utente === 'volontario') {
-    document.getElementById('volontario').checked = true;
-} else if (data.tipo_utente === 'bisognoso di assistenza') {
-    document.getElementById('bisognoso').checked = true;
+    if (data.tipo_account === 'Volontario') {
+    document.getElementById('Volontario').checked = true;
+} else if (data.tipo_account === 'Assistito') {
+    document.getElementById('Assistito').checked = true;
 }
 
 });

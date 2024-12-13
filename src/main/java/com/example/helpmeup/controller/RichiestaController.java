@@ -2,14 +2,17 @@ package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Premio;
 import com.example.helpmeup.model.Richiesta;
+import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.service.RichiestaService;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.PostPersist;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,9 +82,11 @@ public class RichiestaController {
      * @throws Exception Se si verifica un errore durante il processo di registrazione.
      */
     @PostMapping("/pubblica")
-    public ResponseEntity<String> registraRichiesta(@Valid @RequestParam Map<String, String> dati) {
+    public String registraRichiesta(@Valid @RequestParam Map<String, String> dati, HttpSession session, Model model) {
         try {
-            String username = dati.get("assistito");
+            Utente utente = (Utente) session.getAttribute("utente");
+            String username = utente.getUsername();
+            System.out.println(username);
             String titolo = dati.get("titolo");
             String descrizione = dati.get("descrizione");
             LocalDateTime dataPubblicazione = LocalDateTime.now();
@@ -92,10 +97,17 @@ public class RichiestaController {
             Richiesta richiesta = new Richiesta(titolo, descrizione, dataAiuto, oraAiuto, emergenza);
             richiestaService.pubblicaRichiesta(richiesta);
             richiestaService.aiutoRichiesta(richiesta.getId(), username);
-            return ResponseEntity.ok("Registrazione richiesta avvenuta con successo.");
+
+            // Aggiunge un messaggio di successo al modello
+            model.addAttribute("tipo", "Successo");
+            model.addAttribute("message", "Registrazione richiesta avvenuta con successo.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante la registrazione della richiesta: " + e.getMessage());
+            // Aggiunge un messaggio di errore al modello
+            model.addAttribute("tipo", "Errore");
+            model.addAttribute("message", "Errore durante la registrazione della richiesta: " + e.getMessage());
         }
+
+        return "Richiesta/pubblica_richiesta"; // Nome della vista (file HTML)
     }
 
     /**
@@ -151,8 +163,9 @@ public class RichiestaController {
      * @throws Exception Se si verifica un errore durante il processo di modifica.
      */
     @PostMapping("/modifica")
-    public ResponseEntity<String> modificaRichiesta(@Valid @RequestParam Map<String, String> dati) {
+    public String modificaRichiesta(@Valid @RequestParam Map<String, String> dati, Model model) {
         try {
+
             int id = Integer.parseInt(dati.get("richiesta"));
             String titolo = dati.get("titolo");
             String descrizione = dati.get("descrizione");
@@ -163,34 +176,33 @@ public class RichiestaController {
             Optional<Richiesta> richiestaOptional = Optional.ofNullable(richiestaService.getRichiestaById(id));
             if (richiestaOptional.isPresent()) {
                 Richiesta richiesta = richiestaOptional.get();
-                if (richiesta.isCompletato()) {
+                if (!richiesta.isCompletato()) {
                     richiesta.setTitolo(titolo);
                     richiesta.setDescrizione(descrizione);
                     richiesta.setDataAiuto(dataAiuto);
                     richiesta.setOraAiuto(oraAiuto);
                     richiesta.setEmergenza(emergenza);
                     richiestaService.updateRichiesta(richiesta);
-                    return ResponseEntity.ok("Richiesta aggiornata con successo.");
+
+
+                    model.addAttribute("tipo", "Successo");
+                    model.addAttribute("message", "Registrazione richiesta avvenuta con successo.");
                 } else {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta già completata.");
+                    model.addAttribute("tipo", "Error");
+                    model.addAttribute("message", "Registrazione già completa.");
                 }
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta non trovata.");
+                model.addAttribute("tipo", "Error");
+                model.addAttribute("message", "Richiesta non trovata.");
+
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante la modifica della richiesta: " + e.getMessage());
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Errore durante la modifica della richiesta.");
         }
+        return "Richiesta/visualizza_richieste";
     }
 
-    /**
-     * Visualizza il modulo per l'eliminazione di una richiesta.
-     *
-     * @return Il nome della vista per il modulo di eliminazione della richiesta.
-     */
-    @GetMapping("/elimina")
-    public String mostraFormEliminazione() {
-        return "Richiesta/elimina_richiesta";
-    }
 
     /**
      * Elimina una richiesta dal sistema.
@@ -199,24 +211,33 @@ public class RichiestaController {
      * @return ResponseEntity contenente il risultato dell'operazione.
      * @throws Exception Se si verifica un errore durante il processo di eliminazione.
      */
-    @PostMapping("/elimina")
-    public ResponseEntity<String> deleteRichiesta(@Valid @RequestParam Map<String, String> dati) {
+    @GetMapping("/elimina")
+    public String deleteRichiesta(@Valid @RequestParam Map<String, String> dati, Model model) {
         try {
-            int id_richiesta = Integer.parseInt(dati.get("richiesta"));
+            int id_richiesta = Integer.parseInt(dati.get("id"));
+            System.out.println("elimino richiesta"+id_richiesta);
+
             Richiesta richiesta = richiestaService.getRichiestaById(id_richiesta);
             if (!richiesta.isCompletato()) {
                 richiestaService.eliminaRichiesta(richiesta);
-                return ResponseEntity.ok("Richiesta eliminata con successo.");
+                model.addAttribute("tipo", "Successo");
+                model.addAttribute("message", "Richiesta eliminata con successo.");
+
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta già completata.");
+                model.addAttribute("tipo", "Error");
+                model.addAttribute("message", "Richiesta già completata.");
             }
         } catch (NumberFormatException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID richiesta non valido: " + e.getMessage());
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Richiesta non valida.");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta non trovata: " + e.getMessage());
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Richiesta non trovata.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante l'eliminazione della richiesta: " + e.getMessage());
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Errore durante l'eliminazione della richiesta.");
         }
+        return "Richiesta/visualizza_richieste";
     }
 
     /**

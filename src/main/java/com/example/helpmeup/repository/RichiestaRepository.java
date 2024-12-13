@@ -144,9 +144,11 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
      * @param username il nome utente del volontario
      * @return una lista di richieste accettate
      */
-    @Modifying
-    @Query(value = "SELECT r FROM Richiesta r JOIN richiesta_utenti ru ON r.id = ru.richiesta WHERE ru.account_id = :username", nativeQuery = true)
-    List<Richiesta> getRichiesteByVolontario(@Param("username") String username);
+
+    @Query(value = "SELECT r.* FROM Richiesta r " +
+            "JOIN richiesta_utenti ru ON r.id = ru.richiesta " +
+            "WHERE ru.account_id = :username", nativeQuery = true)
+    List<Richiesta> getRichieste(@Param("username") String username);
 
     /**
      * Trova tutte le richieste di emergenza.
@@ -155,4 +157,15 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
      */
     @Query(value = "SELECT r FROM Richiesta WHERE r.emergenza = TRUE", nativeQuery = true)
     List<Richiesta> findAllEmergenze();
+
+    @Modifying
+    @Transactional
+    @Query(value ="DELETE FROM richiesta_utenti WHERE richiesta = :richiesta", nativeQuery = true)
+    void eliminaRichiestaUtenti(@Param("richiesta") int richiesta);
+
+    @Modifying
+    @Transactional
+    @Query(value ="DELETE FROM richiesta WHERE id = :richiesta", nativeQuery = true)
+    void deleteRichiesta(@Param("richiesta") int richiesta);
+
 }

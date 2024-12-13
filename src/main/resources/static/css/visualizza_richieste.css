@@ -1,0 +1,143 @@
+/* Layout base */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+
+    background-color: #f4f4f9;
+    text-align: center; /* Centrato per dispositivi più piccoli */
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-top: 20px;
+}
+
+link{
+    display: inline;
+}
+
+/* Messaggio di errore */
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: none;
+    max-width: 90%;
+    text-align: center;
+    word-wrap: break-word; /* Supporto per testi lunghi */
+}
+
+/* Tabella delle richieste */
+#richiesta-table {
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 30px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#richiesta-table th, #richiesta-table td {
+    padding: 12px 20px;
+    text-align: left;
+}
+
+#richiesta-table th {
+    justify-content: flex-start;
+    background-color: #e05252;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+#richiesta-table td {
+    background-color: #f9f9f9;
+    color: #333;
+    word-wrap: break-word; /* Supporto per testi lunghi nelle celle */
+}
+
+#richiesta-table tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
+
+#richiesta-table tr:hover td {
+    background-color: #fbe5d5;
+    cursor: pointer;
+}
+
+#richiesta-table td {
+    font-size: 0.9rem;
+}
+
+/* Stile responsive */
+@media (max-width: 1024px) {
+    #richiesta-table {
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    #richiesta-table th, #richiesta-table td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    #richiesta-table {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    #richiesta-table th, #richiesta-table td {
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    /* Ottimizzazione per layout stretti */
+    #richiesta-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-top: 15px;
+    }
+
+    #richiesta-table th, #richiesta-table td {
+        padding: 6px;
+        font-size: 0.75rem;
+    }
+
+    #richiesta-table {
+        width: 100%;
+        max-width: none;
+    }
+
+    .error {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+}

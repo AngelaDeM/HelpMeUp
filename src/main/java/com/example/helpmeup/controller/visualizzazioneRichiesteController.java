@@ -1,14 +1,20 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Richiesta;
+import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.repository.RichiestaRepository;
 import com.example.helpmeup.service.RichiestaService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api")
@@ -28,6 +34,11 @@ public class visualizzazioneRichiesteController {
         return richiestaService.getAllRichieste();
     }
 
+    @GetMapping("/visualizzaRichieste")
+    public String mostraPremi() {
+        return "Richiesta/visualizza_richieste";
+    }
+
     //Restituisce una richiesta specifica
     @GetMapping("/findRichiestaById")
     public Richiesta getRichiestaById(int id){
@@ -36,9 +47,10 @@ public class visualizzazioneRichiesteController {
 
 
     //Restituisce tutte le richieste di un determinato volontario
-    @GetMapping("/findRichiesteByVolontario")
-    public List<Richiesta> getRichiesteByVolontario(String username){
-        System.out.println("Richieste by volontario");
-        return richiestaService.getRichiesteByVolontario(username);
+    @PostMapping("/findRichiesteByUser")
+    public ResponseEntity<List<Richiesta>> getRichieste( HttpSession session){
+        Utente utente = (Utente) session.getAttribute("utente");
+        List<Richiesta> l= richiestaService.getRichieste(utente.getUsername());
+        return ResponseEntity.ok(l);
     }
 }

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  <link rel="stylesheet" th:href="@{/css/pubblica_richiesta.css}">
   <meta charset="UTF-8">
-  <title>Invio Richiesta</title>
+  <title>Pubblicazione Richiesta</title>
 </head>
 <body>
-<h1>invio richiesta</h1>
+<h1>Pubblica una richiesta d'aiuto</h1>
 <form th:action="@{/api/richieste/pubblica}" method="POST">
 
-  <label for="assistito">Username assistito:</label>
-  <input type="text" id="assistito" name = "assistito" required><br><br>
+  <div th:if="${message}" class="feedback" th:classappend="${messageType}">
+    <span th:text="${message}"></span>
+  </div>
 
   <label for="titolo">Titolo:</label>
 

@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  <link rel="stylesheet" th:href="@{/css/modifica_richiesta.css}">
   <meta charset="UTF-8">
-  <title>modifica Richiesta</title>
+  <title>Modifica Richiesta</title>
 </head>
 <body>
-<h1>modifica richiesta</h1>
+
+<h1>Modifica richiesta</h1>
+
+<div th:if="${message}" class="feedback" th:classappend="${messageType}">
+  <span th:text="${message}"></span>
+</div>
+
 <form th:action="@{/api/richieste/modifica}" method="POST">
 
-  <label for="richiesta">id:</label>
-  <input type="text" id="richiesta" name="richiesta" required><br><br>
+  <!-- Input nascosto per l'ID della richiesta -->
+  <h1 id="text_id">Richiesta: </h1>
+  <input type="hidden" id="richiesta" name="richiesta"><br><br>
 
   <label for="titolo">Titolo:</label>
   <input type="text" id="titolo" name="titolo" required><br><br>
@@ -27,7 +35,24 @@
   <input type="checkbox" id="emergenza" name="emergenza" value="true">
   <label for="emergenza">Sì, è urgente</label><br><br>
 
-  <input type="submit" value="modifica richiesta">
+  <input type="submit" value="Modifica richiesta">
 </form>
+
+<script>
+  //"api/richieste/modifica?id=13"
+  // Funzione per ottenere il parametro dalla URL
+  function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  // Recupera l'ID dalla query string e lo inserisce nel campo nascosto
+  const richiestaId = getUrlParameter('id');
+  if (richiestaId) {
+    document.getElementById('richiesta').value = richiestaId;
+    document.getElementById('text_id').append(richiestaId);
+  }
+</script>
+
 </body>
 </html>

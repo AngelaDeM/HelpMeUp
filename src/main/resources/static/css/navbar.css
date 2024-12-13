@@ -60,20 +60,27 @@
     color: #000000;
 }
 
-/* Impostazioni per il logo */
-.logo{
-    font-size: 2.3rem;
-    order: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.logo-img {
-    width: 85px;
-    height: auto;
-    margin-right: 15px;
-    margin-left: 30px;
-}
+ /* Impostazioni per il logo */
+ .logo {
+     font-size: 2.3rem;
+     order: 1;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     /* Se vuoi che il div si adatti alle dimensioni dell'immagine */
+     width: auto; /* Assicura che il div non forzi una larghezza */
+     height: auto; /* Mantieni le dimensioni proporzionali */
+ }
+
+ .logo-img {
+     width: 85px; /* Mantieni una larghezza fissa per l'immagine */
+     height: auto; /* Imposta l'altezza automatica per mantenere la proporzione */
+     margin-right: 15px;
+     margin-left: 30px;
+     /* Assicurati che l'immagine non venga schiacciata */
+     display: block; /* Fa sì che l'immagine venga trattata come un blocco */
+ }
+
 
 .logo h1 {
     font-size: 2.3rem;

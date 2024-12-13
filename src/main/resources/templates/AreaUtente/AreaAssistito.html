@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
-    <link rel="stylesheet" href="AreaAssistito.css">
+    <link rel="stylesheet" th:href= "@{css/area_utente.css}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
@@ -15,14 +15,14 @@
     <div class="panel">
         <div class="user-heading">
             <a href="#">
-                <img src="cuore.jpg" alt="Profilo">
+                <img src="/image/cuore.jpg" alt="Profilo">
             </a>
             <h1>AREA UTENTE ASSISTITO</h1>
         </div>
         <ul class="nav">
-            <li><a href="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
-            <li><a href="#richieste"><i class="fas fa-clipboard-list"></i> Le Tue Richieste</a></li>
-            <li><a href="#richieste"><i class="fa-solid fa-pen"></i> Modifica Richieste</a></li>
+            <li><a th:href="@{/data_anagrafici}"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
+            <li><a th:href="@{/api/visualizzaRichieste}"><i class="fas fa-clipboard-list"></i> Le Tue Richieste</a></li>
+            <li><a th:href="@{/api/richieste/pubblica}"><i class="fa-solid fa-pen"></i> Pubblica una Richiesta</a></li>
             <li><a href="#forum"><i class="fa-solid fa-list"></i> Accesso Forum</a></li>
         </ul>
     </div>

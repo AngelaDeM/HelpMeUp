@@ -29,7 +29,7 @@ public class loginController {
         Utente utente = utenteRepository.findByUsername(username);
 
         //stampa di prova
-        System.out.println("User: " + utente.getNome());
+        //System.out.println("User: " + utente.getNome());
 
         if (utente == null) {
             // Handle user not found case
@@ -43,6 +43,7 @@ public class loginController {
 
         // Set the user in the session
         model.addAttribute("utente", utente);
+        System.out.println("Username: " + utente.getUsername());
 
         return "redirect:/"; // Reindirizza alla homepage
     }
