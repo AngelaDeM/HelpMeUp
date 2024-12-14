@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
-    <link rel="stylesheet" href="AreaAssistito.css">
+    <link rel="stylesheet" href="/css/area_utente.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 
 
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="sidebar" id="sidebar">
     <div class="panel">
         <div class="user-heading">
             <a href="#">
-                <img src="cuore.jpg" alt="Profilo">
+                <img src="/image/cuore.jpg" alt="Profilo">
             </a>
             <h1>AREA UTENTE ASSISTITO</h1>
         </div>
         <ul class="nav">
             <li><a href="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
             <li><a href="#richieste"><i class="fas fa-clipboard-list"></i> Le Tue Richieste</a></li>
-            <li><a href="#richieste"><i class="fa-solid fa-pen"></i> Modifica Richieste</a></li>
-            <li><a href="#forum"><i class="fa-solid fa-list"></i> Accesso Forum</a></li>
+            <li><a href="/forum"><i class="fa-solid fa-list"></i> Accesso Forum</a></li>
         </ul>
     </div>
 </div>
@@ -55,6 +55,100 @@
 <div class="hamburger" id="hamburger">
     <i class="fas fa-bars"></i>
 </div>
+<script th:href="@{/js/area_utente.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
 
+
+    // Non mostrare nessuna sezione all'inizio
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+
+    $(document).ready(function() {
+        // Inizialmente nascondi tutte le sezioni
+        $(".section").hide();
+
+        // Quando si clicca su un link, mostra la sezione corrispondente
+        $(".nav-link").click(function (e) {
+            e.preventDefault();  // Evita il comportamento predefinito del link
+
+            // Nascondi tutte le sezioni
+            $(".section").hide();
+
+            // Ottieni l'ID della sezione da mostrare
+            var target = $(this).data("target");
+
+            // Mostra la sezione selezionata
+            $(target).show();
+        });
+
+        // Carica dinamicamente le sezioni
+        $("#dati").load("/dati_anagrafici", function () {
+            $('<link rel="stylesheet" href="/css/dati_anagrafici.css">').appendTo('head');
+            console.log('Sezione Dati Anagrafici caricata');
+            document.querySelector('#dati').classList.add('active');
+
+            // Ora, associamo correttamente il codice che inizializza i dati utente e gli eventi
+
+            const form = document.getElementById('user-form');
+            const editButton = document.getElementById('edit-button');
+            const confirmButton = document.getElementById('confirm-button');
+            const inputs = form.querySelectorAll('input');
+
+            // Riassocia l'evento 'click' al pulsante Modifica Dati
+            editButton.addEventListener('click', () => {
+                console.log('Pulsante Modifica Dati cliccato');
+                inputs.forEach(input => input.disabled = false); // Abilita i campi
+                editButton.style.display = 'none'; // Nasconde "Modifica Dati"
+                confirmButton.style.display = 'block'; // Mostra "Conferma Modifiche"
+            });
+
+            // Gestione dell'invio del form
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                // Raccolta dati modificati
+                const updatedData = {};
+                inputs.forEach(input => {
+                    if (!input.disabled && input.value !== input.defaultValue) {
+                        updatedData[input.name] = input.value;
+                    }
+                });
+
+                if (Object.keys(updatedData).length === 0) {
+                    showPopup('Nessuna modifica effettuata.');
+                    return;
+                }
+
+                // Invio dei dati modificati al server
+                fetch('/update-user-data', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedData),
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            showPopup('Dati aggiornati con successo!');
+                            inputs.forEach(input => {
+                                input.defaultValue = input.value; // Aggiorna il valore predefinito
+                                input.disabled = true; // Disabilita i campi dopo l'aggiornamento
+                            });
+                            editButton.style.display = 'block';
+                            confirmButton.style.display = 'none';
+                        } else {
+                            showPopup('Errore durante l\'aggiornamento dei dati.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Errore:', error);
+                        showPopup('Si è verificato un errore. Riprova più tardi.');
+                    });
+            });
+        });
+    });
+</script>
 </body>
 </html>

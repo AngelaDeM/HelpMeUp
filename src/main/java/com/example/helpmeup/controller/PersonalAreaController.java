@@ -41,11 +41,10 @@ public class PersonalAreaController {
             Volontario volontario = (Volontario) utente;
             model.addAttribute("punti", volontario.getPunti());
             model.addAttribute("premi", volontario.getPremi());
-        } else if (utente instanceof Assistito) {
+            return "AreaUtente/area_utente";
+        } else{
             model.addAttribute("tipo", "assistito");
-            // Any other information for the assistito
+            return "AreaUtente/AreaAssistito";
         }
-
-        return "AreaUtente/area_utente";  // Name of the template to display
     }
 }
