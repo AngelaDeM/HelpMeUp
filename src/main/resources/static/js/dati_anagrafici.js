@@ -11,31 +11,26 @@
     fetch('/get-user-data')
     .then(response => response.json())
     .then(data => {
-    document.getElementById('name').value = data.nome || '';
-    document.getElementById('cognome').value = data.cognome || '';
-    document.getElementById('birthdate').value = data.data_nascita || '';
-    document.getElementById('city').value = data.citta || '';
-    document.getElementById('address').value = data.via || '';
-    document.getElementById('number').value = data.numero || '';
-    document.getElementById('phone').value = data.telefono || '';
-    document.getElementById('username').value = data.username || '';
-    document.getElementById('email').value = data.email || '';
 
-    // Seleziona il tipo di utente
-    if (data.tipo_utente === 'volontario') {
-    document.getElementById('volontario').checked = true;
-} else if (data.tipo_utente === 'bisognoso di assistenza') {
-    document.getElementById('bisognoso').checked = true;
-}
-
+        document.getElementById('name').value = data.nome || '';
+        document.getElementById('cognome').value = data.cognome || '';
+        document.getElementById('birthdate').value = data.data_nascita || '';
+        document.getElementById('city').value = data.citta || '';
+        document.getElementById('address').value = data.via || '';
+        document.getElementById('number').value = data.numero || '';
+        document.getElementById('phone').value = data.telefono || '';
+        document.getElementById('username').value = data.username || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('password').value;
 });
 
-    // Enable edit mode
-    editButton.addEventListener('click', () => {
-    inputs.forEach(input => input.disabled = false); // Abilita tutti i campi
-    editButton.style.display = 'none'; // Nasconde il pulsante "Modifica Dati"
-    confirmButton.style.display = 'block'; // Mostra il pulsante "Conferma Modifiche"
-});
+        document.addEventListener('click', function(event) {
+            if (event.target.id === 'edit-button') {
+                inputs.forEach(input => input.disabled = false);
+                editButton.style.display = 'none';
+                confirmButton.style.display = 'block';
+            }
+        });
 
     // Handle form submission
     form.addEventListener('submit', (event) => {
