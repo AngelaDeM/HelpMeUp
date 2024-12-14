@@ -61,4 +61,15 @@ public class visualizzazioneRichiesteController {
     public List<Richiesta> getRichiesteByVolontario(String username){
         return richiestaService.getRichiesteByVolontario(username);
     }
+
+    @GetMapping("/lista_richieste_assistito")
+    public String mostraRichiesteAssistito() {
+        return "Richiesta/lista_richieste_assistito";
+    }
+
+    //find richieste by assistito
+    @GetMapping("/findRichiesteByAssistito")
+    public @ResponseBody List<Richiesta> getRichiesteByAssistito(String username){
+        return richiestaService.getRichiesteByAssistito(username);
+    }
 }

@@ -155,4 +155,13 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
      */
     @Query(value = "SELECT r FROM Richiesta WHERE r.emergenza = TRUE", nativeQuery = true)
     List<Richiesta> findAllEmergenze();
+
+    /**
+     * Restituisce tutte le richieste associate a un assistito.
+     *
+     * @param username il nome utente dell'assistito
+     * @return una lista di richieste associate all'assistito
+     */
+    @Query(value = "SELECT r FROM Richiesta r JOIN richiesta_utenti ru ON r.id = ru.richiesta WHERE ru.account_id = :username", nativeQuery = true)
+    List<Richiesta> getRichiesteByAssistito(String username);
 }
