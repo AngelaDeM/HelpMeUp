@@ -60,4 +60,14 @@ public class PagineController {
         model.addAttribute("utente", user);
         return "AreaUtente/dati_anagrafici";
     }
+
+    @GetMapping("/lista_emergenze")
+    public String mostraEmergenze() {
+        return "AreaUtente/lista_emergenze";
+    }
+
+    @GetMapping("/lista_richieste_assistito")
+    public String mostraRichiesteAssistito() {
+        return "Richiesta/lista_richieste_assistito";
+    }
 }

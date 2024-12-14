@@ -30,12 +30,12 @@ public class PersonalAreaController {
         Utente utente = (Utente) session.getAttribute("utente");
 
         if (utente == null) {
-            return "redirect:/login";  // Reindirizza se non c'è l'utente in sessione
+            return "redirect:/login";  // Redirect if there is no user in session
         }
 
         model.addAttribute("utente", utente);
 
-        // Determina se l'utente è un Volontario o Assistito
+        // Determine if the user is a Volontario or Assistito
         if (utente instanceof Volontario) {
             model.addAttribute("tipo", "volontario");
             Volontario volontario = (Volontario) utente;
@@ -45,8 +45,7 @@ public class PersonalAreaController {
         }
         else if (utente instanceof Assistito) {
             model.addAttribute("tipo", "assistito");
-
-            // Eventuali altre informazioni per l'assistito
+            // Any other information for the assistito
         }
         return "AreaUtente/AreaAssistito";  // Nome del template da visualizzare
 

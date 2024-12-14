@@ -1,4 +1,3 @@
-
 body.list {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f7fa;
@@ -27,11 +26,12 @@ body.list {
     align-items: baseline;
 }
 #icon-img{
-    font-size: 32px; /* Modifica la dimensione in base alle tue preferenze */
+    font-size: 26px; /* Modifica la dimensione in base alle tue preferenze */
     color: #e04c4c;
     cursor: pointer;
     margin: 10px;
 }
+
 
 .requests-list {
     margin-top: 20px;
@@ -91,7 +91,7 @@ input[type="checkbox"] {
     align-items: flex-start; /* Allinea tutto a sinistra */
 }
 
-#searchInput1 {
+#searchInput {
     width: 100%;
     padding: 10px 15px;
     font-size: 16px;
@@ -198,3 +198,4 @@ button {
 button:hover {
     opacity: 0.9;
 }
+

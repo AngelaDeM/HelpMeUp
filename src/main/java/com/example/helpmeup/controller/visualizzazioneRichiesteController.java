@@ -52,21 +52,24 @@ public class visualizzazioneRichiesteController {
      * @param id l'id della richiesta
      * @return
      */
+    @GetMapping("/findRichiestaById")
+    public Richiesta getRichiestaById(int id) {
+        return richiestaService.getRichiestaById(id);
+          }
+
+
     @GetMapping("/visualizzaRichieste")
     public String mostraPremi() {
         return "Richiesta/visualizza_richieste";
     }
 
     //Restituisce una richiesta specifica
-    @GetMapping("/findRichiestaById")
-    public Richiesta getRichiestaById(int id){
-        return richiestaService.getRichiestaById(id);
-    }
+
 
 
     /**Restituisce tutte le richieste di un determinato volontario
      *
-     * @param username l'username del volontario
+     * @param session
      * @return
      */
     @PostMapping("/findRichiesteByUser")

@@ -18,10 +18,8 @@
 });
 });
 
-
-    document.addEventListener('DOMContentLoaded', () => {
         // Funzione per ottenere tutte le richieste
-        fetch('/api/findAllRichieste')
+       /* fetch('/api/findAllRichieste')
             .then(response => {
                 console.log('Risposta ricevuta:', response); // Visualizza l'oggetto Response
                 return response.json();
@@ -66,5 +64,4 @@
                     item.style.display = 'none';
                 }
             });
-        });
-    });
+        }); */

@@ -159,4 +159,8 @@ public class RichiestaService {
     public List<Richiesta> getAllEmergency() {
         return richiestaRepository.findAllEmergenze();
     }
+
+    public List<Richiesta> getRichiesteByAssistito(String username) {
+        return richiestaRepository.getRichiesteByAssistito(username);
+    }
 }

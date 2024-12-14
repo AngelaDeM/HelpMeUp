@@ -78,7 +78,8 @@ public class loginController {
      * @return String
      */
     @GetMapping("/logout")
-    public String logoutUser(SessionStatus sessionStatus) {
+    public String logoutUser(SessionStatus sessionStatus, HttpSession session) {
+        session.removeAttribute("utente"); // Rimuove l'utente dalla sessione
         sessionStatus.setComplete(); // Completa la sessione
         return "redirect:login"; // Reindirizza alla pagina di login
     }
