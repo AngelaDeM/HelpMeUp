@@ -64,11 +64,6 @@ public class visualizzazioneRichiesteController {
         return richiestaService.getRichiesteByVolontario(username);
     }
 
-    @GetMapping("/lista_richieste_assistito")
-    public String mostraRichiesteAssistito() {
-        return "Richiesta/lista_richieste_assistito";
-    }
-
     /**Restituisce tutte le richieste di un determinato assistito
      *
      * @param session

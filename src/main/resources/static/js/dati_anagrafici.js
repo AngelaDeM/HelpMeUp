@@ -5,24 +5,7 @@
     const editButton = document.getElementById('edit-button');
     const confirmButton = document.getElementById('confirm-button');
     const inputs = form.querySelectorAll('input');
-
-
-    // Fetch user data and populate fields
-    fetch('/get-user-data')
-    .then(response => response.json())
-    .then(data => {
-
-        document.getElementById('name').value = data.nome || '';
-        document.getElementById('cognome').value = data.cognome || '';
-        document.getElementById('birthdate').value = data.data_nascita || '';
-        document.getElementById('city').value = data.citta || '';
-        document.getElementById('address').value = data.via || '';
-        document.getElementById('number').value = data.numero || '';
-        document.getElementById('phone').value = data.telefono || '';
-        document.getElementById('username').value = data.username || '';
-        document.getElementById('email').value = data.email || '';
-        document.getElementById('password').value;
-});
+    
 
         document.addEventListener('click', function(event) {
             if (event.target.id === 'edit-button') {
