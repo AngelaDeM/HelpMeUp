@@ -3,6 +3,7 @@ package com.example.helpmeup.controller;
 import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.repository.RichiestaRepository;
 import com.example.helpmeup.service.RichiestaService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -54,11 +55,12 @@ public class visualizzazioneRichiesteController {
 
     /**Restituisce tutte le richieste di un determinato volontario
      *
-     * @param username l'username del volontario
+     * @param session
      * @return
      */
     @GetMapping("/findRichiesteByVolontario")
-    public List<Richiesta> getRichiesteByVolontario(String username){
+    public List<Richiesta> getRichiesteByVolontario(HttpSession session) {
+        String username = (String) session.getAttribute("username");
         return richiestaService.getRichiesteByVolontario(username);
     }
 
@@ -67,9 +69,14 @@ public class visualizzazioneRichiesteController {
         return "Richiesta/lista_richieste_assistito";
     }
 
-    //find richieste by assistito
+    /**Restituisce tutte le richieste di un determinato assistito
+     *
+     * @param session
+     * @return
+     */
     @GetMapping("/findRichiesteByAssistito")
-    public @ResponseBody List<Richiesta> getRichiesteByAssistito(String username){
+    public @ResponseBody List<Richiesta> getRichiesteByAssistito(HttpSession session) {
+        String username = (String) session.getAttribute("username");
         return richiestaService.getRichiesteByAssistito(username);
     }
 }
