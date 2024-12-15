@@ -77,4 +77,8 @@ public class PremioService {
     public Premio getPremioByNome(String id) {
         return premioRepository.getByNome(id);
     }
+
+    public List<Premio> getAllByUser(String utente) {
+        return premioRepository.getByVolontario2(utente);
+    }
 }

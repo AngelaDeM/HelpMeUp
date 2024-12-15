@@ -1,12 +1,17 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Assistito;
+import com.example.helpmeup.model.Premio;
 import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.service.UtenteService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 /**
  * Controller for managing the personal area of users.
@@ -49,5 +54,12 @@ public class PersonalAreaController {
         }
         return "AreaUtente/AreaAssistito";  // Nome del template da visualizzare
 
+    }
+
+    @GetMapping("/get_punti")
+    public ResponseEntity<List<Premio>> visualizzaTuttiIPremi(HttpSession session) {
+        Utente u = (Utente) session.getAttribute("utente");
+        UtenteService utenteService = null;
+        return ResponseEntity.ok(utenteService.getAllPunti(u));
     }
 }

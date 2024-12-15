@@ -86,22 +86,13 @@ body{
     margin-bottom: 20px;
 }
 
-section {
-    display: none;
-}
+
 
 section.active {
     display: block;
 }
 
-/* Hamburger Icon */
-.hamburger {
-    display: none;
-    cursor: pointer;
-    font-size: 30px;
-    color: #000000;
-    margin-left: 20px;
-}
+
 
 
 

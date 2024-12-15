@@ -6,7 +6,11 @@
   <title>Pubblicazione Richiesta</title>
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div id="blocco_dati">
 <h1>Pubblica una richiesta d'aiuto</h1>
+
 <form th:action="@{/api/richieste/pubblica}" method="POST">
 
   <div th:if="${message}" class="feedback" th:classappend="${messageType}">
@@ -32,5 +36,7 @@
 
   <input type="submit" value="Invia richiesta">
 </form>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

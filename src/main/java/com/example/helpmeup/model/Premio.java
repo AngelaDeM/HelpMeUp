@@ -3,6 +3,7 @@ package com.example.helpmeup.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Premio{
@@ -12,7 +13,7 @@ public class Premio{
     private  String descrizione;
     private int puntiRichiesti;
     @ManyToMany(mappedBy = "premi")
-    private ArrayList<Volontario> volontari;
+    private List<Volontario> volontari;
 
     public Premio() {
     }

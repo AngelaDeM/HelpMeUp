@@ -152,6 +152,7 @@ public class RichiestaController {
      */
     @GetMapping("/modifica")
     public String mostraFormModifica() {
+
         return "Richiesta/modifica_richiesta";
     }
 
@@ -183,8 +184,6 @@ public class RichiestaController {
                     richiesta.setOraAiuto(oraAiuto);
                     richiesta.setEmergenza(emergenza);
                     richiestaService.updateRichiesta(richiesta);
-
-
                     model.addAttribute("tipo", "Successo");
                     model.addAttribute("message", "Registrazione richiesta avvenuta con successo.");
                 } else {

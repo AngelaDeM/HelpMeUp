@@ -5,13 +5,14 @@ import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.service.PremioService;
 import com.example.helpmeup.service.UtenteService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.ui.Model;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,15 +45,6 @@ public class PremioController {
         this.utenteService = utenteService;
     }
 
-    /**
-     * Mostra il form per riscattare un premio.
-     *
-     * @return il nome della pagina HTML del form di riscatto
-     */
-    @GetMapping("/riscatta")
-    public String mostraFormRiscatto() {
-        return "Premio/riscatta_premio";
-    }
 
     /**
      * Gestisce il riscatto di un premio da parte di un volontario.
@@ -61,30 +53,33 @@ public class PremioController {
      * @return una risposta HTTP che indica il risultato dell'operazione
      * @throws IllegalArgumentException se si verifica un errore durante il riscatto
      */
-    @PostMapping("/riscatta")
-    public ResponseEntity<?> riscattaPremio(@Valid @RequestParam Map<String, String> dati) {
+    @GetMapping("/riscatta")
+    public String riscattaPremio(@Valid @RequestParam Map<String, String> dati, HttpSession session,Model model) {
         try {
             String id_premio = dati.get("premio");
-            String utente = dati.get("utente");
-            Volontario v = utenteService.getVolontarioByUsername(utente);
+            Utente utente = (Utente) session.getAttribute("utente");
+            String user = utente.getUsername();
+            Volontario v = utenteService.getVolontarioByUsername(user);
             Premio p = premioService.getPremioByNome(id_premio);
             int pt = v.getPunti();
             int pr = p.getPuntiRichiesti();
 
             if (pt >= pr) {
-                premioService.riscattaPremio(id_premio, utente);
+                premioService.riscattaPremio(id_premio, user);
                 v.removePunti(pr);
                 pt = pt - pr;
                 utenteService.updatePuntiVolontario(v.getUsername(), pt);
-                return ResponseEntity.ok("Premio riscattato con successo.");
+                model.addAttribute("tipo","Success.");
+                model.addAttribute("message","Premio riscattato con successo.");
             } else {
-                String messaggio = "Non hai abbastanza punti per riscattare questo premio. "
-                        + "Punti richiesti: " + p.getPuntiRichiesti() + ", punti disponibili: " + v.getPunti();
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(messaggio);
+                model.addAttribute("tipo", "Error");
+                model.addAttribute("message", "Non hai abbastanza punti per riscattare il premio.");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante il riscatto del premio: " + e.getMessage());
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message","Errore durante il riscatto del premio");
         }
+        return "/Premio/visualizza_premi";
     }
 
     /**
@@ -129,19 +124,12 @@ public class PremioController {
      * @return una risposta HTTP contenente la lista dei premi
      */
     @GetMapping("/visualizza")
-    public ResponseEntity<List<Premio>> visualizzaTuttiIPremi() {
+    public ResponseEntity<List<Premio>> visualizzaTuttiIPremi(HttpSession session) {
         List<Premio> premi = premioService.getAllPremi();
+        Utente u = (Utente) session.getAttribute("utente");
+        List<Premio> premiMinus = premioService.getAllByUser(u.getUsername());
+        premi.removeAll(premiMinus);
         return ResponseEntity.ok(premi);
-    }
-
-    /**
-     * Mostra la pagina HTML per visualizzare i premi riscattati da un utente.
-     *
-     * @return il nome della pagina HTML
-     */
-    @GetMapping("/visualizzaByUtente")
-    public String mostraPremiByUser() {
-        return "Premio/visualizza_premi_utente";
     }
 
     /**
@@ -150,10 +138,10 @@ public class PremioController {
      * @param dati una mappa contenente il nome dell'utente
      * @return una risposta HTTP contenente la lista di premi riscattati
      */
-    @PostMapping("/visualizzaByUtente")
-    public ResponseEntity<List<Object[]>> visualizzaPremiByUtente(@Valid @RequestBody Map<String, String> dati) {
-        String utente = dati.get("utente");
-        System.out.println(utente);
+    @GetMapping("/visualizzaByUtente")
+    public ResponseEntity<List<Object[]>> visualizzaPremiByUtente(@Valid @RequestBody Map<String, String> dati,HttpSession sessione) {
+        Utente u = (Utente) sessione.getAttribute("utente");
+        String utente = u.getUsername();
         List<Object[]> premi = premioService.getAllPremiByUser(utente);
 
         // Formatter per ottenere solo "yyyy-MM-dd HH:mm:ss"

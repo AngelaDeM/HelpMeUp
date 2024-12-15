@@ -1,5 +1,6 @@
 package com.example.helpmeup.service;
 
+import com.example.helpmeup.model.Premio;
 import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.repository.UtenteRepository;
@@ -105,5 +106,9 @@ public class UtenteService {
      */
     public void updatePuntiVolontario(String username, int pt) {
         volontarioRepository.updatePunti(username, pt);
+    }
+
+    public List<Premio> getAllPunti(Utente u) {
+        return null;
     }
 }

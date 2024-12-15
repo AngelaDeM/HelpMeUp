@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Utente</title>
     <link rel="stylesheet" th:href= "@{css/area_utente.css}">
+    <link rel="stylesheet" th:href="@{css/dati_anagrafici.css}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
@@ -13,10 +14,7 @@
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="total">
-    <!-- Icona hamburger -->
-    <div class="hamburger" id="hamburger">
-        <i class="fa-solid fa-arrow-right"></i>
-    </div>
+
     <div class="sidebar" id="sidebar">
         <div class="panel">
             <div class="user-heading">
@@ -26,156 +24,76 @@
                 <h1>AREA UTENTE ASSISTITO</h1>
             </div>
             <ul class="nav">
-                <li><a href="#" class="nav-link" data-target="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
-                <li><a href="#" class="nav-link" data-target="#richieste"><i class="fas fa-clipboard-list"></i> Le tue Richieste</a></li>
+                <li><a th:href="@{/api/visualizzaRichieste}"><i class="fas fa-clipboard-list"></i> Le tue Richieste</a></li>
+                <li><a th:href="@{/api/richieste/pubblica}"><i class="fas fa-clipboard-list"></i> Pubblica una Richiesta</a></li>
             </ul>
         </div>
     </div>
 
     <main class="content">
+        <div class="registration-container">
         <section id="dati" class="section">
-            <h1>Dati Anagrafici</h1>
+            <h2>Dati Anagrafici</h2>
+            <form id="user-form">
+
+                <div class="input-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="nome" th:value="${utente.getNome()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" th:value="${utente.getCognome()}" disabled>
+                </div>
+
+
+                <div class="input-group">
+                    <label for="birthdate">Data di nascita:</label>
+                    <input type="date" id="birthdate" name="birthdate" th:value="${utente.getDataNascita()}" disabled>
+                </div>
+
+
+                <div class="input-group">
+                    <label for="address">Indirizzo:</label>
+                    <input type="text" id="address" name="address" th:value="${utente.getIndirizzo()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Numero di Telefono:</label>
+                    <input type="tel" id="phone" name="phone" th:value="${utente.getNumeroTelefono()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" th:value="${utente.getUsername()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" th:value="${utente.getEmail()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Nuova Password:</label>
+                    <input type="password" id="password" name="password" disabled>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" id="edit-button">Modifica Dati</button>
+                    <button type="submit" id="confirm-button" style="display: none;">Conferma Modifiche</button>
+                </div>
+            </form>
+
+
 
         </section>
-
-        <section id="richieste" class="section">
-            <div class="request"></div>
-        </section>
-
-        <section id="calendario" class="section">
-            <h1>Calendario</h1>
-            <p>Contenuto per la sezione Calendario...</p>
-
-        </section>
+</div>
     </main>
 </div>
 
 <script th:href="@{/js/area_utente.js}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+<script src="/js/dati_anagrafici.js"></script>
 
-
-    // Non mostrare nessuna sezione all'inizio
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-
-    $(document).ready(function() {
-        // Inizialmente nascondi tutte le sezioni
-        $(".section").hide();
-
-        // Quando si clicca su un link, mostra la sezione corrispondente
-        $(".nav-link").click(function(e) {
-            e.preventDefault();  // Evita il comportamento predefinito del link
-
-            // Nascondi tutte le sezioni
-            $(".section").hide();
-
-            // Ottieni l'ID della sezione da mostrare
-            var target = $(this).data("target");
-
-            // Mostra la sezione selezionata
-            $(target).show();
-        });
-
-        // Carica dinamicamente le sezioni
-        $("#dati").load("/dati_anagrafici", function() {
-            $('<link rel="stylesheet" href="/css/dati_anagrafici.css">').appendTo('head');
-            console.log('Sezione Dati Anagrafici caricata');
-            document.querySelector('#dati').classList.add('active');
-
-            // Ora, associamo correttamente il codice che inizializza i dati utente e gli eventi
-
-            const form = document.getElementById('user-form');
-            const editButton = document.getElementById('edit-button');
-            const confirmButton = document.getElementById('confirm-button');
-            const inputs = form.querySelectorAll('input');
-
-            // Fetch user data and populate fields
-            fetch('/get-user-data')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('name').value = data.nome || '';
-                    document.getElementById('cognome').value = data.cognome || '';
-                    document.getElementById('birthdate').value = data.data_nascita || '';
-                    document.getElementById('city').value = data.citta || '';
-                    document.getElementById('address').value = data.via || '';
-                    document.getElementById('number').value = data.numero || '';
-                    document.getElementById('phone').value = data.telefono || '';
-                    document.getElementById('username').value = data.username || '';
-                    document.getElementById('email').value = data.email || '';
-                    document.getElementById('password').value;
-
-                });
-
-            // Riassocia l'evento 'click' al pulsante Modifica Dati
-            editButton.addEventListener('click', () => {
-                console.log('Pulsante Modifica Dati cliccato');
-                inputs.forEach(input => input.disabled = false); // Abilita i campi
-                editButton.style.display = 'none'; // Nasconde "Modifica Dati"
-                confirmButton.style.display = 'block'; // Mostra "Conferma Modifiche"
-            });
-
-            // Gestione dell'invio del form
-            form.addEventListener('submit', (event) => {
-                event.preventDefault();
-
-                // Raccolta dati modificati
-                const updatedData = {};
-                inputs.forEach(input => {
-                    if (!input.disabled && input.value !== input.defaultValue) {
-                        updatedData[input.name] = input.value;
-                    }
-                });
-
-                if (Object.keys(updatedData).length === 0) {
-                    showPopup('Nessuna modifica effettuata.');
-                    return;
-                }
-
-                // Invio dei dati modificati al server
-                fetch('/update-user-data', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(updatedData),
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            showPopup('Dati aggiornati con successo!');
-                            inputs.forEach(input => {
-                                input.defaultValue = input.value; // Aggiorna il valore predefinito
-                                input.disabled = true; // Disabilita i campi dopo l'aggiornamento
-                            });
-                            editButton.style.display = 'block';
-                            confirmButton.style.display = 'none';
-                        } else {
-                            showPopup('Errore durante l\'aggiornamento dei dati.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Errore:', error);
-                        showPopup('Si è verificato un errore. Riprova più tardi.');
-                    });
-            });
-        });
-
-
-
-        $("#richieste").load("/lista_richieste_assistito", function() {
-            $('<link rel="stylesheet" href="/css/lista_richieste.css">').appendTo('head');
-        });
-
-        $("#calendario").load("/calendario", function(response, status, xhr) {
-            if (status === "error") {
-                console.log("Errore: " + xhr.status + " " + xhr.statusText);
-            } else {
-                $('<link rel="stylesheet" href="/css/calendario.css">').appendTo('head');
-            }
-        });
-    });
-
-</script>
+<div id ="footer" th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

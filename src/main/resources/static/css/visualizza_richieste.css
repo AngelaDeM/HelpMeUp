@@ -1,5 +1,10 @@
 /* Layout base */
-body {
+table{
+    margin: 50px auto; /* Centra la tabella orizzontalment
+    text-align: center; /* Centra il testo */
+
+}
+main {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -15,7 +20,7 @@ body {
 
 h1 {
     font-size: 2.5rem;
-    color: #333;
+
     margin-top: 20px;
 }
 
@@ -70,6 +75,21 @@ link{
 #richiesta-table tr:nth-child(even) td {
     background-color: #f1f1f1;
 }
+
+.bi-pencil {
+    color: #de6061; /* Colore arancione per la matita */
+    font-size: 30px; /* Impostiamo la dimensione dell'icona */
+}
+
+.bi-trash{
+    color: #de6061; /* Colore arancione per la matita */
+    font-size: 30px; /* Impostiamo la dimensione dell'icona */
+}
+.bi-check-circle{
+    color: #de6061; /* Colore arancione per la matita */
+    font-size: 30px; /* Impostiamo la dimensione dell'icona */
+}
+
 
 #richiesta-table tr:hover td {
     background-color: #fbe5d5;
