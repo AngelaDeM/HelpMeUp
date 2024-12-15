@@ -9,6 +9,7 @@
 </head>
 
 <body>
+<p hidden class="username" th:text="${utente.getUsername()}"></p>
 <div class="container">
     <div class="info">
         <h1>Calendario</h1>
@@ -79,6 +80,18 @@
             <span><span id="footer-date" class="footer__link"></span></span>
         </div>
     </div>
+    <div id="event-details" class="event-details">
+        <div class="event-details-header">
+            <h3>Dettagli Evento</h3>
+            <span id="event-details-close" class="event-details-close">&times;</span>
+        </div>
+        <div id="event-details-content" class="event-details-content">
+            <p><strong>Nome:</strong> <span id="event-name"></span></p>
+            <p><strong>Data:</strong> <span id="event-date"></span></p>
+            <p><strong>Orario:</strong> <span id="event-time"></span></p>
+        </div>
+    </div>
+
 </div>
 <script th:href="@{/js/calendario.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -86,12 +99,15 @@
     $(document).ready(function() {
         // URL del tuo endpoint
         const eventiEndpoint = '/eventiByUtente';
+        const insertEventoEndpoint = '/insertEvento';
 
         // Recupera l'utente loggato
-        const username = 'mariorossi';
+        const username = $('.username').text();
 
         // Array per memorizzare le date degli eventi
         let eventiDate = [];
+        // Array per memorizzare gli eventi
+        let eventiArr = [];
 
         // Ottieni gli eventi dell'utente
         function loadEventi() {
@@ -100,10 +116,12 @@
                 type: 'GET',
                 data: { username: username },
                 success: function (eventi) {
+                    // Salva gli eventi
+                    eventiArr = eventi;
+                    // Salva le date degli eventi
                     eventiDate = eventi.map(evento => ({
                         date: evento.data,
                     }));
-                    console.log("eventi recuperati", eventiDate);
                     // Ricarica il calendario per aggiungere gli eventi
                     populateCalendar(month, year);
                 },
@@ -149,13 +167,77 @@
 
                 const eventIndicator = hasEvent ? '<div class="event-indicator"></div>' : '';
 
+                const dayElement = $('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
+                dayElement.data('date', fullDate);  // Associa la data alla cella del giorno
+                dayElement.on('click', function() {
+                    const selectedDate = $(this).data('date');
+                    showEventForm(selectedDate);
+                });
+
                 daysContainer.append('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
             }
-                //cambia il nome del mese corrente
+            //cambia il nome del mese corrente
             $('#calendar-month').text(monthNames[month - 1] + ' ' + year);
         }
 
-        // Popola il calendario per il mese corrente
+        // Mostra il modulo per l'inserimento dell'evento
+        function showEventForm(date) {
+            $('#day-view-date').text(date);  // Mostra la data selezionata
+            $('#add-day-event-box').attr('data-active', 'true').show();
+        }
+
+        // Salva l'evento
+        $('#add-event-save').on('click', function() {
+            const nome = $('#input-add-event-name').val();
+            const startTime = $('#input-add-event-start-time').val();
+            const startAmpm = $('#input-add-event-start-ampm').val();
+            const data = $('#day-view-date').text();
+
+            const startHour = convertTo24Hour(startTime, startAmpm);
+
+            // Invia i dati al server
+            $.ajax({
+                url: insertEventoEndpoint,
+                type: 'POST',
+                data: {
+                    nome: nome,
+                    data: data,
+                    ora: startHour,
+                    utente: username
+                },
+                success: function() {
+                    alert('Evento inserito con successo');
+                    loadEventi();  // Ricarica gli eventi
+                    $('#add-day-event-box').attr('data-active', 'false').hide();  // Nascondi il modulo
+                },
+                error: function() {
+                    alert('Errore nell\'inserimento dell\'evento');
+                }
+            });
+        });
+
+        // Cancella il modulo
+        $('#add-event-cancel').on('click', function() {
+            $('#add-day-event-box').attr('data-active', 'false').hide();
+        });
+
+        // Funzione per convertire orari am/pm in formato 24 ore
+        function convertTo24Hour(time, ampm) {
+            let [hour, minute] = time.split(':');
+            hour = parseInt(hour);
+            minute = parseInt(minute);
+
+            if (ampm === 'pm' && hour !== 12) {
+                hour += 12;
+            } else if (ampm === 'am' && hour === 12) {
+                hour = 0;
+            }
+
+            return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+        }
+
+        // Carica gli eventi e il calendario all'avvio
+        loadEventi();
         populateCalendar(month, year);
 
         // Gestisce il cambio di mese (aggiungi i tuoi eventi click per i pulsanti "mese precedente" e "mese successivo")
@@ -176,8 +258,53 @@
             }
             populateCalendar(month, year);
         });
-    });
 
+        // Funzione per caricare i dettagli dell'evento in base alla data
+        function showEventDetails(date) {
+            // Trova l'evento che corrisponde alla data selezionata
+            const evento = eventiArr.find(e => e.data === date);
+
+            if (evento) {
+                // Mostra i dettagli nell'interfaccia
+                $('#event-name').text(evento.nome);
+                $('#event-date').text(evento.data);
+                $('#event-time').text(evento.ora);
+
+                // Mostra la finestra modale
+                $('#event-details').fadeIn();
+            } else {
+                // Se non ci sono eventi per quella data
+                alert("Nessun evento trovato per questa data.");
+            }
+        }
+
+        // Funzione per nascondere la finestra dei dettagli
+        $('#event-details-close').click(function() {
+            $('#event-details').fadeOut();
+        });
+
+        // Gestisci il clic su un giorno con evento
+        $('#dates').on('click', '.cview__day', function() {
+            const day = $(this).text(); // Il giorno selezionato, es. "10"
+
+            // Estrai mese e anno visualizzati nella pagina (dal titolo del mese)
+            const monthText = $('#calendar-month').text(); // Es. "Dicembre"
+            const year = parseInt(monthText.split(' ')[1]); // Estrai l'anno, es. "2024"
+
+            // Mappa il nome del mese al numero del mese
+            const months = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+                "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+            const month = months.indexOf(monthText.split(' ')[0]) + 1; // Ottieni il numero del mese
+
+            // Costruisci la data nel formato YYYY-MM-DD
+            const selectedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            console.log('Data selezionata:', selectedDate);
+
+            showEventDetails(selectedDate);
+        });
+
+    });
 </script>
 </body>
 

@@ -46,9 +46,14 @@ public class CalendarioController {
      * @param ora l'ora dell'evento
      */
     @PostMapping("/insertEvento")
-    public void insertEvento(String nome, LocalDate data, LocalTime ora, String utente) {
-        eventoService.insertEvento(nome, data, ora, utente);
+    public void insertEvento(@RequestParam String nome, @RequestParam String data, @RequestParam String ora, @RequestParam String utente) {
+        // Converti la stringa della data e ora in oggetti Java
+        LocalDate eventoData = LocalDate.parse(data);
+        LocalTime eventoOra = LocalTime.parse(ora);
+
+        eventoService.insertEvento(nome, eventoData, eventoOra, utente);
     }
+
 
     /**
      * Elimina l'evento con l'id specificato.
@@ -91,7 +96,7 @@ public class CalendarioController {
      * @param username l'username dell'utente di cui si vogliono ottenere gli eventi
      * @return List<Evento>
      */
-    @GetMapping("/findByUtente")
+    @GetMapping("/eventiByUtente")
     public @ResponseBody List<Evento> findByUtente(String username) {
         return eventoService.findByUtente(username);
     }
