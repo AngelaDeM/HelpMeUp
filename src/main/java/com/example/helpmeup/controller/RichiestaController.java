@@ -216,7 +216,6 @@ public class RichiestaController {
     public String deleteRichiesta(@Valid @RequestParam Map<String, String> dati, Model model) {
         try {
             int id_richiesta = Integer.parseInt(dati.get("id"));
-            System.out.println("elimino richiesta"+id_richiesta);
 
             Richiesta richiesta = richiestaService.getRichiestaById(id_richiesta);
             if (!richiesta.isCompletato()) {
@@ -241,15 +240,6 @@ public class RichiestaController {
         return "Richiesta/visualizza_richieste";
     }
 
-    /**
-     * Visualizza il modulo per il completamento di una richiesta.
-     *
-     * @return Il nome della vista per il modulo di completamento della richiesta.
-     */
-    @GetMapping("/completa")
-    public String mostraFormCompletarichiesta() {
-        return "Richiesta/completa_richiesta";
-    }
 
     /**
      * Completa una richiesta e la segna come terminata.
@@ -258,18 +248,22 @@ public class RichiestaController {
      * @return ResponseEntity contenente il risultato dell'operazione.
      * @throws Exception Se si verifica un errore durante il processo di completamento.
      */
-    @PostMapping("/completa")
-    public ResponseEntity<String> completaRichiesta(@Valid @RequestParam Map<String, String> dati) {
+    @GetMapping("/completa")
+    public String completaRichiesta(@Valid @RequestParam Map<String, String> dati, Model model) {
         try {
-            int id_richiesta = Integer.parseInt(dati.get("richiesta"));
+            int id_richiesta = Integer.parseInt(dati.get("id"));
             List<String> volontari = richiestaService.getVolontari(id_richiesta);
             Richiesta r = richiestaService.getRichiestaById(id_richiesta);
             richiestaService.completaRichiesta(id_richiesta, volontari, r.getPunti());
             richiestaService.getRichiestaById(id_richiesta).setCompletato(true);
-            return ResponseEntity.ok("Richiesta completata con successo.");
+            model.addAttribute("tipo", "Successo");
+            model.addAttribute("message", "Richiesta completata con successo.");
+
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante il completamento della richiesta: " + e.getMessage());
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Errore durante il completamento della richiesta.");
         }
+        return "Richiesta/visualizza_richieste";
     }
 
     /**
