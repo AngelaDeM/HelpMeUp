@@ -1,7 +1,10 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Evento;
+import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.service.EventoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,12 +49,20 @@ public class CalendarioController {
      * @param ora l'ora dell'evento
      */
     @PostMapping("/insertEvento")
-    public void insertEvento(@RequestParam String nome, @RequestParam String data, @RequestParam String ora, @RequestParam String utente) {
+    public String insertEvento(HttpSession session, @RequestParam String nome, @RequestParam String data, @RequestParam String ora, @RequestParam String utente) {
         // Converti la stringa della data e ora in oggetti Java
         LocalDate eventoData = LocalDate.parse(data);
         LocalTime eventoOra = LocalTime.parse(ora);
 
         eventoService.insertEvento(nome, eventoData, eventoOra, utente);
+
+        Utente user = (Utente) session.getAttribute("utente");
+        if(user instanceof Volontario) {
+            return "AreaUtente/area_utente";
+        }
+        else {
+            return "AreaUtente/AreaAssistito";
+        }
     }
 
 

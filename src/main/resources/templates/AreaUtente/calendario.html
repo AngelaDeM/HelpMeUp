@@ -23,36 +23,6 @@
                 <div class="day-highlight">
                     <span class="day-events" id="day-events"> </span>. &nbsp; <span tabindex="0" onkeyup="if(event.keyCode != 13) return; this.click();" class="day-events-link" id="add-event" data-date>Vuoi aggiungere un nuovo evento?</span>
                 </div>
-                <div class="day-add-event" id="add-day-event-box" data-active="false">
-                    <div class="row">
-                        <div class="half">
-                            <label class="add-event-label">
-                                Nome dell'evento
-                                <input type="text" class="add-event-edit add-event-edit--long" placeholder="New event" id="input-add-event-name">
-
-                            </label>
-                        </div>
-                        <div class="qtr">
-                            <label class="add-event-label">
-                                Start Time
-                                <input type="text" class="add-event-edit" placeholder="8:15" id="input-add-event-start-time" data-options="1,2,3,4,5,6,7,8,9,10,11,12" data-format="datetime">
-                                <input type="text" class="add-event-edit" placeholder="am" id="input-add-event-start-ampm" data-options="a,p,am,pm">
-                            </label>
-                        </div>
-                        <div class="qtr">
-                            <label class="add-event-label">
-                                End Time
-                                <input type="text" class="add-event-edit" placeholder="9" id="input-add-event-end-time" data-options="1,2,3,4,5,6,7,8,9,10,11,12" data-format="datetime">
-                                <input type="text" class="add-event-edit" placeholder="am" id="input-add-event-end-ampm" data-options="a,p,am,pm">
-                            </label>
-                        </div>
-                        <div class="half">
-                            <a onkeyup="if(event.keyCode != 13) return; this.click();" tabindex="0" id="add-event-save" class="event-btn--save event-btn">save</a>
-                            <a tabindex="0" id="add-event-cancel" class="event-btn--cancel event-btn">cancel</a>
-                        </div>
-                    </div>
-
-                </div>
                 <div id="day-events-list" class="day-events-list">
 
                 </div>
@@ -91,7 +61,24 @@
             <p><strong>Orario:</strong> <span id="event-time"></span></p>
         </div>
     </div>
+    <!-- Modulo per l'inserimento di un nuovo evento -->
+    <div id="event-form" class="event-form" style="display: none;">
+        <div class="event-form-header">
+            <h3>Aggiungi Nuovo Evento</h3>
+            <span id="event-form-close" class="event-form-close">&times;</span>
+        </div>
+        <form id="new-event-form">
+            <label for="new-event-title">Titolo:</label>
+            <input type="text" id="new-event-title" name="event-title" required>
 
+            <label for="new-event-time">Orario:</label>
+            <input type="time" id="new-event-time" name="event-time" required>
+
+            <input type="hidden" id="new-event-date" name="event-date">
+
+            <button type="submit">Aggiungi Evento</button>
+        </form>
+    </div>
 </div>
 <script th:href="@{/js/calendario.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -103,11 +90,42 @@
 
         // Recupera l'utente loggato
         const username = $('.username').text();
-
         // Array per memorizzare le date degli eventi
         let eventiDate = [];
         // Array per memorizzare gli eventi
         let eventiArr = [];
+
+        function showEventForm(date) {
+            $('#new-event-date').val(date); // Imposta la data nascosta nel modulo
+            $('#event-form').fadeIn(); // Mostra il modulo
+        }
+
+        $('#event-form-close').click(function() {
+            $('#event-form').fadeOut(); // Nascondi il modulo
+        });
+
+        $('#new-event-form').submit(function(event) {
+            event.preventDefault();
+            const titolo = $('#new-event-title').val();
+            const ora = $('#new-event-time').val();
+            const data = $('#new-event-date').val();
+
+            // Effettua una richiesta POST per aggiungere l'evento
+            $.ajax({
+                url: insertEventoEndpoint,
+                type: 'POST',
+                data: { utente: username, nome: titolo, ora: ora, data: data },
+                success: function() {
+                    alert('Evento aggiunto con successo!');
+                    $('#event-form').fadeOut(); // Nascondi il modulo
+                    location.reload(); // Ricarica la pagina per aggiornare il calendario
+                },
+                error: function() {
+                    alert('Errore durante l\'aggiunta dell\'evento.');
+                }
+            });
+        });
+
 
         // Ottieni gli eventi dell'utente
         function loadEventi() {
@@ -169,10 +187,6 @@
 
                 const dayElement = $('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
                 dayElement.data('date', fullDate);  // Associa la data alla cella del giorno
-                dayElement.on('click', function() {
-                    const selectedDate = $(this).data('date');
-                    showEventForm(selectedDate);
-                });
 
                 daysContainer.append('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
             }
@@ -180,46 +194,7 @@
             $('#calendar-month').text(monthNames[month - 1] + ' ' + year);
         }
 
-        // Mostra il modulo per l'inserimento dell'evento
-        function showEventForm(date) {
-            $('#day-view-date').text(date);  // Mostra la data selezionata
-            $('#add-day-event-box').attr('data-active', 'true').show();
-        }
 
-        // Salva l'evento
-        $('#add-event-save').on('click', function() {
-            const nome = $('#input-add-event-name').val();
-            const startTime = $('#input-add-event-start-time').val();
-            const startAmpm = $('#input-add-event-start-ampm').val();
-            const data = $('#day-view-date').text();
-
-            const startHour = convertTo24Hour(startTime, startAmpm);
-
-            // Invia i dati al server
-            $.ajax({
-                url: insertEventoEndpoint,
-                type: 'POST',
-                data: {
-                    nome: nome,
-                    data: data,
-                    ora: startHour,
-                    utente: username
-                },
-                success: function() {
-                    alert('Evento inserito con successo');
-                    loadEventi();  // Ricarica gli eventi
-                    $('#add-day-event-box').attr('data-active', 'false').hide();  // Nascondi il modulo
-                },
-                error: function() {
-                    alert('Errore nell\'inserimento dell\'evento');
-                }
-            });
-        });
-
-        // Cancella il modulo
-        $('#add-event-cancel').on('click', function() {
-            $('#add-day-event-box').attr('data-active', 'false').hide();
-        });
 
         // Funzione per convertire orari am/pm in formato 24 ore
         function convertTo24Hour(time, ampm) {
@@ -273,8 +248,8 @@
                 // Mostra la finestra modale
                 $('#event-details').fadeIn();
             } else {
-                // Se non ci sono eventi per quella data
-                alert("Nessun evento trovato per questa data.");
+                // Se non ci sono eventi per quella data, apri il modulo per aggiungere un evento
+                showEventForm(date);
             }
         }
 
@@ -298,8 +273,6 @@
 
             // Costruisci la data nel formato YYYY-MM-DD
             const selectedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
-            console.log('Data selezionata:', selectedDate);
 
             showEventDetails(selectedDate);
         });

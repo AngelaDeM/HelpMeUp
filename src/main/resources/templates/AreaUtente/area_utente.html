@@ -91,7 +91,6 @@
         // Carica dinamicamente le sezioni
         $("#dati").load("/dati_anagrafici", function() {
             $('<link rel="stylesheet" href="/css/dati_anagrafici.css">').appendTo('head');
-            console.log('Sezione Dati Anagrafici caricata');
             document.querySelector('#dati').classList.add('active');
 
             // Ora, associamo correttamente il codice che inizializza i dati utente e gli eventi

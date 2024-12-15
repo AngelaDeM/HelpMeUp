@@ -99,18 +99,23 @@ body{
     }
 }
 
-.day-add-event{
-    background: #fbe5d5;
-    color: #000000;
-    padding: 16px;
-    display: none;
-    transform: translateY(-15px);
-    opacity: 0;
+.day-add-event {
+    display: none; /* Nascondi il modulo di default */
+    position: fixed; /* Posizionamento per centrarlo */
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra orizzontalmente */
+    transform: translate(-50%, -50%); /* Aggiusta il centro */
+    background-color: #fff; /* Sfondo bianco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra */
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000; /* Assicurati che sia sopra gli altri elementi */
 }
-.day-add-event[data-active="true"]{
-    display: block;
-    animation: popIn 250ms 1 forwards;
+
+.day-add-event[data-active="true"] {
+    display: block; /* Mostra il modulo se l'attributo è true */
 }
+
 .add-event-label{
     padding: 10px 0;
     font-size: 18px;

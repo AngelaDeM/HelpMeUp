@@ -2,7 +2,9 @@ package com.example.helpmeup.repository;
 
 
 import com.example.helpmeup.model.Evento;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +54,8 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      * @param data la data dell'evento
      * @param ora l'ora dell'evento
      */
+    @Modifying
+    @Transactional
     @Query(value = "INSERT INTO Evento (nome, data_evento, ora, utente) VALUES (:nome, :data, :ora, :utente)", nativeQuery = true)
     void insertEvento(String nome, LocalDate data, LocalTime ora, String utente);
 
@@ -60,6 +64,8 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      *
      * @param id l'id dell'evento
      */
+    @Modifying
+    @Transactional
     @Query(value = "DELETE FROM Evento WHERE id = :id", nativeQuery = true)
     void deleteEvento(int id);
 
@@ -71,6 +77,8 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
      * @param data la data dell'evento
      * @param ora l'ora dell'evento
      */
+    @Modifying
+    @Transactional
     @Query(value = "UPDATE Evento SET nome = :nome, data_evento = :data, ora = :ora WHERE id = :id", nativeQuery = true)
     void updateEvento(int id, String nome, LocalDate data, LocalTime ora);
 }
