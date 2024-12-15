@@ -23,6 +23,9 @@ import java.util.List;
 @Repository
 public interface VolontarioRepository extends JpaRepository<Volontario, String> {
 
+    @Query(value = "SELECT u.punti FROM Utente u where username= :username", nativeQuery = true)
+     int getPuntiVolontario(@Param("username") String username);
+
     /**
      * Verifica se esiste un volontario con una determinata email.
      *

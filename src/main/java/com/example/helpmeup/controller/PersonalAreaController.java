@@ -1,17 +1,17 @@
 package com.example.helpmeup.controller;
 
-import com.example.helpmeup.model.Assistito;
-import com.example.helpmeup.model.Premio;
-import com.example.helpmeup.model.Volontario;
-import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.*;
 import com.example.helpmeup.service.UtenteService;
+import com.example.helpmeup.service.VolontarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for managing the personal area of users.
@@ -21,6 +21,12 @@ import java.util.List;
  */
 @Controller
 public class PersonalAreaController {
+private final VolontarioService volontarioService;
+
+
+    public PersonalAreaController(VolontarioService volontarioService) {
+        this.volontarioService = volontarioService;
+    }
 
     /**
      * Displays the personal area of the user.
@@ -57,9 +63,11 @@ public class PersonalAreaController {
     }
 
     @GetMapping("/get_punti")
-    public ResponseEntity<List<Premio>> visualizzaTuttiIPremi(HttpSession session) {
-        Utente u = (Utente) session.getAttribute("utente");
-        UtenteService utenteService = null;
-        return ResponseEntity.ok(utenteService.getAllPunti(u));
+    public ResponseEntity<Map<String, Integer>> getPunti(HttpSession session) {
+        int punti = (int) session.getAttribute("punti");  // Sostituisci con la logica per ottenere i punti
+        Map<String, Integer> response = new HashMap<>();
+        response.put("punti", punti);
+        return ResponseEntity.ok(response);
     }
+
 }

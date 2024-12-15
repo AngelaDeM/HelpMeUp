@@ -28,10 +28,11 @@
         </div>
         <ul class="nav">
             <li><a href="#" class="nav-link" data-target="#dati"><i class="fas fa-user"></i> Dati Anagrafici</a></li>
-            <li><a href="#" class="nav-link" data-target="#richieste"><i class="fas fa-clipboard-list"></i> Le tue Richieste</a></li>
+            <li><a th:href="@{/api/visualizzaRichieste}"><i class="fas fa-clipboard-list"></i> Richieste in corso</a></li>
             <li><a href="#" class="nav-link" data-target="#calendario"><i class="fas fa-calendar"></i> Calendario</a></li>
             <li><a th:href="@{/api/premio/getAll}"><i class="fas fa-clipboard-list"></i> Lista dei Premi</a></li>
-            <li><a href="#" class="nav-link" data-target="#emergenze"><i class="fa-solid fa-suitcase-medical"></i> Le tue Emergenze</a></li>
+            <li><a th:href="@{/api/findListRichieste}"><i class="fas fa-clipboard-list"></i> Lista Richieste</a></li>
+            <li><a th:href="@{/api/findListRichiesteEmergenze}" ><i class="fa-solid fa-suitcase-medical"></i> Lista Emergenze</a></li>
 
         </ul>
     </div>
@@ -43,9 +44,6 @@
 
     </section>
 
-    <section id="richieste" class="section">
-        <div class="request"></div>
-    </section>
 
     <section id="calendario" class="section">
         <h1>Calendario</h1>
@@ -54,9 +52,7 @@
     </section>
 
 
-    <section id="emergenze" class="section">
-        <h1>Le tue Emergenze</h1>
-    </section>
+
 </main>
 </div>
 
@@ -172,11 +168,6 @@
         });
 
 
-
-        $("#richieste").load("/lista_richieste", function() {
-            $('<link rel="stylesheet" href="/css/lista_richieste.css">').appendTo('head');
-        });
-
         $("#calendario").load("/calendario", function(response, status, xhr) {
             if (status === "error") {
                 console.log("Errore: " + xhr.status + " " + xhr.statusText);
@@ -186,9 +177,6 @@
         });
 
 
-        $("#emergenze").load("/lista_emergenze", function() {
-            $('<link rel="stylesheet" href="/css/lista_emergenze.css">').appendTo('head');
-        });
     });
 
 </script>

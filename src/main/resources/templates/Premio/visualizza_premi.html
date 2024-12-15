@@ -14,7 +14,7 @@
 <div th:if="${message}" class="feedback" th:classappend="${messageType}">
     <span th:text="${message}"></span>
 </div>
-
+<body><div th:replace="fragments/navbar :: navbar"></div>
 <h1>Elenco Premi</h1>
 <div id="error" class="error" style="display: none;"></div>
 <table id="premi-table">
@@ -89,6 +89,48 @@
     document.addEventListener("DOMContentLoaded", caricaPremi);
 
 </script>
-<h7>Punti: </h7>
+<h7 id="punti">Punti: </h7>
+
+<script>
+    // Funzione per ottenere i punti da /getpunti
+    function getPunti() {
+        console.log("Chiamata a /get_punti");
+        fetch('/get_punti', {
+            method: 'GET', // Utilizziamo il metodo GET
+            headers: {
+                'Content-Type': 'application/json' // Indichiamo che stiamo ricevendo dati JSON
+            }
+        })
+            .then(response => {
+                // Verifica se la risposta è OK (codice HTTP 200)
+                if (!response.ok) {
+                    throw new Error(`Errore nella risposta: ${response.status}`);
+                }
+                console.log("Punti ricevuti");
+                return response.json(); // Procedi a trattare la risposta come JSON
+            })
+            .then(data => {
+                // Verifica che la risposta contenga il campo 'punti'
+                if (data && data.punti !== undefined) {
+                    // Mostra il punteggio nel tag con id 'punti'
+                    document.getElementById('punti').textContent = `Punti: ${data.punti}`;
+                } else {
+                    console.error('La risposta non contiene il campo "punti"');
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella richiesta:', error);
+            });
+    }
+
+    // Chiama la funzione getPunti quando la pagina è pronta
+    window.onload = getPunti;
+</script>
+
+
+
+<div id="footer" th:insert="fragments/footer :: footer"></div>
 </body>
+
+
 </html>

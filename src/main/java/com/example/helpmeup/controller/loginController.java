@@ -1,6 +1,9 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
+import com.example.helpmeup.service.UtenteService;
+import com.example.helpmeup.service.VolontarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
@@ -21,14 +24,18 @@ import com.example.helpmeup.repository.UtenteRepository;
 @SessionAttributes("utente")
 public class loginController {
     private final UtenteRepository utenteRepository;
+    private final UtenteService utenteService;
+    private final VolontarioService volontarioService;
 
     /**
      * Costruttore del controller per il login.
      *
      * @param utenteRepository il repository degli utenti
      */
-    public loginController(UtenteRepository utenteRepository) {
+    public loginController(UtenteRepository utenteRepository, UtenteService utenteService, VolontarioService volontarioService) {
         this.utenteRepository = utenteRepository;
+        this.utenteService = utenteService;
+        this.volontarioService = volontarioService;
     }
 
     /**
@@ -66,6 +73,11 @@ public class loginController {
 
         // Set the user in the session
         model.addAttribute("utente", utente);
+
+        if(utente instanceof Volontario){
+            int puntiVolontarioLogged = volontarioService.getPuntiVolontario(utente.getUsername());
+            session.setAttribute("punti",puntiVolontarioLogged);
+        }
 
 
         return "redirect:/"; // Reindirizza alla homepage

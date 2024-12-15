@@ -1,5 +1,6 @@
 package com.example.helpmeup.controller;
 
+import com.example.helpmeup.model.Assistito;
 import com.example.helpmeup.model.Richiesta;
 import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.repository.RichiestaRepository;
@@ -43,10 +44,39 @@ public class visualizzazioneRichiesteController {
      * @return List<Richiesta>
      */
     @GetMapping("/findAllRichieste")
-    public @ResponseBody List<Richiesta> getAllRichieste() {
-        return richiestaService.getAllRichieste();
+    public @ResponseBody List<Richiesta> getAllRichieste(HttpSession session) {
+        Utente utente = (Utente) session.getAttribute("utente");
+        String username = utente.getUsername();
+        List<Richiesta> l1= richiestaService.getAllRichieste();
+        List<Richiesta> l2= richiestaService.getRichieste(username);
+        l1.removeAll(l2);
+        l1.removeIf(Richiesta::isCompletato);
+        l1.removeIf(Richiesta::isEmergenza);
+        return l1;
     }
 
+    @GetMapping("/findAllRichiesteEmergenze")
+    public @ResponseBody List<Richiesta> getAllEmergenze(HttpSession session) {
+        Utente utente = (Utente) session.getAttribute("utente");
+        String username = utente.getUsername();
+        List<Richiesta> l1= richiestaService.getAllRichieste();
+        List<Richiesta> l2= richiestaService.getRichieste(username);
+        l1.removeAll(l2);
+        l1.removeIf(Richiesta::isCompletato);
+        l1.removeIf(richiesta -> !richiesta.isEmergenza());
+        return l1;
+    }
+
+
+    @GetMapping("/findListRichieste")
+    public String getPaginaRichieste() {
+        return "/Richiesta/lista_richieste";
+    }
+
+    @GetMapping("/findListRichiesteEmergenze")
+    public String getPaginaRichiesteEmergenza() {
+        return "/Richiesta/visualizza_emergenza";
+    }
     /**Restituisce una richiesta specifica
      *
      * @param id l'id della richiesta
@@ -59,9 +89,14 @@ public class visualizzazioneRichiesteController {
 
 
     @GetMapping("/visualizzaRichieste")
-    public String mostraPremi() {
-        return "Richiesta/visualizza_richieste";
+    public String mostraPremi(HttpSession session) {
+        Utente u = (Utente) session.getAttribute("utente");
+        if(u instanceof Assistito)
+            return "/Richiesta/visualizza_richieste";
+        else
+            return "/Richiesta/visualizza_richieste_volontario";
     }
+
 
     //Restituisce una richiesta specifica
 

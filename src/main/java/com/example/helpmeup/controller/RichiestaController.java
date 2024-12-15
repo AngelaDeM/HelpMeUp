@@ -111,38 +111,40 @@ public class RichiestaController {
     }
 
     /**
-     * Visualizza il modulo per l'accettazione di una richiesta.
-     *
-     * @return Il nome della vista per il modulo di accettazione della richiesta.
-     */
-    @GetMapping("/accetta")
-    public String mostraFormAccetta() {
-        return "Richiesta/accetta_richiesta";
-    }
-
-    /**
      * Accetta una richiesta per un volontario specifico.
      *
      * @param dati I parametri della richiesta, inclusi l'ID della richiesta e l'ID del volontario.
      * @return ResponseEntity contenente il risultato dell'operazione.
      * @throws Exception Se si verifica un errore durante il processo di accettazione.
      */
-    @PostMapping("/accetta")
-    public ResponseEntity<String> accettaRichiesta(@Valid @RequestParam Map<String, String> dati) {
+    @GetMapping("/accetta")
+    public String accettaRichiesta(@Valid @RequestParam Map<String, String> dati,HttpSession session,Model model) {
         try {
-            int id_richiesta = Integer.parseInt(dati.get("richiesta"));
-            String id_volontario = dati.get("volontario");
+            int id_richiesta = Integer.parseInt(dati.get("id"));
+
+            Utente utente = (Utente) session.getAttribute("utente");
+            String id_volontario = utente.getUsername();
+
             Richiesta r = richiestaService.getRichiestaById(id_richiesta);
             boolean giaAccettato = richiestaService.statoAccettoVolontario(id_richiesta, id_volontario);
             if (!r.isCompletato() && !giaAccettato) {
                 richiestaService.accettaRichiesta(id_richiesta, id_volontario);
-                return ResponseEntity.ok("Richiesta accettata con successo.");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Richiesta già accettata dall'utente.");
+                model.addAttribute("tipo", "Success");
+                model.addAttribute("message", "Richiesta accettata con successo.");
+            } else if(r.isCompletato()){
+                model.addAttribute("tipo", "Error");
+                model.addAttribute("message", "Richiesta già completata.");
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore durante l'accettazione della richiesta: " + e.getMessage());
+            else if(giaAccettato){
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Richiesta già accettata dall'utente.");
         }
+        } catch (Exception e) {
+            model.addAttribute("tipo", "Error");
+            model.addAttribute("message", "Errore durante l'accettazione della richiesta:" + e.getMessage());
+
+        }
+        return "Richiesta/visualizza_richieste";
     }
 
     /**

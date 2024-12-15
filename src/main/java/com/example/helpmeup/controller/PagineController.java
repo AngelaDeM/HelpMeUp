@@ -66,8 +66,5 @@ public class PagineController {
         return "AreaUtente/lista_emergenze";
     }
 
-    @GetMapping("/lista_richieste_assistito")
-    public String mostraRichiesteAssistito() {
-        return "Richiesta/lista_richieste_assistito";
-    }
+
 }

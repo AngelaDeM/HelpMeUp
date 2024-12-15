@@ -11,6 +11,12 @@
 
 }
 
+#nomeSito{
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+}
+
 /* Nascondi l'input checkbox e le linee dell'hamburger */
 .navbar input[type="checkbox"],
 .navbar .hamburger-lines{

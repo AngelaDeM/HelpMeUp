@@ -6,7 +6,7 @@
   <title>Modifica Richiesta</title>
 </head>
 <body>
-
+<body><div th:replace="fragments/navbar :: navbar"></div>
 <h1>Modifica richiesta</h1>
 
 <div th:if="${message}" class="feedback" th:classappend="${messageType}">
@@ -53,6 +53,6 @@
     document.getElementById('text_id').append(richiestaId);
   }
 </script>
-
+<div id="footer" th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

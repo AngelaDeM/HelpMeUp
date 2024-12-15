@@ -1,6 +1,8 @@
 package com.example.helpmeup.service;
 
+import com.example.helpmeup.model.Utente;
 import com.example.helpmeup.model.Volontario;
+import com.example.helpmeup.repository.UtenteRepository;
 import com.example.helpmeup.repository.VolontarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +54,9 @@ public class VolontarioService {
      */
     public boolean verificaUsername(String username) {
         return volontarioRepository.existsByUsername(username);
+    }
+
+    public int getPuntiVolontario(String username) {
+        return volontarioRepository.getPuntiVolontario(username);
     }
 }

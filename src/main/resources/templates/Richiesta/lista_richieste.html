@@ -6,6 +6,7 @@
     <title>Lista Richieste Volontario</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/lista_richieste.css"></head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body class="list">
@@ -52,6 +53,7 @@
                     <p><strong>Data Intervento:</strong> ${new Date(richiesta.data_intervento).toLocaleDateString()}</p>
                     <p><strong>Orario Intervento:</strong> ${richiesta.orario_intervento}</p>
                     <p><strong>Emergenza:</strong> ${richiesta.emergenza ? 'Sì' : 'No'}</p>
+                    <p><a href="/api/richieste/accetta?id=${richiesta.id}"><i class="bi bi-check-circle"></i> </a></p>
                 `;
 
                 requestsList.appendChild(requestItem);
@@ -78,7 +80,7 @@
         });
     });
 </script>
-
+<div id="footer" th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
 

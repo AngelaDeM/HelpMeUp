@@ -68,6 +68,9 @@ public class PremioController {
                 premioService.riscattaPremio(id_premio, user);
                 v.removePunti(pr);
                 pt = pt - pr;
+                int nuovipunti= (int) session.getAttribute("punti");
+                nuovipunti = nuovipunti-pr;
+                session.setAttribute("punti",nuovipunti);
                 utenteService.updatePuntiVolontario(v.getUsername(), pt);
                 model.addAttribute("tipo","Success.");
                 model.addAttribute("message","Premio riscattato con successo.");

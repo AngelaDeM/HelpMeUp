@@ -168,4 +168,7 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
     @Query(value ="DELETE FROM richiesta WHERE id = :richiesta", nativeQuery = true)
     void deleteRichiesta(@Param("richiesta") int richiesta);
 
+    @Query(value = "SELECT r.* FROM Richiesta r LEFT JOIN richiesta_utenti ru ON r.id = ru.richiesta LEFT JOIN Utente u ON ru.account_id = u.username WHERE u.username = :username AND ru.richiesta IS NULL", nativeQuery = true)
+    List<Richiesta> getRichiesteNonAccettate(@Param("username") String username);
+
 }

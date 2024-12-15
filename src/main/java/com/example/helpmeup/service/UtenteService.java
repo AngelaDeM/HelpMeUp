@@ -108,7 +108,6 @@ public class UtenteService {
         volontarioRepository.updatePunti(username, pt);
     }
 
-    public List<Premio> getAllPunti(Utente u) {
-        return null;
-    }
+
+
 }

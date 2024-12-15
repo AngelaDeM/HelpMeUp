@@ -1,8 +1,13 @@
 package com.example.helpmeup.repository;
 
+import com.example.helpmeup.model.Premio;
 import com.example.helpmeup.model.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Repository per la gestione delle operazioni relative agli utenti.
@@ -13,6 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UtenteRepository extends JpaRepository<Utente, String> {
+
 
     /**
      * Verifica se esiste un utente con l'email fornita.
