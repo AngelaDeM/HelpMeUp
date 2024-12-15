@@ -30,6 +30,7 @@
     <!-- I dati verranno aggiunti dinamicamente -->
     </tbody>
 </table>
+<h7>Punti: <span th:text="${utente.getPunti()}"></span></h7>
 
 <script>
     // Funzione per caricare tutti i premi
@@ -89,6 +90,5 @@
     document.addEventListener("DOMContentLoaded", caricaPremi);
 
 </script>
-<h7>Punti: </h7>
 </body>
 </html>
