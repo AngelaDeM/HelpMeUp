@@ -1,7 +1,10 @@
 package com.example.helpmeup.controller;
 
 import com.example.helpmeup.model.Evento;
+import com.example.helpmeup.model.Utente;
+import com.example.helpmeup.model.Volontario;
 import com.example.helpmeup.service.EventoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,9 +49,22 @@ public class CalendarioController {
      * @param ora l'ora dell'evento
      */
     @PostMapping("/insertEvento")
-    public void insertEvento(String nome, LocalDate data, LocalTime ora, String utente) {
-        eventoService.insertEvento(nome, data, ora, utente);
+    public String insertEvento(HttpSession session, @RequestParam String nome, @RequestParam String data, @RequestParam String ora, @RequestParam String utente) {
+        // Converti la stringa della data e ora in oggetti Java
+        LocalDate eventoData = LocalDate.parse(data);
+        LocalTime eventoOra = LocalTime.parse(ora);
+
+        eventoService.insertEvento(nome, eventoData, eventoOra, utente);
+
+        Utente user = (Utente) session.getAttribute("utente");
+        if(user instanceof Volontario) {
+            return "AreaUtente/area_utente";
+        }
+        else {
+            return "AreaUtente/AreaAssistito";
+        }
     }
+
 
     /**
      * Elimina l'evento con l'id specificato.
@@ -91,7 +107,7 @@ public class CalendarioController {
      * @param username l'username dell'utente di cui si vogliono ottenere gli eventi
      * @return List<Evento>
      */
-    @GetMapping("/findByUtente")
+    @GetMapping("/eventiByUtente")
     public @ResponseBody List<Evento> findByUtente(String username) {
         return eventoService.findByUtente(username);
     }

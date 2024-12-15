@@ -46,7 +46,12 @@ public class PagineController {
 
     //Visualizza calendario
     @GetMapping("/calendario")
-    public String mostraCalendario() {
+    public String mostraCalendario(HttpSession session, Model model) {
+        // Recupera l'utente dalla sessione
+        Utente user = (Utente) session.getAttribute("utente");
+
+        // Aggiungi l'oggetto user al modello per Thymeleaf
+        model.addAttribute("utente", user);
         return "AreaUtente/calendario";
     }
 

@@ -117,7 +117,9 @@ public class PremioController {
      * @return il nome della pagina HTML
      */
     @GetMapping("/getAll")
-    public String mostraPremi() {
+    public String mostraPremi(HttpSession session, Model model) {
+        Volontario u = (Volontario) session.getAttribute("utente");
+        model.addAttribute("utente", u);
         return "Premio/visualizza_premi";
     }
 

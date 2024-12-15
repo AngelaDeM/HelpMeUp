@@ -10,11 +10,11 @@
 
 </head>
 <body>
-
+<div th:insert="fragments/navbar :: navbar"></div>
 <div th:if="${message}" class="feedback" th:classappend="${messageType}">
     <span th:text="${message}"></span>
 </div>
-<body><div th:replace="fragments/navbar :: navbar"></div>
+
 <h1>Elenco Premi</h1>
 <div id="error" class="error" style="display: none;"></div>
 <table id="premi-table">
