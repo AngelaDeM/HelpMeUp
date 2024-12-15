@@ -21,7 +21,7 @@ public class Volontario extends Utente{
 
     @ManyToMany
     @JoinTable(
-    name = "richieste_volontari",
+    name = "richiesta_utenti",
     joinColumns = @JoinColumn(name = "account_id"),
     inverseJoinColumns = @JoinColumn(name = "richiesta_id")
     )
