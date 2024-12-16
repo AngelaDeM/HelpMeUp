@@ -56,6 +56,12 @@ public interface PremioRepository extends JpaRepository<Premio, Integer> {
     @Query(value = "SELECT * FROM Premio WHERE nome = :id", nativeQuery = true)
     Premio getByNome(@Param("id") String id);
 
+    /**
+     * Retrieves a list of Premio objects associated with a specified volunteer.
+     *
+     * @param username the username of the volunteer whose redeemed rewards are to be retrieved
+     * @return a list of Premio objects associated with the given volunteer
+     */
     @Query(value = "SELECT p.* " +
             "FROM Premio p " +
             "JOIN riscatti_premi rp ON p.nome = rp.premio_id " +

@@ -18,9 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller per la visualizzazione delle richieste.
- *
- * @author Claudio
+ * Controller per la gestione delle richieste, incluse visualizzazione
+ * e filtraggio delle richieste secondo criteri specifici. Questo
+ * controller contiene endpoint per ottenere dati relativi alle
+ * richieste e per gestire le visualizzazioni delle stesse.
  */
 @Controller
 @RequestMapping("/api")
@@ -54,6 +55,13 @@ public class visualizzazioneRichiesteController {
         return l1;
     }
 
+    /**
+     * Retrieves the list of emergency requests that have not been completed and are not associated
+     * with the current user.
+     *
+     * @param session the current HTTP session, used to retrieve the current user's information
+     * @return a list of emergency requests that are not completed and do not belong to the current user
+     */
     @GetMapping("/findAllRichiesteEmergenze")
     public @ResponseBody List<Richiesta> getAllEmergenze(HttpSession session) {
         Utente utente = (Utente) session.getAttribute("utente");
@@ -67,6 +75,12 @@ public class visualizzazioneRichiesteController {
     }
 
 
+    /**
+     * Handles the HTTP GET request for the endpoint "/findListRichieste" and maps it
+     * to provide the view for the page that lists requests.
+     *
+     * @return the name of the view that displays the list of requests.
+     */
     @GetMapping("/findListRichieste")
     public String getPaginaRichieste() {
         return "/Richiesta/lista_richieste";
@@ -87,6 +101,13 @@ public class visualizzazioneRichiesteController {
           }
 
 
+    /**
+     * Handles the GET request for viewing requests based on the user role.
+     * Determines the type of user from the session and returns the appropriate view.
+     *
+     * @param session the HttpSession object to retrieve the current user information
+     * @return a string representing the view name for assistito or volontario
+     */
     @GetMapping("/visualizzaRichieste")
     public String mostraPremi(HttpSession session) {
         Utente u = (Utente) session.getAttribute("utente");

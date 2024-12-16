@@ -4,6 +4,11 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller in charge of handling error pages.
+ * Implements {@code ErrorController} to customize error handling behavior within the application.
+ * Specifically, it intercepts requests to the error endpoint and provides a custom response.
+ */
 @Controller
 public class errorController implements ErrorController {
 

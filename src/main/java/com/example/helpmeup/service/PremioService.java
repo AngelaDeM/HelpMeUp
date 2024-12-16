@@ -78,6 +78,12 @@ public class PremioService {
         return premioRepository.getByNome(id);
     }
 
+    /**
+     * Recupera una lista di oggetti Premio associati a un determinato utente.
+     *
+     * @param utente Il nome dell'utente per il quale si desidera ottenere i premi associati.
+     * @return Una lista di oggetti Premio associati all'utente specificato.
+     */
     public List<Premio> getAllByUser(String utente) {
         return premioRepository.getByVolontario2(utente);
     }

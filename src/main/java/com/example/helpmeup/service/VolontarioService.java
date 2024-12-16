@@ -56,6 +56,12 @@ public class VolontarioService {
         return volontarioRepository.existsByUsername(username);
     }
 
+    /**
+     * Retrieves the points associated with a Volontario identified by their username.
+     *
+     * @param username the username of the Volontario whose points are to be retrieved
+     * @return the points of the specified Volontario
+     */
     public int getPuntiVolontario(String username) {
         return volontarioRepository.getPuntiVolontario(username);
     }

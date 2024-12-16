@@ -160,9 +160,6 @@ public class RichiestaService {
         return richiestaRepository.findAllEmergenze();
     }
 
-    public List<Richiesta> getRichiesteNonAccettate(String username) {
-        return richiestaRepository.getRichiesteNonAccettate(username);
-    }
 
 
 }

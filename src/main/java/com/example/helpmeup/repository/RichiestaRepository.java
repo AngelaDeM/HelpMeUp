@@ -158,16 +158,34 @@ public interface RichiestaRepository extends JpaRepository<Richiesta, Integer> {
     @Query(value = "SELECT r FROM Richiesta WHERE r.emergenza = TRUE", nativeQuery = true)
     List<Richiesta> findAllEmergenze();
 
+    /**
+     * Deletes entries from the richiesta_utenti table based on the specified richiesta value.
+     *
+     * @param richiesta the ID of the richiesta whose associated utenti entries should be deleted
+     */
     @Modifying
     @Transactional
     @Query(value ="DELETE FROM richiesta_utenti WHERE richiesta = :richiesta", nativeQuery = true)
     void eliminaRichiestaUtenti(@Param("richiesta") int richiesta);
 
+    /**
+     * Deletes a richiesta (request) from the database based on the provided richiesta ID.
+     *
+     * @param richiesta the ID of the richiesta to be deleted
+     */
     @Modifying
     @Transactional
     @Query(value ="DELETE FROM richiesta WHERE id = :richiesta", nativeQuery = true)
     void deleteRichiesta(@Param("richiesta") int richiesta);
 
+    /**
+     * Retrieves a list of requests (Richieste) that have not been accepted by a specific user.
+     * The method executes a native SQL query to fetch requests where the association
+     * with the specified user's account does not exist.
+     *
+     * @param username the username of the user for whom to retrieve non-accepted requests
+     * @return a list of Richiesta objects that are not accepted by the specified user
+     */
     @Query(value = "SELECT r.* FROM Richiesta r LEFT JOIN richiesta_utenti ru ON r.id = ru.richiesta LEFT JOIN Utente u ON ru.account_id = u.username WHERE u.username = :username AND ru.richiesta IS NULL", nativeQuery = true)
     List<Richiesta> getRichiesteNonAccettate(@Param("username") String username);
 

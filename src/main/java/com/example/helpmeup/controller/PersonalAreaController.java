@@ -17,6 +17,8 @@ import java.util.Map;
  * Controller for managing the personal area of users.
  *
  * @author Domenico
+ * @author ROBERTO-SCARPA
+ * @author fimiani
  *
  */
 @Controller
@@ -29,11 +31,16 @@ private final VolontarioService volontarioService;
     }
 
     /**
-     * Displays the personal area of the user.
+     * Displays the personal area page for the user based on their type.
+     * If the user is not logged in, redirects to the login page.
+     * For users of type {@code Volontario}, additional information such as
+     * points and rewards is displayed. For users of type {@code Assistito},
+     * a specific view is returned.
      *
-     * @param session the HTTP session to retrieve the user
-     * @param model the model to pass data to the view
-     * @return the name of the view to display
+     * @param session the current HTTP session, used to retrieve the logged-in user.
+     * @param model the model object used to bind attributes for the view.
+     * @return the name of the view to be rendered, either the personal area for
+     *         "volontario" or "assistito", or a redirect to the login page if no user is logged in.
      */
     @GetMapping("/area_utente")
     public String visualizzaAreaPersonale(HttpSession session, Model model) {
@@ -62,6 +69,12 @@ private final VolontarioService volontarioService;
 
     }
 
+    /**
+     * Retrieves the user's current points from the session and returns them in a map.
+     *
+     * @param session the current HTTP session, used to fetch the user's points.
+     * @return a ResponseEntity containing a map with the key "punti" and the user's points as the value.
+     */
     @GetMapping("/get_punti")
     public ResponseEntity<Map<String, Integer>> getPunti(HttpSession session) {
         int punti = (int) session.getAttribute("punti");  // Sostituisci con la logica per ottenere i punti
