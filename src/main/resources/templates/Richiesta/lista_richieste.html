@@ -13,16 +13,8 @@
 
 <div class="request-container">
     <div class="intro" >
-        <h1>Le Tue Richieste</h1>
+        <h1>Lista Richieste</h1>
         <i class="fa-regular fa-square-check" id="icon-img"></i>
-    </div>
-
-    <div class="search-bar">
-        <h3>TROVA L' ATTIVITÀ</h3>
-        <div class="search-input-container">
-            <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
-            <input type="text" placeholder="Cerca attività" id="searchInput">
-        </div>
     </div>
 
     <div class="requests-list"></div>
@@ -41,6 +33,10 @@
             // Popola la lista delle richieste nella pagina
             const requestsList = document.querySelector('.requests-list');
             requestsList.innerHTML = ''; // Pulisce eventuali contenuti preesistenti
+
+            if(data.length === 0) {
+                requestsList.innerHTML = '<p>Nessuna richiesta presente.</p>';
+            }
 
             data.forEach(richiesta => {
                 const requestItem = document.createElement('div');
@@ -80,7 +76,6 @@
         });
     });
 </script>
-<div id="footer" th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
 

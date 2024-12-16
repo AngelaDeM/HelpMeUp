@@ -144,7 +144,7 @@ public class RichiestaController {
             model.addAttribute("message", "Errore durante l'accettazione della richiesta:" + e.getMessage());
 
         }
-        return "Richiesta/visualizza_richieste";
+        return "Richiesta/visualizza_richieste_volontario";
     }
 
     /**

@@ -51,7 +51,6 @@ public class visualizzazioneRichiesteController {
         List<Richiesta> l2= richiestaService.getRichieste(username);
         l1.removeAll(l2);
         l1.removeIf(Richiesta::isCompletato);
-        l1.removeIf(Richiesta::isEmergenza);
         return l1;
     }
 
