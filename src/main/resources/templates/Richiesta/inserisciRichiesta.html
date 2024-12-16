@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>Invia la tua Richiesta</title>
+  <link rel="stylesheet" href="../../static/css/Richiesta.css">
+  <script src="../../static/js/richiesta.js"></script>
+</head>
+
+<body>
+<div class="container">
+  <h2>Modulo Richiesta</h2>
+  <form>
+    <label for="titolo">Titolo della Richiesta:</label>
+    <input type="text" id="titolo" name="titolo" required>
+
+    <label for="descrizione">Descrizione Dettagliata:</label>
+    <textarea id="descrizione" name="descrizione" required></textarea>
+
+    <div class="data-ora-container">
+      <label for="data-ora">Data e Ora della Richiesta:</label>
+      <span id="data-ora"></span>
+      <span id="ora-attuale"></span>
+    </div>
+
+    <div class="emergenza-container">
+      <label for="emergenza-si">Emergenza?</label>
+      <input type="radio" id="emergenza-si" name="emergenza" value="si">
+      <label for="emergenza-si" class="emergenza-label">Si</label>
+      <input type="radio" id="emergenza-no" name="emergenza" value="no">
+      <label for="emergenza-no" class="emergenza-label">No</label>
+    </div>
+
+    <div class="button-container">
+      <input type="submit" value="Invia Richiesta">
+    </div>
+
+  </form>
+</div>
+</body>
+</html>

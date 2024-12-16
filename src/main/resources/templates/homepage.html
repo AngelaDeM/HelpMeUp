@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpMeUp - Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+<div th:fragment="homepage" id="navbar">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+<section class="hero">
+    <div class="slider">
+        <div class="slide" style="background-image: url('/image/Volontariato.jpg');">
+            <div class="overlay"></div> <!-- Overlay semi-trasparente sopra l'immagine -->
+            <div class="title">
+                <div class="text1">HelpMeUp</div>
+                <div class="text2">Unisciti a noi per fare la differenza nel mondo!</div>
+            </div>
+
+        </div>
+        <div class="slide" style="background-image: url('/image/disegno.png');">
+            <div class="overlay"></div>
+            <div class="text">Aiuta chi ha bisogno, ogni piccolo gesto conta.</div>
+        </div>
+        <div class="slide" style="background-image: url('/image/volontari.png');">
+            <div class="overlay"></div>
+            <div class="text">Volontariato: un'opportunità di crescita personale e comunitaria.</div>
+        </div>
+    </div>
+</section>
+
+<div class="info-bar">
+    <span class="info-text">Vuoi saperne di più?</span>
+    <div class="middle">
+        <button class="confetti-button" id = "button">Learn More</button>
+    </div>
+</div>
+
+
+<section class="features" id="features">
+    <h2 class="features-title">I NOSTRI SERVIZI</h2>
+    <div class="feature-card">
+        <h3>Per Volontari e Assistiti</h3>
+        <p>Scopri chi ha bisogno di aiuto vicino a te e fai la differenza nella tua comunità, o richiedi supporto facilmente.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Forum</h3>
+        <p>Condividi esperienze e chiedi consigli nella nostra comunità online.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Notifiche Locali</h3>
+        <p>Ricevi notifiche solo da persone nelle tue vicinanze, per un aiuto rapido ed efficiente.</p>
+    </div>
+</section>
+
+
+<div class="custom-features">
+    <div class="custom-feature-item">
+        <i class="fa-solid fa-hand-holding-heart" id="custom-icon"></i>
+        <p>Impatto sociale</p>
+    </div>
+    <div class="custom-feature-item">
+        <i class="fa-solid fa-users" id="custom-icon1"></i>
+        <p>Volontariato responsabile</p>
+    </div>
+    <div class="custom-feature-item">
+        <i class="fa-solid fa-award" id="custom-icon2"></i>
+        <p>Punti e Premi</p>
+    </div>
+</div>
+
+<div class="title-container">
+    <h2 class="centered-title">Eventi Organizzati</h2>
+</div>
+
+<div class="wrapper">
+
+    <div class="card">
+        <div class="card-banner">
+            <p class="category-tag popular">Cura</p>
+            <a th:href="@{/learn_more}"> <img class="banner-img" src='/image/volontari2.png' alt=''> </a>
+        </div>
+        <div class="card-body">
+            <h2 class="blog-title">Opportunità di Volontariato nella Tua Comunità</h2>
+            <p class="blog-description">Scopri come puoi fare la differenza nella tua comunità attraverso attività di volontariato.
+                Partecipa a eventi che aiutano le persone in difficoltà, offrendo supporto in vari ambiti.</p>
+
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-banner">
+            <p class="category-tag technology">Join Us</p>
+            <a th:href="@{/registrazione}"> <img class="banner-img" src='/image/mani.jpeg' alt=''></a>
+        </div>
+        <div class="card-body">
+            <h2 class="blog-title">Unisciti a noi!</h2>
+            <p class="blog-description">HelpMeUp sta organizzando diversi eventi di volontariato per aiutare la comunità locale.
+                Questi eventi offrono un'opportunità per fare la differenza, sostenendo coloro che sono in difficoltà.
+                Puoi partecipare fisicamente o anche virtualmente, a seconda delle tue preferenze e disponibilità.
+                Scopri tutte le opzioni e come puoi contribuire oggi!</p>
+
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-banner">
+            <p class="category-tag psychology">Aiuto</p>
+            <img class="banner-img" src='/image/puzzle.jpg' alt=''>
+        </div>
+        <div class="card-body">
+            <h2 class="blog-title">Attività di Sostegno per Chi Ha Bisogno</h2>
+            <p class="blog-description">Se hai bisogno di supporto, siamo qui per te!
+                Unisciti alla nostra comunità e ricevi aiuto da volontari pronti ad assisterti in attività quotidiane,
+                come la spesa, il trasporto o semplicemente per darti una mano nelle difficoltà. Non sei solo, siamo al tuo fianco!</p>
+
+
+        </div>
+    </div>
+</div>
+<script src="/js/homepage.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function() {
+        $("#navbar").load("[[@{/navbar.html}]]");
+    });
+</script>
+</div>
+</body>
+
+</html>
+
+
+
+
+

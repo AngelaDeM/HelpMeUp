@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Footer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+<body>
+<footer th:fragment="footer">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/js/footer.js}">
+    <div class="container" id="container1">
+        <div class="column">
+            <h3>Chi siamo</h3>
+            <p>Homepage</p>
+            <p>Forum</p>
+        </div>
+        <div class="column">
+            <h3>Link utili</h3>
+            <ul>
+                <li><a href="#">Richieste </a></li>
+                <li><a href="#">Messaggi</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h3>Contattaci</h3>
+            <div class="social-icons">
+                <i class="fa-solid fa-envelope"></i>
+                <i class="fa-sharp fa-solid fa-at"></i>
+                <i class="fa-sharp fa-solid fa-paper-plane"></i>
+            </div>
+        </div>
+    </div>
+    <p class="copyright">&copy; 2024 Associazione Aiutiamo. Tutti i diritti riservati.</p>
+</footer>
+</body>
+</html>

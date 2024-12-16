@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elenco Premi di Utente</title>
+</head>
+<body>
+<body><div th:replace="fragments/navbar :: navbar"></div>
+<h1>Elenco Premi di Utente</h1>
+
+<div class="form-container">
+    <form id="utente-form">
+        <label for="utente">Inserisci Utente:</label>
+        <input type="text" id="utente" name="utente" required>
+        <button type="submit">Visualizza Premi</button>
+    </form>
+</div>
+
+<div id="error" class="error" style="display: none;"></div>
+
+<table id="premi-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Data</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- I dati verranno aggiunti dinamicamente -->
+    </tbody>
+</table>
+
+<script>
+    // Gestisce il submit del form
+    document.getElementById("utente-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const utente = document.getElementById("utente").value.trim();
+        if (!utente) {
+            alert("Inserisci un nome utente valido!");
+            return;
+        }
+
+        await caricaPremi(utente);
+    });
+
+    async function caricaPremi(utente) {
+        const tableBody = document.querySelector("#premi-table tbody");
+        const errorDiv = document.getElementById("error");
+
+        try {
+            const response = await fetch("/api/premio/visualizzaByUtente", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ utente }) // Utente come chiave unica
+            });
+
+            if (response.status === 404) {
+                throw new Error("Nessun premio trovato per l'utente specificato.");
+            }
+            if (!response.ok) {
+                throw new Error("Errore durante il recupero dei premi.");
+            }
+
+            const premi = await response.json();
+            tableBody.innerHTML = "";
+
+            premi.forEach(premio => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>${premio[0]}</td>
+                <td>${premio[2]}</td>
+            `;
+                tableBody.appendChild(row);
+            });
+
+            errorDiv.style.display = "none";
+        } catch (error) {
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = "block";
+        }
+    }
+
+</script>
+<div id="footer" th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Utente</title>
+    <link rel="stylesheet" th:href= "@{css/area_utente.css}">
+    <link rel="stylesheet" th:href="@{css/dati_anagrafici.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="total">
+
+    <div class="sidebar" id="sidebar">
+        <div class="panel">
+            <div class="user-heading">
+                <a href="#">
+                    <img src="/image/cuore.jpg" alt="Profilo">
+                </a>
+                <h1>AREA UTENTE ASSISTITO</h1>
+            </div>
+            <ul class="nav">
+                <li><a th:href="@{/api/visualizzaRichieste}"><i class="fas fa-clipboard-list"></i> Le tue Richieste</a></li>
+                <li><a th:href="@{/api/richieste/pubblica}"><i class="fas fa-clipboard-list"></i> Pubblica una Richiesta</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="content">
+        <div class="registration-container">
+        <section id="dati" class="section">
+            <h2>Dati Anagrafici</h2>
+            <form id="user-form">
+
+                <div class="input-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="nome" th:value="${utente.getNome()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" th:value="${utente.getCognome()}" disabled>
+                </div>
+
+
+                <div class="input-group">
+                    <label for="birthdate">Data di nascita:</label>
+                    <input type="date" id="birthdate" name="birthdate" th:value="${utente.getDataNascita()}" disabled>
+                </div>
+
+
+                <div class="input-group">
+                    <label for="address">Indirizzo:</label>
+                    <input type="text" id="address" name="address" th:value="${utente.getIndirizzo()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Numero di Telefono:</label>
+                    <input type="tel" id="phone" name="phone" th:value="${utente.getNumeroTelefono()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" th:value="${utente.getUsername()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" th:value="${utente.getEmail()}" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Nuova Password:</label>
+                    <input type="password" id="password" name="password" disabled>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" id="edit-button">Modifica Dati</button>
+                    <button type="submit" id="confirm-button" style="display: none;">Conferma Modifiche</button>
+                </div>
+            </form>
+
+
+
+        </section>
+</div>
+    </main>
+</div>
+
+<script th:href="@{/js/area_utente.js}"></script>
+<script src="/js/dati_anagrafici.js"></script>
+
+<div id ="footer" th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

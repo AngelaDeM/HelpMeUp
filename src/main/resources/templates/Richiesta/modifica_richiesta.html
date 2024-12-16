@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <link rel="stylesheet" th:href="@{/css/modifica_richiesta.css}">
+  <meta charset="UTF-8">
+  <title>Modifica Richiesta</title>
+</head>
+<body>
+<body><div th:replace="fragments/navbar :: navbar"></div>
+<h1>Modifica richiesta</h1>
+
+<div th:if="${message}" class="feedback" th:classappend="${messageType}">
+  <span th:text="${message}"></span>
+</div>
+
+<form th:action="@{/api/richieste/modifica}" method="POST">
+
+  <!-- Input nascosto per l'ID della richiesta -->
+  <h1 id="text_id">Richiesta: </h1>
+  <input type="hidden" id="richiesta" name="richiesta"><br><br>
+
+  <label for="titolo">Titolo:</label>
+  <input type="text" id="titolo" name="titolo" required><br><br>
+
+  <label for="descrizione">Descrizione:</label><br>
+  <textarea id="descrizione" name="descrizione" rows="4" cols="50" required></textarea><br><br>
+
+  <label for="data">Data:</label>
+  <input type="date" id="data" name="data" required><br><br>
+
+  <label for="ora">Ora:</label>
+  <input type="time" id="ora" name="ora" required><br><br>
+
+  <label for="emergenza">Emergenza:</label>
+  <input type="checkbox" id="emergenza" name="emergenza" value="true">
+  <label for="emergenza">Sì, è urgente</label><br><br>
+
+  <input type="submit" value="Modifica richiesta">
+</form>
+
+<script>
+  //"api/richieste/modifica?id=13"
+  // Funzione per ottenere il parametro dalla URL
+  function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  // Recupera l'ID dalla query string e lo inserisce nel campo nascosto
+  const richiestaId = getUrlParameter('id');
+  if (richiestaId) {
+    document.getElementById('richiesta').value = richiestaId;
+    document.getElementById('text_id').append(richiestaId);
+  }
+</script>
+<div id="footer" th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Utente</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/forum.css">
+</head>
+
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="sidebar" id="sidebar">
+  <div class="panel">
+    <div class="user-heading">
+      <a href="#">
+        <img src="/image/cuore.jpg" alt="Profilo">
+      </a>
+      <h1>FORUM</h1>
+    </div>
+    <ul class="nav">
+      <li><a href="#dati"><i class="fas fa-user"></i> tutte le iniziative</a></li>
+      <li><a href="#richieste"><i class="fas fa-clipboard-list"></i> messaggi</a></li>
+      <li><a href="#cestino"><i class="fas fa-trash"></i> cestino </a></li>
+    </ul>
+  </div>
+</div>
+
+
+<main class="content">
+  <section class="message-composer">
+    <h2>Scrivi un messaggio nel forum</h2>
+    <input type="text" id="messageTitle" placeholder="Titolo del messaggio">
+    <textarea id="messageInput" rows="5" cols="30" placeholder="Scrivi qui il tuo messaggio "></textarea>
+    <button id="sendMessageButton">Invia</button>
+  </section>
+</main>
+
+<div class="discussion-container">
+  <div class="container">
+    <div class="discussion-list">
+
+
+      <div class="discussion">
+        <div class="discussion-header">
+
+          <div class="avatar avatar-orange size-xl">
+            <p aria-hidden="true">GR</p>
+            <span class="visually-hidden">Giacomino Rossi</span>
+          </div>
+          <h3>MESSAGGIO SUL FORUM</h3>
+          <p>Ho paura di non essere all'altezza. Come posso superare questa insicurezza?</p>
+        </div>
+      </div>
+
+      <div class="discussion">
+        <div class="discussion-header">
+
+          <div class="avatar avatar-orange size-xl">
+            <p aria-hidden="true">NS</p>
+            <span class="visually-hidden">Nicola Siciliano </span>
+          </div>
+          <h3>MESSAGGIO SUL FORUM</h3>
+          <p>Cerco un'associazione dove poter donare il mio tempo libero per aiutare gli animali abbandonati.</p>
+        </div>
+      </div>
+
+
+
+      <div class="discussion">
+        <div class="discussion-header">
+
+          <div class="avatar avatar-orange size-xl">
+            <p aria-hidden="true">EM</p>
+            <span class="visually-hidden">Elsa Morante</span>
+          </div>
+          <h3>MESSAGGIO SUL FORUM</h3>
+          <p>Sono un pensionato e ho molto tempo a disposizione. Quali attività di volontariato sono adatte alla mia età?</p>
+        </div>
+      </div>
+
+      <div class="discussion">
+        <div class="discussion-header">
+
+          <div class="avatar avatar-orange size-xl">
+            <p aria-hidden="true">VT</p>
+            <span class="visually-hidden">Veronica Tedesco</span>
+          </div>
+          <h3>MESSAGGIO SUL FORUM</h3>
+          <p>Qualcuno ha esperienza con il volontariato all'estero? Quali sono le associazioni più affidabili?</p>
+        </div>
+      </div>
+
+      <div class="discussion">
+        <div class="discussion-header">
+
+          <div class="avatar avatar-orange size-xl">
+            <p aria-hidden="true">GA</p>
+            <span class="visually-hidden">Gigi Aloisi</span>
+          </div>
+          <h3>MESSAGGIO SUL FORUM</h3>
+          <p>Condividiamo le nostre esperienze di volontariato! Qual è stata la cosa più gratificante che avete fatto?</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

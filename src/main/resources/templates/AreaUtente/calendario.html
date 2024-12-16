@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/calendario.css">
+</head>
+
+<body>
+<p hidden class="username" th:text="${utente.getUsername()}"></p>
+<div class="container">
+    <div class="info">
+        <h1>Calendario</h1>
+        <p>Qui puoi inserire tutti i tuoi impegni.</p>
+    </div>
+    <div class="calendar" id="calendar-app">
+        <div class="calendar--day-view" id="day-view">
+            <span class="day-view-exit" id="day-view-exit">&times;</span>
+            <span class="day-view-date" id="day-view-date">2 Dicembre 2024</span>
+            <div class="day-view-content">
+                <div class="day-highlight">
+                    <span class="day-events" id="day-events"> </span>. &nbsp; <span tabindex="0" onkeyup="if(event.keyCode != 13) return; this.click();" class="day-events-link" id="add-event" data-date>Vuoi aggiungere un nuovo evento?</span>
+                </div>
+                <div id="day-events-list" class="day-events-list">
+
+                </div>
+                <div class="day-inspiration-quote" id="inspirational-quote"></div>
+            </div>
+        </div>
+        <div class="calendar--view" id="calendar-view">
+            <div class="cview__month">
+                <span class="cview__month-last" id="calendar-month-last">&lt;-</span>
+                <span class="cview__month-current" id="calendar-month"></span>
+                <span class="cview__month-next" id="calendar-month-next">-&gt;</span>
+            </div>
+            <div class="cview__header">Dom</div>
+            <div class="cview__header">Lun</div>
+            <div class="cview__header">Mar</div>
+            <div class="cview__header">Mer</div>
+            <div class="cview__header">Gio</div>
+            <div class="cview__header">Ven</div>
+            <div class="cview__header">Sab</div>
+
+            <div class="calendar--view" id="dates">
+            </div>
+        </div>
+        <div class="footer">
+            <span><span id="footer-date" class="footer__link"></span></span>
+        </div>
+    </div>
+    <div id="event-details" class="event-details">
+        <div class="event-details-header">
+            <h3>Dettagli Evento</h3>
+            <span id="event-details-close" class="event-details-close">&times;</span>
+        </div>
+        <div id="event-details-content" class="event-details-content">
+            <p><strong>Nome:</strong> <span id="event-name"></span></p>
+            <p><strong>Data:</strong> <span id="event-date"></span></p>
+            <p><strong>Orario:</strong> <span id="event-time"></span></p>
+        </div>
+    </div>
+    <!-- Modulo per l'inserimento di un nuovo evento -->
+    <div id="event-form" class="event-form" style="display: none;">
+        <div class="event-form-header">
+            <h3>Aggiungi Nuovo Evento</h3>
+            <span id="event-form-close" class="event-form-close">&times;</span>
+        </div>
+        <form id="new-event-form">
+            <label for="new-event-title">Titolo:</label>
+            <input type="text" id="new-event-title" name="event-title" required>
+
+            <label for="new-event-time">Orario:</label>
+            <input type="time" id="new-event-time" name="event-time" required>
+
+            <input type="hidden" id="new-event-date" name="event-date">
+
+            <button type="submit">Aggiungi Evento</button>
+        </form>
+    </div>
+</div>
+<script th:href="@{/js/calendario.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // URL del tuo endpoint
+        const eventiEndpoint = '/eventiByUtente';
+        const insertEventoEndpoint = '/insertEvento';
+
+        // Recupera l'utente loggato
+        const username = $('.username').text();
+        // Array per memorizzare le date degli eventi
+        let eventiDate = [];
+        // Array per memorizzare gli eventi
+        let eventiArr = [];
+
+        function showEventForm(date) {
+            $('#new-event-date').val(date); // Imposta la data nascosta nel modulo
+            $('#event-form').fadeIn(); // Mostra il modulo
+        }
+
+        $('#event-form-close').click(function() {
+            $('#event-form').fadeOut(); // Nascondi il modulo
+        });
+
+        $('#new-event-form').submit(function(event) {
+            event.preventDefault();
+            const titolo = $('#new-event-title').val();
+            const ora = $('#new-event-time').val();
+            const data = $('#new-event-date').val();
+
+            // Effettua una richiesta POST per aggiungere l'evento
+            $.ajax({
+                url: insertEventoEndpoint,
+                type: 'POST',
+                data: { utente: username, nome: titolo, ora: ora, data: data },
+                success: function() {
+                    alert('Evento aggiunto con successo!');
+                    $('#event-form').fadeOut(); // Nascondi il modulo
+                    location.reload(); // Ricarica la pagina per aggiornare il calendario
+                },
+                error: function() {
+                    alert('Errore durante l\'aggiunta dell\'evento.');
+                }
+            });
+        });
+
+
+        // Ottieni gli eventi dell'utente
+        function loadEventi() {
+            $.ajax({
+                url: eventiEndpoint,
+                type: 'GET',
+                data: { username: username },
+                success: function (eventi) {
+                    // Salva gli eventi
+                    eventiArr = eventi;
+                    // Salva le date degli eventi
+                    eventiDate = eventi.map(evento => ({
+                        date: evento.data,
+                    }));
+                    // Ricarica il calendario per aggiungere gli eventi
+                    populateCalendar(month, year);
+                },
+                error: function () {
+                    console.error('Errore nel caricamento degli eventi');
+                }
+            });
+        }
+
+        // Carica la data di oggi
+        var d = new Date();
+        var month = d.getMonth() + 1; // I mesi in JavaScript sono indicizzati da 0
+        var day = d.getDate();
+        var year = d.getFullYear();
+
+        var monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+            "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+
+        // Funzione per calcolare il numero di giorni in un mese
+        function getDaysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        // Funzione per popolare i giorni del mese
+        function populateCalendar(month, year) {
+            var daysContainer = $('#dates');
+            daysContainer.empty();
+
+            var firstDay = new Date(year, month - 1, 1).getDay();
+            var daysInMonth = new Date(year, month, 0).getDate();
+
+            for (var i = 0; i < firstDay; i++) {
+                daysContainer.append('<div class="cview__day cview__day--empty"></div>');
+            }
+
+            for (var day = 1; day <= daysInMonth; day++) {
+                const fullDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasEvent = eventiDate.some(evento => evento.date === fullDate);
+
+                const dayClass = day === d.getDate() && month === (d.getMonth() + 1) && year === d.getFullYear()
+                    ? 'cview__day cview__day--today'
+                    : 'cview__day';
+
+                const eventIndicator = hasEvent ? '<div class="event-indicator"></div>' : '';
+
+                const dayElement = $('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
+                dayElement.data('date', fullDate);  // Associa la data alla cella del giorno
+
+                daysContainer.append('<div class="' + dayClass + '">' + day + eventIndicator + '</div>');
+            }
+            //cambia il nome del mese corrente
+            $('#calendar-month').text(monthNames[month - 1] + ' ' + year);
+        }
+
+
+
+        // Funzione per convertire orari am/pm in formato 24 ore
+        function convertTo24Hour(time, ampm) {
+            let [hour, minute] = time.split(':');
+            hour = parseInt(hour);
+            minute = parseInt(minute);
+
+            if (ampm === 'pm' && hour !== 12) {
+                hour += 12;
+            } else if (ampm === 'am' && hour === 12) {
+                hour = 0;
+            }
+
+            return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+        }
+
+        // Carica gli eventi e il calendario all'avvio
+        loadEventi();
+        populateCalendar(month, year);
+
+        // Gestisce il cambio di mese (aggiungi i tuoi eventi click per i pulsanti "mese precedente" e "mese successivo")
+        $('#calendar-month-last').click(function() {
+            month--;
+            if (month < 1) {
+                month = 12;
+                year--;
+            }
+            populateCalendar(month, year);
+        });
+
+        $('#calendar-month-next').click(function() {
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+            populateCalendar(month, year);
+        });
+
+        // Funzione per caricare i dettagli dell'evento in base alla data
+        function showEventDetails(date) {
+            // Trova l'evento che corrisponde alla data selezionata
+            const evento = eventiArr.find(e => e.data === date);
+
+            if (evento) {
+                // Mostra i dettagli nell'interfaccia
+                $('#event-name').text(evento.nome);
+                $('#event-date').text(evento.data);
+                $('#event-time').text(evento.ora);
+
+                // Mostra la finestra modale
+                $('#event-details').fadeIn();
+            } else {
+                // Se non ci sono eventi per quella data, apri il modulo per aggiungere un evento
+                showEventForm(date);
+            }
+        }
+
+        // Funzione per nascondere la finestra dei dettagli
+        $('#event-details-close').click(function() {
+            $('#event-details').fadeOut();
+        });
+
+        // Gestisci il clic su un giorno con evento
+        $('#dates').on('click', '.cview__day', function() {
+            const day = $(this).text(); // Il giorno selezionato, es. "10"
+
+            // Estrai mese e anno visualizzati nella pagina (dal titolo del mese)
+            const monthText = $('#calendar-month').text(); // Es. "Dicembre"
+            const year = parseInt(monthText.split(' ')[1]); // Estrai l'anno, es. "2024"
+
+            // Mappa il nome del mese al numero del mese
+            const months = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+                "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+            const month = months.indexOf(monthText.split(' ')[0]) + 1; // Ottieni il numero del mese
+
+            // Costruisci la data nel formato YYYY-MM-DD
+            const selectedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            showEventDetails(selectedDate);
+        });
+
+    });
+</script>
+</body>
+
+</html>

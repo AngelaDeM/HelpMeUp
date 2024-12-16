@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Aggiungi premio</title>
+</head>
+<body>
+<h1>Aggiungi premio</h1>
+<form th:action="@{/api/premio/aggiungi}" method="POST">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required><br><br>
+    <label for="descrizione">Descrizione:</label>
+    <input type="text" id="descrizione" name="descrizione" required><br><br>
+    <label for="punti">Punti:</label>
+    <input type="text" id="punti" name="punti" required><br><br>
+
+    <input type="submit" value="aggiungi premio">
+</form>
+</body>
+</html>

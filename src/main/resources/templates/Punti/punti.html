@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punti- HelpMeUp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/punti.css">
+</head>
+
+<body class="point">
+<div class="wrapper">
+    <div class="container">
+
+
+        <section class="profile">
+            <div class="profile-info">
+
+                <h1>I Tuoi Punti</h1>
+                <p>Qui puoi vedere i tuoi punti guadagnati con il volontariato, le richieste che hai accettato e i premi che puoi riscattare.</p>
+
+            </div>
+
+            <div class="points">
+                <h3>Punti Guadagnati</h3>
+                <div class="points-bar">
+                    <div class="bar" id="progress-bar"></div>
+                </div>
+                <p id="points-text">0 Punti</p>
+            </div>
+
+            <div class="requests">
+                <h3>Richieste Accettate</h3>
+                <ul id="requests-list">
+                    <!-- Lista delle richieste accettate -->
+                    <li>
+                        <p>Aiuto per la raccolta di cibo - 10 ore</p>
+                        <button class="complete-btn" onclick="completeRequest(10)">Richiesta Completata</button>
+                    </li>
+                    <li>
+                        <p>Supporto alla casa di riposo - 5 ore</p>
+                        <button class="complete-btn" onclick="completeRequest(5)">Richiesta Completata</button>
+                    </li>
+                    <li>
+                        <p>Distribuzione vestiti ai senzatetto - 8 ore</p>
+                        <button class="complete-btn" onclick="completeRequest(8)">Richiesta Completata</button>
+                    </li>
+                </ul>
+            </div>
+
+    <div class="container1">
+        <!-- Sezione Premi -->
+        <div class="rewards">
+            <h3>Premi Riscattabili</h3>
+            <div class="rewards-grid">
+                <!-- Premi in due colonne -->
+                <div class="reward-item">
+                    <p>Certificato di Volontariato - 20 Punti</p>
+                    <button class="reward-btn" onclick="redeemReward(20)" id="reward-20">Riscatta</button>
+                </div>
+                <div class="reward-item">
+                    <p>Badge di Volontario Esperto - 50 Punti</p>
+                    <button class="reward-btn" onclick="redeemReward(50)" id="reward-50">Riscatta</button>
+                </div>
+                <div class="reward-item">
+                    <p>Premio Speciale - 100 Punti</p>
+                    <button class="reward-btn" onclick="redeemReward(100)" id="reward-100">Riscatta</button>
+                </div>
+                <div class="reward-item">
+                    <p>Medaglia d’Oro - 150 Punti</p>
+                    <button class="reward-btn" onclick="redeemReward(150)" id="reward-150">Riscatta</button>
+                </div>
+                <div class="reward-item">
+                    <p>Trofeo di Volontario - 200 Punti</p>
+                    <button class="reward-btn" onclick="redeemReward(200)" id="reward-200">Riscatta</button>
+                </div>
+                <div class="reward-item">
+                    <p>Volontario dell'Anno - 300 Punti</p>
+                    <button class="reward-btn" onclick="redeemReward(300)" id="reward-300">Riscatta</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="redeemed-history">
+            <h3>Cronologia Premi Riscattati</h3>
+            <ul id="redeemed-list">
+                <!-- Premi riscattati verranno aggiunti qui dinamicamente -->
+            </ul>
+        </div>
+
+        <!-- Popup Premio Riscattato -->
+        <div id="popup" class="popup hidden">
+            <div class="popup-content">
+                <p id="popup-message"></p>
+                <button onclick="closePopup()">OK</button>
+            </div>
+        </div>
+    </div>
+
+        </section>
+
+
+    </div>
+</div>
+
+<script src="/js/punti.js"></script>
+
+</body>
+</html>

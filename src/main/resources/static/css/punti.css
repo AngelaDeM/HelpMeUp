@@ -1,0 +1,251 @@
+ /* Styles for the page */
+
+body.point{
+    font-family: 'Roboto', sans-serif;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+
+    margin:auto;
+}
+
+.container1 {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+header h1 {
+    color: #de6061;
+    font-size: 24px;
+}
+
+header p {
+    color: #757575;
+    font-size: 16px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile p {
+    font-size: 14px;
+    color: #757575;
+    margin-top: 10px;
+}
+
+.points {
+    width: 100%;
+    text-align: center;
+}
+
+.points h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.points-bar {
+    background-color: #e0e0e0;
+    width: 100%;
+    height: 30px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.bar {
+    background-color: #fbe5d5;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+}
+
+#points-text {
+    font-size: 18px;
+    color: #de6061;
+}
+
+.requests {
+    margin-top: 30px;
+}
+
+.requests h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.requests ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.requests li {
+    background-color: #fbe5d5;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.complete-btn {
+    background-color: #de6061;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.complete-btn:hover {
+    background-color: #df4c4c;
+}
+/* Styles for rewards */
+.rewards {
+    margin-top: 30px;
+}
+
+.rewards h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.rewards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.reward-item {
+    background-color: #f4f7fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reward-item p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.reward-btn {
+    background-color: #de6061;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reward-btn:hover {
+    background-color: #df4c4c;
+}
+
+.reward-btn.disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* Popup styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+
+.popup-content button {
+    background-color: #de6061;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content button:hover {
+    background-color: #de6061;
+}
+
+.hidden {
+    display: none;
+}
+
+/*premi riscattati*/
+
+.redeemed-history {
+    margin-top: 30px;
+}
+
+.redeemed-history h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#redeemed-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#redeemed-list li {
+    background-color: #f0f4f8;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    text-align: center;
+}
+
+
