@@ -24,16 +24,8 @@
     <h1>Le Tue Emergenze</h1>
     <i class="fa-regular fa-square-check" id="icon-img"></i>
   </div>
-
-  <div class="search-bar">
-    <h3>TROVA L' ATTIVITÀ</h3>
-    <div class="search-input-container">
-      <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
-      <input type="text" placeholder="Cerca attività" id="searchInput">
-    </div>
-  </div>
-
   <div class="requests-list"></div>
+</div>
 
 </div>
 
@@ -57,9 +49,8 @@
               requestItem.innerHTML = `
                     <h2>${richiesta.titolo}</h2>
                     <p><strong>Descrizione:</strong> ${richiesta.descrizione}</p>
-                    <p><strong>Data di Creazione:</strong> ${new Date(richiesta.data_creazione).toLocaleDateString()}</p>
-                    <p><strong>Data Intervento:</strong> ${new Date(richiesta.data_intervento).toLocaleDateString()}</p>
-                    <p><strong>Orario Intervento:</strong> ${richiesta.orario_intervento}</p>
+                    <p><strong>Data Intervento:</strong> ${richiesta.dataAiuto}</p>
+                    <p><strong>Orario Intervento:</strong> ${richiesta.oraAiuto}</p>
                     <p><strong>Emergenza:</strong> ${richiesta.emergenza ? 'Sì' : 'No'}</p>
                     <p><a href="/api/richieste/accetta?id=${richiesta.id}"><i class="bi bi-check-circle"></i> </a></p>
                 `;
